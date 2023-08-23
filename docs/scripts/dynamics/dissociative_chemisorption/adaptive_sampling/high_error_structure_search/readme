@@ -1,0 +1,10 @@
+# Saving high error structures for expanding/improving ML models 
+
+The script 'sticking_prob_save_str.jl' allows saving high error structures, which is enabled by the function 'OutputTrajectory'.
+
+For the script to work properly, several parameters have to be correctly set:
+    'save_errors' = true
+    'v_models_error' = 0.025 # minimum error (std) between potential energies of multiple models, of the structure that will be saved
+    'models_mult_paths' - list of paths to ML models that will be used to predict the values of potential energy
+
+For initial conditions, go to folder: dynamics/dissociative_chemisorption/initial_conditions
