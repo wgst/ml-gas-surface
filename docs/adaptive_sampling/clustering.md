@@ -73,7 +73,8 @@ plt.ylabel("Variance ratio")
 plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black')
 ```
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/h2cu_pca_analysis.png?raw=true" width="300">
+<!-- <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/h2cu_pca_analysis.png?raw=true" width="300"> -->
+![](../figures/h2cu_pca_analysis.png)
 
 ```py
 descr = X_new[:,:2]
@@ -89,7 +90,8 @@ fig.set_figwidth(6.0)
 plt.show()
 ```
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="500">
+<!-- <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="500"> -->
+![](../figures/plot_PCA_h2cu111_E_all_v0.png)
 
 ```py
 from sklearn.cluster import MiniBatchKMeans
@@ -148,8 +150,8 @@ fig.set_figwidth(6.0)
 
 plt.show()
 ```
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="500">
-
+<!-- <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="500"> -->
+![](../figures/plot_PC1PC2_h2cu111_E_all_v0.png)
 ### Plotting centers of clusters within H-H and H1-Cu distances
 
 ```py
@@ -168,9 +170,9 @@ fig.set_figwidth(6.0)
 plt.show()
 
 ```
+<!-- 
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PC_distances_h2cu111_E_all_v0.png?raw=true" width="500"> -->
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PC_distances_h2cu111_E_all_v0.png?raw=true" width="500">
-
-
+![](../figures/plot_PC_distances_h2cu111_E_all_v0.png)
 
 
