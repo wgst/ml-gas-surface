@@ -94,7 +94,7 @@ fig.set_figwidth(6.0)
 plt.show()
 ```
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="500">
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="300">
 
 ```py
 from sklearn.cluster import MiniBatchKMeans
@@ -153,7 +153,7 @@ fig.set_figwidth(6.0)
 
 plt.show()
 ```
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="500">
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="300">
 
 ### Plotting centers of clusters within H-H and H1-Cu distances
 
@@ -174,6 +174,6 @@ plt.show()
 
 ```
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC_distances_h2cu111_E_all_v0.png?raw=true" width="500">
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC_distances_h2cu111_E_all_v0.png?raw=true" width="300">
 
 
