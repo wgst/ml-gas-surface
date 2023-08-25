@@ -9,7 +9,11 @@ nav_order: 5
 
 
 ## Clustering (Python code)
+{: .note }
 The database of high-error structures usually contains too many data points. Fortunately, clustering methods, such as k-means, can help to find the most informative data points and add only them to our database. To do that, we prepared a Python notebook, which can be found [in this repository](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_clusters/choosing_datapoints_h2cu111_v0_clean.ipynb). Its contents with an explanation are also included below.
+
+See [in this repository]({% link scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_clusters/choosing_datapoints_h2cu111_v0_clean.ipynb).
+
 
 ### Import database with high-error structures
 
@@ -73,8 +77,8 @@ plt.ylabel("Variance ratio")
 plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black')
 ```
 
-<!-- <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/h2cu_pca_analysis.png?raw=true" width="300"> -->
-![](../figures/h2cu_pca_analysis.png)
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/h2cu_pca_analysis.png?raw=true" width="300">
+
 
 ```py
 descr = X_new[:,:2]
@@ -90,10 +94,7 @@ fig.set_figwidth(6.0)
 plt.show()
 ```
 
-<!-- <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="500"> -->
-![](../figures/plot_PCA_h2cu111_E_all_v0.png)
-![](figures/plot_PCA_h2cu111_E_all_v0.png)
-![](docs/figures/plot_PCA_h2cu111_E_all_v0.png)
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="500">
 
 ```py
 from sklearn.cluster import MiniBatchKMeans
@@ -152,8 +153,8 @@ fig.set_figwidth(6.0)
 
 plt.show()
 ```
-<!-- <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="500"> -->
-![](../figures/plot_PC1PC2_h2cu111_E_all_v0.png)
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="500">
+
 ### Plotting centers of clusters within H-H and H1-Cu distances
 
 ```py
@@ -172,9 +173,7 @@ fig.set_figwidth(6.0)
 plt.show()
 
 ```
-<!-- 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/images/plot_PC_distances_h2cu111_E_all_v0.png?raw=true" width="500"> -->
 
-![](../figures/plot_PC_distances_h2cu111_E_all_v0.png)
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC_distances_h2cu111_E_all_v0.png?raw=true" width="500">
 
 
