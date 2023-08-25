@@ -10,7 +10,7 @@ url: https://wgst.github.io/ml-gas-surface
 
 
 
-permalink: pretty
+# permalink: pretty
 
 # exclude:
 #  # from https://github.com/jekyll/jekyll/blob/master/lib/site_template/_config.yml:
