@@ -1,8 +1,8 @@
 title: ML for gas-surface dynamics
 description: Documentation for ML-based gas-surface dynamics.
+color_scheme: dark
 theme: just-the-docs
 # Color scheme supports "light" (default) and "dark"
-color_scheme: dark
 
 url: https://wgst.github.io/ml-gas-surface
 
