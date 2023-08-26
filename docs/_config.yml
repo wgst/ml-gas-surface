@@ -41,7 +41,7 @@ exclude:
    - fixtures/
 
 # Set a path/url to a logo that will be displayed instead of the title
-logo: "https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/mlgsd_logo1.png?raw=true"
+logo: "https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/mlgsd_logo.png?raw=true"
 
 # Enable or disable the site search
 # Supports true (default) or false
