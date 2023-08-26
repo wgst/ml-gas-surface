@@ -41,7 +41,7 @@ exclude:
    - fixtures/
 
 Set a path/url to a logo that will be displayed instead of the title
-logo: "/docs/figures/mlgsd_logo.png"
+logo: "figures/mlgsd_logo.png"
 
 # Enable or disable the site search
 # Supports true (default) or false
