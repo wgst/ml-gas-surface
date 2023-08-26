@@ -2,22 +2,16 @@
 layout: default
 title: High error structure clustering 
 parent: Adaptive sampling
-nav_order: 5
+nav_order: 8
 ---
 
 
 
 
 ## Clustering (Python code)
-{: .note }
+
 The database of high-error structures usually contains too many data points. Fortunately, clustering methods, such as k-means, can help to find the most informative data points and add only them to our database. To do that, we prepared a Python notebook, which can be found [in this repository](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_clusters/choosing_datapoints_h2cu111_v0_clean.ipynb). Its contents with an explanation are also 
 included below.
-
-{: .note }
-Test note
-
-{: .warning }
-Test warning
 
 ### Import database with high-error structures
 

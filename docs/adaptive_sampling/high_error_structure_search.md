@@ -2,7 +2,7 @@
 layout: default
 title: High error structure search
 parent: Adaptive sampling
-nav_order: 4
+nav_order: 7
 ---
 
 
@@ -34,10 +34,11 @@ io = pyimport("ase.io")
 db = pyimport("ase.db")
 spk_utils = pyimport("schnetpack.utils")
 spk_interfaces = pyimport("schnetpack.interfaces")
+```
 
-"""
-Trajectory terminator if H2 is above 'scat_cutoff' or if the distance between H2 is more than 'dist_cutoff'
-"""
+### Trajectory terminator if H2 is above 'scat_cutoff' or if the distance between H2 is more than 'dist_cutoff'
+
+```jl
 mutable struct TrajectoryTerminator
     h2_indices
     scat_cutoff
@@ -59,17 +60,19 @@ function (term::TrajectoryTerminator)(u, t, integrator)::Bool
         return false
     end
 end
+```
 
-"""
-Function to compute H-H distance atoms
-"""
+### Function to compute H-H distance atoms
+
+```jl
 function dh2(p) 
     norm(p[:,end].-p[:,end-1])  
 end
+```
 
-"""
-Function for removing surface
-"""
+### Function for removing surface
+
+```jl
 function remove_surface(ase_atoms)
     n_a = length(ase_atoms)
     for i in 1:n_a-2
@@ -77,10 +80,11 @@ function remove_surface(ase_atoms)
     end
     return ase_atoms
 end
+```
 
-"""
-Function for creating ASE object from SchNet model
-"""
+### Function for creating ASE object from SchNet model
+
+```jl
 function schnet_model_pes(model_path, cur_atoms)
     spk_model = spk_utils.load_model(model_path;map_location="cpu")
     model_args = spk_utils.read_from_json("$(model_path)/args.json")
@@ -91,10 +95,11 @@ function schnet_model_pes(model_path, cur_atoms)
 
     return model
 end
+```
 
-"""
-Function for processing the results
-"""
+### Function for processing the results
+
+```jl
 function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, model_h2, surface, e_tran, cur_folder, n_atoms_layer)
     atoms_all = []
     output_data = []
@@ -139,10 +144,11 @@ function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, mo
     end
     return output_data, atoms_all, n_scat, n_reac, n_nondef
 end
+```
 
-"""
-Output the end point of each trajectory.
-"""
+### Output the end point of each trajectory.
+
+```jl
 struct OutputTrajectory 
     atoms
     cell
@@ -185,35 +191,33 @@ function (out::OutputTrajectory)(sol, i)
 
     return last(sol.u) # return last trajectory
 end
+```
 
+### Running Ensemble (x_cores) simulation by using the initial conditions
 
+### Setting paths and simulation details
 
-
-"""
-------------------------------------------------------------------------
-- Running Ensemble (x_cores) simulation by using the initial conditions
-------------------------------------------------------------------------
-"""
-
-############################################
-############# INITIAL SETTINGS #############
-############################################ 
-
+```jl
 es_tran = [0.200, 0.400, 0.500, 0.600, 0.750, 0.850] # v0
 #es_tran = [0.200, 0.300, 0.400, 0.500, 0.600, 0.750] # v1
 
-model_folder = ENV["MODEL_FOLDER"]
-icond_f = "$(ENV["H2CU_ML_INIT_COND"])/output/$(model_folder)/"
-icond_str = "$(ENV["H2CU_ML_INIT_COND"])/inputs/"
-output_f = "$(ENV["H2CU_ML_DYN"])/output/$(model_folder)/"
+ml_model_f = "path/to/mlip/model"
+icond_f = "path/to/initial/conditions/folder"
+icond_str = "path/to/initial/structures/folder/"
+output_f = "path/to/output/folder/"
 mkpath(output_f)
-ml_model_f = "$(ENV["H2CU_ML_MODELS"])/$(model_folder)"
+```
 
-# SAVING DATAPOINTS FOR ADAPTIVE LEARNING
+#### Setting saving high-error structures for adaptive sampling
+
+```jl
 save_errors = true # choose if you want to save structures with min error of v_models_error for adaptive sampling 
 v_models_error = 0.025 # minimum error (std) of potential energy predictions made by multiple models, of the structure that will be saved for adaptive sampling
+```
 
-# SIMULATION DETAILS
+#### Simulation details
+
+```jl
 height = 7.0 # H height / Ang 
 traj_start = parse(Int64, ENV["TRAJ_START"]) # starting trajectory (based on initial conditions)
 traj_end = parse(Int64, ENV["TRAJ_END"]) # last trajectory (based on initial conditions)
@@ -225,21 +229,16 @@ scat_cutoff = ang_to_au(7.1) # termination condition (h2 height)
 dist_cutoff = ang_to_au(2.25) # termination condition (h2 bond length)
 slab_outside_max_len = ang_to_au(10)
 
-############################################
-################# SETTINGS #################
-############################################ 
-
 surface = "cu111" # surface
 e_tran = es_tran[1] # translational/collision energy
 vjs = [0,1] # v and J states
 temp_surf = "925" # temperature of surface
 n_layers_metal = 6
+```
 
-############################################
-########### READING DISTRIBUTION ###########
-############################################ 
+### Reading initial conditions file
 
-println("Reading distribution ...")
+```jl
 file_name = "Et$(e_tran)_v$(vjs[1])_J$(vjs[2])/distr_Et$(e_tran)_v$(vjs[1])_J$(vjs[2])"
 system = load("$(icond_f)$(surface)/T$(temp_surf)K/$(file_name).jld2")
 ase_atoms = io.read("$(icond_str)$(surface)_h$(height)_full_$(temp_surf)K.in")
@@ -254,58 +253,65 @@ errors = []
 cur_folder = "$(output_f)$(surface)/v$(vjs[1])J$(vjs[2])/T$(temp_surf)/"
 mkpath(cur_folder)
 n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # if molecule is 2 atoms
+```
 
-############################################
-############## SET SIMULATION ##############
-############################################ 
-
-# LOAD MODELS FOR ADAPTIVE LEARNING PROCEDURE
+### Setting simulation
+#### LOAD MODELS FOR ADAPTIVE LEARNING PROCEDURE
+```jl
 if save_errors == true
     for (i, m) in enumerate(models_mult_paths) # 
         append!(models_mult, [schnet_model_pes(models_mult_paths[i], ase_slab.copy())])
     end
 end
+```
 
-# LOAD MODELS
+#### LOAD MODELS for MD
+
+```jl
 model = schnet_model_pes(ml_model_f, ase_atoms)
 sim = Simulation{Classical}(atoms, model, cell=cell)
+```
 
-# SET TRAJECTORY TERMINATOR FUNCTION 
+#### Set trajectory terminator
+
+```jl
 terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_cutoff, dist_cutoff, slab_outside_max_len, 
                         [[ang_to_au(0.0), cell.vectors[1,1] + cell.vectors[1,2]], [ang_to_au(0.0), cell.vectors[2,2]], [ang_to_au(0.0), ang_to_au(15.0)]],Int(n_atoms_layer))
 
 terminate_cb = DynamicsUtils.TerminatingCallback(terminator)
+```
 
-############################################
-############## RUN SIMULATION ##############
-############################################ 
+### Running simulation
 
+```jl
 println("Initialize ...  ")
 println("... Running simulation ... ")
 @time ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, 
                         output=OutputTrajectory(atoms, cell, cur_folder, surface, string(e_tran), models_mult, traj_start, v_models_error, save_errors),
                         callback=terminate_cb, ensemble_algorithm=EnsembleDistributed(), saveat=(0.0:austrip(1.0*u"fs"):austrip(max_time_fs*u"fs")))
+```
 
+### Postprocess
+#### Create new sim just for H2 (for quantise_diatomic)
 
-############################################
-############## POSTPROCESSING ##############
-############################################ 
-
-# Collect final output results
-#------------------------------
-# create new sim just for H2 (for quantise_diatomic)
+```jl
 ase_atoms = remove_surface(ase_atoms)
 model_h2 = schnet_model_pes(ml_model_f, ase_atoms)
 output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, model_h2, surface, e_tran, cur_folder, Int(n_atoms_layer))
+```
 
-# Calculating dissociation probability:
+#### Calculating dissociation probability:
+
+```jl
 n_traj_sr = n_scat + n_reac
 n_traj_all = n_scat + n_reac + n_nondef
 prob_reac = n_reac/n_traj_sr
 prob_reac_all = n_reac/n_traj_all
+```
 
-println("... Ending simulation and printing external files ...")
-# Print dissociation probability
+#### Ending simulation and printing external files
+
+```jl
 labels = ["n_scattering: ", "n_reaction: ", "n_nondefined: ", "reaction_probability: ", "reaction_probability_all: "]
 results =[n_scat, n_reac, n_nondef, prob_reac, prob_reac_all]
 writedlm("$(cur_folder)$(surface)_Et$(e_tran)_results_$(traj_start)to$(traj_end).log", zip(labels,results))
