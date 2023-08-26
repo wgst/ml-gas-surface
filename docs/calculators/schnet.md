@@ -1,8 +1,8 @@
 ---
 layout: default
 title: SchNet
-parent: Calculators
-nav_order: 4
+parent: MLIP calculators
+nav_order: 5
 ---
 
 

@@ -2,7 +2,7 @@
 layout: default
 title: High error structure clustering 
 parent: Adaptive sampling
-nav_order: 8
+nav_order: 9
 ---
 
 

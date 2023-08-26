@@ -1,9 +1,7 @@
 ---
 layout: default
-title: MLIP calculators
-nav_order: 4
-has_children: true
-permalink: /docs/calculators
+title: Training MLIPs
+nav_order: 3
 ---
 
 

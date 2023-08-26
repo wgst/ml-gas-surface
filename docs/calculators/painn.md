@@ -1,8 +1,8 @@
 ---
 layout: default
 title: PaiNN
-parent: Calculators
-nav_order: 5
+parent: MLIP calculators
+nav_order: 6
 ---
 
 
