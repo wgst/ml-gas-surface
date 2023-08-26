@@ -4,12 +4,12 @@ title: High error structure clustering
 parent: Adaptive sampling
 nav_order: 9
 ---
-<!-- 
+
 # Navigation Structure
 {: .no_toc }
 
 ## Table of contents
-{: .no_toc .text-delta } -->
+{: .no_toc .text-delta }
 
 - TOC
 {:toc}

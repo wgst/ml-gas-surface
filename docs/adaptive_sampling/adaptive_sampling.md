@@ -5,6 +5,16 @@ nav_order: 7
 has_children: true
 permalink: /docs/adaptive_sampling
 ---
+s
+# Navigation Structure
+{: .no_toc }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+- TOC
+{:toc}
+
 
 The adaptive sampling procedure for gas-surface dynamics is described by [Stark et al.](https://arxiv.org/abs/2305.10873). We will briefly describe the process here, starting with the scheme shown below.
 
