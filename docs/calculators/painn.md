@@ -5,9 +5,12 @@ parent: MLIP calculators
 nav_order: 6
 ---
 
+[https://proceedings.mlr.press/v139/schutt21a.html](PaiNN) is one of the most popular equivariant message-passing neural-network-based MLIPs.
+
+Below are the instructions on how to initialize the PaiNN calculator, to run dynamics simulations within [https://github.com/NQCD/NQCDynamics.jl](NQCDynamics.jl).
 
 
-## PaiNN
+We start with importing NQCDynamics.jl packages and PyCall that allows importing python-based packages.
 
 ```jl
 using NQCDynamics
@@ -21,7 +24,7 @@ spk_transform = pyimport("schnetpack.transform")
 torch = pyimport("torch")
 ```
 
-Function for creating ASE object from PaiNN model
+We define a function for creating NQCModels object that includes PaiNN model, using three variables: path to our PaiNN model, ASE-based atoms object and a cutoff distance.
 
 ```jl
 function painn_model_pes(model_path, cur_atoms, cutoff)
@@ -35,19 +38,24 @@ function painn_model_pes(model_path, cur_atoms, cutoff)
 end
 ```
 
-Using the model within NQCDynamics.jl
+Now, we specify the cutoff distance, paths to the model and atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
 
 ```jl
-pes_model_path = "../../../models/painn/best_inference_model"
-atoms_path = "../../../dbs/example_structures/cu111_h7.0_full_925K.in"
+cutoff = 4.0  # Angstrom (units used in model)
+pes_model_path = "path/to/painn/model/best_inference_model"
+atoms_path = "path/to/atoms.xyz"
 ase_atoms = io.read(atoms_path)
 atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms)
-cutoff = 4.0  # Angstrom (units used in model)
 ```
 
-Loading ML models and initializing the simulation
+Finally, we initialize the model using previously defined 'painn_model_pes' function and we initialize Simulation object that can be used e.g. to run dynamics simulations.
 
 ```jl
 pes_model = painn_model_pes(pes_model_path, ase_atoms, cutoff)
 sim = Simulation{Classical}(atoms, pes_model, cell=cell)
 ```
+
+
+## References
+
+[https://proceedings.mlr.press/v139/schutt21a.html](K. Schütt, O. Unke, M. Gastegger, Equivariant message passing for the prediction of tensorial properties and molecular spectra, PMLR 2021)
