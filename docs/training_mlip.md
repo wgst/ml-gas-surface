@@ -4,7 +4,7 @@ title: Training MLIPs
 nav_order: 3
 ---
 
-# Navigation Structure
+# Training MLIPs
 {: .no_toc }
 
 ## Table of contents

@@ -4,6 +4,7 @@ title: High error structure search
 parent: Adaptive sampling
 nav_order: 8
 ---
+# High-energy structure search (Julia code)
 
 # Navigation Structure
 {: .no_toc }
@@ -14,8 +15,7 @@ nav_order: 8
 - TOC
 {:toc}
 
-
-# High-energy structure search (Julia code)
+## Introduction
 After training the models, we can finally start searching for high-error structures in our system. An excellent environment to run such simulations is [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl/) within [Julia](https://julialang.org).
 
 In order to run the dynamics, we recommend creating the initial conditions (initial positions and velocities) separately. This part is very well explained in the [NQCDynamics.jl documentation](https://nqcd.github.io/NQCDynamics.jl/dev/).
