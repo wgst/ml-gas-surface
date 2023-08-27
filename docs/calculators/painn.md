@@ -5,7 +5,9 @@ parent: MLIP calculators
 nav_order: 6
 ---
 
-[PaiNN](https://proceedings.mlr.press/v139/schutt21a.html) is one of the most popular equivariant message-passing neural-network-based MLIPs.
+# PaiNN calculator
+
+[PaiNN](https://github.com/atomistic-machine-learning/schnetpack) is one of the most popular equivariant message-passing neural-network-based MLIPs.
 
 Below are the instructions on how to initialize the PaiNN calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
 
@@ -24,19 +26,6 @@ spk_transform = pyimport("schnetpack.transform")
 torch = pyimport("torch")
 ```
 
-We define a function for creating NQCModels [AdiabaticASEModel](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCModels/adiabaticmodels/#NQCModels.AdiabaticModels.AdiabaticASEModel) object that includes PaiNN model, using three variables: path to our PaiNN model, ASE-based atoms object and a cutoff distance.
-
-```jl
-function painn_model_pes(model_path, cur_atoms, cutoff)
-    best_model = torch.load(model_path,map_location=torch.device("cpu") ).to("cpu")
-    converter = spk_interfaces.AtomsConverter(neighbor_list=spk_transform.ASENeighborList(cutoff=cutoff), dtype=torch.float32)
-    calculator = spk_interfaces.SpkCalculator(model=best_model, converter=converter, energy_units="eV", forces_units="eV/Angstrom")
-    cur_atoms.set_calculator(calculator)
-    model = AdiabaticASEModel(cur_atoms)
-
-    return model
-end
-```
 
 Now, we specify the cutoff distance, paths to the model and atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
 
@@ -48,10 +37,20 @@ ase_atoms = io.read(atoms_path)
 atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms)
 ```
 
-Finally, we initialize the model using previously defined 'painn_model_pes' function and we initialize [Simulation](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCDynamics/nonadiabaticmoleculardynamics/#NQCDynamics.Simulation-Union%7BTuple%7BT%7D,%20Tuple%7BM%7D,%20Tuple%7BAtoms%7BT%7D,%20NQCModels.Model,%20M%7D%7D%20where%20%7BM,%20T%7D) object that can be used e.g. to run dynamics simulations.
+
+We then set up our PaiNN calculator and create NQCModels [AdiabaticASEModel](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCModels/adiabaticmodels/#NQCModels.AdiabaticModels.AdiabaticASEModel) object that includes the model.
 
 ```jl
-pes_model = painn_model_pes(pes_model_path, ase_atoms, cutoff)
+best_model = torch.load(pes_model_path,map_location=torch.device("cpu") ).to("cpu")
+converter = spk_interfaces.AtomsConverter(neighbor_list=spk_transform.ASENeighborList(cutoff=cutoff), dtype=torch.float32)
+calculator = spk_interfaces.SpkCalculator(model=best_model, converter=converter, energy_units="eV", forces_units="eV/Angstrom")
+ase_atoms.set_calculator(calculator)
+model = AdiabaticASEModel(ase_atoms)
+```
+
+Finally, we initialize [Simulation](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCDynamics/nonadiabaticmoleculardynamics/#NQCDynamics.Simulation-Union%7BTuple%7BT%7D,%20Tuple%7BM%7D,%20Tuple%7BAtoms%7BT%7D,%20NQCModels.Model,%20M%7D%7D%20where%20%7BM,%20T%7D) object that can be used e.g. to run dynamics simulations.
+
+```jl
 sim = Simulation{Classical}(atoms, pes_model, cell=cell)
 ```
 

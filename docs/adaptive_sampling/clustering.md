@@ -15,7 +15,7 @@ nav_order: 9
 {:toc}
 
 
-## Clustering (Python code)
+# Clustering (Python code)
 
 The database of high-error structures usually contains too many data points. Fortunately, clustering methods, such as k-means, can help to find the most informative data points and add only them to our database. To do that, we prepared a Python notebook, which can be found [in this repository](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_clusters/choosing_datapoints_h2cu111_v0_clean.ipynb). Its contents with an explanation are also 
 included below.
@@ -82,7 +82,7 @@ plt.ylabel("Variance ratio")
 plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black')
 ```
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/h2cu_pca_analysis.png?raw=true" width="400">
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_pca_bar_E_all_v0.png?raw=true" width="400">
 
 
 ```py
