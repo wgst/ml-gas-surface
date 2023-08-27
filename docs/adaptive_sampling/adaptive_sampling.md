@@ -8,8 +8,6 @@ has_toc: false
 ---
 
 # Adaptive sampling
-
-# Navigation Structure
 {: .no_toc }
 
 ## Table of contents
@@ -17,7 +15,8 @@ has_toc: false
 
 - TOC
 {:toc}
-# Adaptive sampling scheme
+
+# Introduction
 The adaptive sampling procedure for gas-surface dynamics is described by [Stark et al.](https://arxiv.org/abs/2305.10873). We will briefly describe the process here, starting with the scheme shown below.
 <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/adaptive_sampling_scheme.png?raw=true" width="500">
 
