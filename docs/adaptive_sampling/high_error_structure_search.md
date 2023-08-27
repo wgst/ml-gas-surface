@@ -5,8 +5,9 @@ parent: Adaptive sampling
 nav_order: 8
 ---
 
-# High-energy structure search (Julia code)
+# High-energy structure search
 {: .no_toc }
+The following section will include Julia-based code.
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -15,15 +16,16 @@ nav_order: 8
 {:toc}
 
 # Introduction
-After training the models, we can finally start searching for high-error structures in our system. An excellent environment to run such simulations is [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl/) within [Julia](https://julialang.org).
+After training the models, we can finally start searching for high-error structures in our system. This is done by running molecular dynamics (MD) trajectories using forces from one of the trained models searching for potential energy surface holes across the trajectories. An excellent environment to run such simulations is [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl/) within [Julia](https://julialang.org).
 
-In order to run the dynamics, we recommend creating the initial conditions (initial positions and velocities) separately. This part is very well explained in the [NQCDynamics.jl documentation](https://nqcd.github.io/NQCDynamics.jl/dev/).
-Our initial conditions scripts for dissociative chemisorption could be also of help ([link1](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/initial_conditions/molecule%2Bsurface/initial_conditions_3x3_6lrs.jl), [link2](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl)).
+In order to run the dynamics, we usually create the initial conditions (initial positions and velocities) separately, in order to be able to access it multiple times, if needed. This part is very well explained in the [NQCDynamics.jl documentation](https://nqcd.github.io/NQCDynamics.jl/dev/).
+Our initial conditions scripts for dissociative chemisorption included in this repository could be also helpful ([link1](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/initial_conditions/molecule%2Bsurface/initial_conditions_3x3_6lrs.jl), [link2](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl)).
 
-Having both the ML models and the initial conditions, we can finally run the high-error structure search. Below we will show an example script, which can also be accessed directly [here](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl).
+Having both the ML-based PES models and a set of initial conditions, we can finally run MD with high-error structure search. Below we will show an example script, which can also be accessed directly [here](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl).
 
+## Importing packages
+First, we import Julia-based and Python-based (PyCall) packages.
 ```jl
-using NNInterfaces
 using NQCDynamics
 using NQCDynamics.InitialConditions.QuantisedDiatomic
 using PyCall
@@ -42,7 +44,11 @@ spk_utils = pyimport("schnetpack.utils")
 spk_interfaces = pyimport("schnetpack.interfaces")
 ```
 
-### Trajectory terminator if H2 is above 'scat_cutoff' or if the distance between H2 is more than 'dist_cutoff'
+## Initial functions/structs
+Next, we define a couple of functions and structs that will allow us to create certain MD callbacks or to analyse our results.
+
+### Trajectory terminator
+Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above 'scat_cutoff' value or if the distance between hydrogens in H<sub>2</sub> is exceeds 'dist_cutoff' value.
 
 ```jl
 mutable struct TrajectoryTerminator
@@ -68,91 +74,9 @@ function (term::TrajectoryTerminator)(u, t, integrator)::Bool
 end
 ```
 
-### Function to compute H-H distance atoms
-
-```jl
-function dh2(p) 
-    norm(p[:,end].-p[:,end-1])  
-end
-```
-
-### Function for removing surface
-
-```jl
-function remove_surface(ase_atoms)
-    n_a = length(ase_atoms)
-    for i in 1:n_a-2
-        ase_atoms.pop(0)
-    end
-    return ase_atoms
-end
-```
-
-### Function for creating ASE object from SchNet model
-
-```jl
-function schnet_model_pes(model_path, cur_atoms)
-    spk_model = spk_utils.load_model(model_path;map_location="cpu")
-    model_args = spk_utils.read_from_json("$(model_path)/args.json")
-    environment_provider = spk_utils.script_utils.settings.get_environment_provider(model_args,device="cpu")
-    calculator = spk_interfaces.SpkCalculator(spk_model, energy="energy", forces="forces", environment_provider=environment_provider)
-    cur_atoms.set_calculator(calculator)
-    model = AdiabaticASEModel(cur_atoms)
-
-    return model
-end
-```
-
-### Function for processing the results
-
-```jl
-function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, model_h2, surface, e_tran, cur_folder, n_atoms_layer)
-    atoms_all = []
-    output_data = []
-    n_scat = 0
-    n_reac = 0
-    n_nondef = 0
-    h2_distance = 0
-    h2_surface_distance = 0
-    scattering = 0
-    reaction = 0
-    non_defined = 0
-
-    db_out = db.connect("$(cur_folder)output_last_str_h2$(surface)_E$(e_tran).db")
-
-    for (n, e) in enumerate(ensemble) # for each traj
-        e = e[:OutputTrajectory]
-        scattering = 0
-        reaction = 0
-        non_defined = 0
-        h2_distance = dh2(NQCDynamics.get_positions(e))
-        top_surface_avg_z = sum(NQCDynamics.get_positions(e)[3,end-Int(n_atoms_layer)-1:end-2])/n_atoms_layer
-        h2_surface_distance = minimum(NQCDynamics.get_positions(e)[3,end-1:end]) - top_surface_avg_z # min H2 z - max Cu z value
-        cur_ase_atoms = NQCDynamics.convert_to_ase_atoms(atoms, NQCDynamics.get_positions(e), cell)
-
-        if h2_surface_distance >= scat_cutoff  # Scattering event
-            n_scat += 1
-            scattering = 1
-        elseif h2_distance >= dist_cutoff            # DC event
-            n_reac += 1
-            reaction = 1
-        else                              # Non-defined category
-            n_nondef += 1
-            non_defined = 1
-        end
-
-        data=Dict()
-        data["surface"] = surface
-        data["scattering"] = scattering
-        data["reaction"] = reaction
-        data["non_defined"] = non_defined
-        db_out.write(cur_ase_atoms, data=data)
-    end
-    return output_data, atoms_all, n_scat, n_reac, n_nondef
-end
-```
-
-### Output the end point of each trajectory.
+### High-error structure saver
+Struct and a function that includes calculating energies using all the models 
+#### HERE CONTINUE
 
 ```jl
 struct OutputTrajectory 
@@ -199,9 +123,78 @@ function (out::OutputTrajectory)(sol, i)
 end
 ```
 
-### Running Ensemble (x_cores) simulation by using the initial conditions
 
-### Setting paths and simulation details
+### Postprocessing
+Function *ensemble_processing* allows 
+
+```jl
+function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, n_atoms_layer)
+    atoms_all = []
+    output_data = []
+    n_scat = 0
+    n_reac = 0
+    n_nondef = 0
+    h2_distance = 0
+    h2_surface_distance = 0
+    scattering = 0
+    reaction = 0
+    non_defined = 0
+
+    db_out = db.connect("$(cur_folder)output_last_str_h2$(surface)_E$(e_tran).db")
+
+    for (n, e) in enumerate(ensemble) # for each traj
+        e = e[:OutputTrajectory]
+        scattering = 0
+        reaction = 0
+        non_defined = 0
+        h2_distance = norm(NQCDynamics.get_positions(e)[:,end].-NQCDynamics.get_positions(e)[:,end-1])
+        top_surface_avg_z = sum(NQCDynamics.get_positions(e)[3,end-Int(n_atoms_layer)-1:end-2])/n_atoms_layer
+        h2_surface_distance = minimum(NQCDynamics.get_positions(e)[3,end-1:end]) - top_surface_avg_z # min H2 z - max Cu z value
+        cur_ase_atoms = NQCDynamics.convert_to_ase_atoms(atoms, NQCDynamics.get_positions(e), cell)
+
+        if h2_surface_distance >= scat_cutoff  # Scattering event
+            n_scat += 1
+            scattering = 1
+        elseif h2_distance >= dist_cutoff            # DC event
+            n_reac += 1
+            reaction = 1
+        else                              # Non-defined category
+            n_nondef += 1
+            non_defined = 1
+        end
+
+        data=Dict()
+        data["surface"] = surface
+        data["scattering"] = scattering
+        data["reaction"] = reaction
+        data["non_defined"] = non_defined
+        db_out.write(cur_ase_atoms, data=data)
+    end
+    return output_data, atoms_all, n_scat, n_reac, n_nondef
+end
+```
+
+
+### Model initializer
+Function for creating an NQCDynamics model object using ASE calculator (here SchNet calculator).
+
+```jl
+function schnet_model_pes(model_path, cur_atoms)
+    spk_model = spk_utils.load_model(model_path;map_location="cpu")
+    model_args = spk_utils.read_from_json("$(model_path)/args.json")
+    environment_provider = spk_utils.script_utils.settings.get_environment_provider(model_args,device="cpu")
+    calculator = spk_interfaces.SpkCalculator(spk_model, energy="energy", forces="forces", environment_provider=environment_provider)
+    cur_atoms.set_calculator(calculator)
+    model = AdiabaticASEModel(cur_atoms)
+
+    return model
+end
+```
+
+
+## Running Ensemble (x_cores) simulation by using the initial conditions
+
+## Setting paths and simulation details
 
 ```jl
 es_tran = [0.200, 0.400, 0.500, 0.600, 0.750, 0.850] # v0
@@ -214,14 +207,14 @@ output_f = "path/to/output/folder/"
 mkpath(output_f)
 ```
 
-#### Setting saving high-error structures for adaptive sampling
+## Setting saving high-error structures for adaptive sampling
 
 ```jl
 save_errors = true # choose if you want to save structures with min error of v_models_error for adaptive sampling 
 v_models_error = 0.025 # minimum error (std) of potential energy predictions made by multiple models, of the structure that will be saved for adaptive sampling
 ```
 
-#### Simulation details
+## Simulation details
 
 ```jl
 height = 7.0 # H height / Ang 
@@ -242,7 +235,7 @@ temp_surf = "925" # temperature of surface
 n_layers_metal = 6
 ```
 
-### Reading initial conditions file
+## Reading initial conditions file
 
 ```jl
 file_name = "Et$(e_tran)_v$(vjs[1])_J$(vjs[2])/distr_Et$(e_tran)_v$(vjs[1])_J$(vjs[2])"
@@ -261,8 +254,8 @@ mkpath(cur_folder)
 n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # if molecule is 2 atoms
 ```
 
-### Setting simulation
-#### LOAD MODELS FOR ADAPTIVE LEARNING PROCEDURE
+## Setting simulation
+### LOAD MODELS FOR ADAPTIVE LEARNING PROCEDURE
 ```jl
 if save_errors == true
     for (i, m) in enumerate(models_mult_paths) # 
@@ -271,14 +264,14 @@ if save_errors == true
 end
 ```
 
-#### LOAD MODELS for MD
+### LOAD MODELS for MD
 
 ```jl
 model = schnet_model_pes(ml_model_f, ase_atoms)
 sim = Simulation{Classical}(atoms, model, cell=cell)
 ```
 
-#### Set trajectory terminator
+### Set trajectory terminator
 
 ```jl
 terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_cutoff, dist_cutoff, slab_outside_max_len, 
@@ -287,7 +280,7 @@ terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_
 terminate_cb = DynamicsUtils.TerminatingCallback(terminator)
 ```
 
-### Running simulation
+## Running simulation
 
 ```jl
 println("Initialize ...  ")
@@ -297,16 +290,14 @@ println("... Running simulation ... ")
                         callback=terminate_cb, ensemble_algorithm=EnsembleDistributed(), saveat=(0.0:austrip(1.0*u"fs"):austrip(max_time_fs*u"fs")))
 ```
 
-### Postprocess
-#### Create new sim just for H2 (for quantise_diatomic)
+## Postprocess
+### Create new sim just for H<sub>2</sub> (for quantise_diatomic)
 
 ```jl
-ase_atoms = remove_surface(ase_atoms)
-model_h2 = schnet_model_pes(ml_model_f, ase_atoms)
-output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, model_h2, surface, e_tran, cur_folder, Int(n_atoms_layer))
+output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, Int(n_atoms_layer))
 ```
 
-#### Calculating dissociation probability:
+### Calculating dissociation probability:
 
 ```jl
 n_traj_sr = n_scat + n_reac
@@ -315,7 +306,7 @@ prob_reac = n_reac/n_traj_sr
 prob_reac_all = n_reac/n_traj_all
 ```
 
-#### Ending simulation and printing external files
+### Ending simulation and printing external files
 
 ```jl
 labels = ["n_scattering: ", "n_reaction: ", "n_nondefined: ", "reaction_probability: ", "reaction_probability_all: "]

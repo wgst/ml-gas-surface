@@ -6,7 +6,6 @@ using PyCall
 using Unitful
 using UnitfulAtomic
 using Statistics
-using NNInterfaces
 using LinearAlgebra
 using JLD2
 using StatsBase: var

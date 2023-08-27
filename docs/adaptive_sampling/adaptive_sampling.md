@@ -21,7 +21,7 @@ The adaptive sampling procedure for gas-surface dynamics is described by [Stark 
 <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/adaptive_sampling_scheme.png?raw=true" width="500">
 
 
-## Initial database
+# Initial database
 
-## Training MLIPs
+# Training MLIPs
 In order to go to the next step of adaptive sampling, we need to train at least 3 MLIPs. Usually, this can be done by just training on different random training-validation-test splits.

@@ -6,7 +6,6 @@ using Unitful
 using UnitfulAtomic
 using Plots
 using Statistics
-using NNInterfaces
 using LinearAlgebra
 using JLD2
 using StatsBase: var

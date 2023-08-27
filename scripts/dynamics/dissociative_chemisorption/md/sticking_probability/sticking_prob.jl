@@ -3,8 +3,6 @@ using Distributed, SlurmClusterManager
 addprocs(SlurmManager())
 
 @everywhere begin
-
-    using NNInterfaces
     using NQCDynamics
     using NQCDynamics.InitialConditions.QuantisedDiatomic
     using PyCall
@@ -85,7 +83,7 @@ end # @everywhere
     """
     Function for processing the results
     """
-    function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, model_h2, surface, e_tran, cur_folder, n_atoms_layer)
+    function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, n_atoms_layer)
         atoms_all = []
         output_data = []
         n_scat = 0
@@ -97,7 +95,6 @@ end # @everywhere
         reaction = 0
         non_defined = 0
 
-        # sim_h2 = Simulation{Classical}(Atoms([:H,:H]), model_h2, cell=cell)
         db_out = db.connect("$(cur_folder)output_last_str_h2$(surface)_E$(e_tran).db")
 
         for (n, e) in enumerate(ensemble) # for each traj
@@ -268,9 +265,7 @@ println("... Running simulation ... ")
 # Collect final output results
 #------------------------------
 # create new sim just for H2 (for quantise_diatomic)
-ase_atoms = remove_surface(ase_atoms)
-model_h2 = schnet_model_pes(ml_model_f, ase_atoms)
-output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, model_h2, surface, e_tran, cur_folder, Int(n_atoms_layer))
+output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, Int(n_atoms_layer))
 
 # Calculating dissociation probability:
 n_traj_sr = n_scat + n_reac

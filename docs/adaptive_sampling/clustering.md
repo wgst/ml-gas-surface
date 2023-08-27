@@ -7,7 +7,7 @@ nav_order: 9
 
 # Clustering
 {: .no_toc }
-The following section includes Python-based code.
+The following section will include Python-based code.
 
 
 ## Table of contents
