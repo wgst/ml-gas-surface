@@ -7,7 +7,7 @@ nav_order: 6
 
 # PaiNN calculator
 
-[PaiNN](https://github.com/atomistic-machine-learning/schnetpack) is one of the most popular equivariant message-passing neural-network-based MLIPs.
+[PaiNN](https://github.com/atomistic-machine-learning/schnetpack) is an equivariant message-passing neural-network-based MLIPs.
 
 Below are the instructions on how to initialize the PaiNN calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
 
