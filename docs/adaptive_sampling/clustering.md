@@ -1,6 +1,6 @@
 ---
 layout: default
-title: High error structure clustering 
+title: Clustering 
 parent: Adaptive sampling
 nav_order: 9
 ---
@@ -20,6 +20,9 @@ The database of high-error structures very often may contain too many data point
 
 {: .warning }
 The following sections will include **Python**-based code.
+
+{: .note }
+The scripts shown below were prepared for H<sub>2</sub> dissociative chemisorption on Cu surface, but could be adjusted for any other system.
 
 # Initialization
 ## Importing packages and loading high-error structures
