@@ -7,7 +7,9 @@ nav_order: 8
 
 # High-energy structure search
 {: .no_toc }
-The following section will include Julia-based code.
+
+{: .warning }
+*The following section will include Julia-based code.*
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -48,7 +50,7 @@ spk_interfaces = pyimport("schnetpack.interfaces")
 Next, we define a couple of functions and structs that will allow us to create certain MD callbacks or to analyse our results.
 
 ### Trajectory terminator
-Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above 'scat_cutoff' value or if the distance between hydrogens in H<sub>2</sub> is exceeds 'dist_cutoff' value.
+Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above *scat_cutoff* value or if the distance between hydrogens in H<sub>2</sub> is exceeds *dist_cutoff* value.
 
 ```jl
 mutable struct TrajectoryTerminator
@@ -230,8 +232,8 @@ traj_num = traj_end - traj_start + 1 # number of trajectories to run
 max_time_fs = 3000 # simulation time / fs
 max_time = max_time_fs*u"fs"
 step = 0.1u"fs" # simulation step
-scat_cutoff = ang_to_au(7.1) # termination condition (h2 height)
-dist_cutoff = ang_to_au(2.25) # termination condition (h2 bond length)
+scat_cutoff = ang_to_au(7.1) # termination condition (H2 height)
+dist_cutoff = ang_to_au(2.25) # termination condition (H2 bond length)
 slab_outside_max_len = ang_to_au(10)
 surface = "cu111" # surface
 e_tran = 0.5 # translational/collision energy in eV
@@ -285,14 +287,14 @@ terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_
 terminate_cb = DynamicsUtils.TerminatingCallback(terminator)
 ```
 
-## Running ensemble MD simulation
+## Running the ensemble MD simulation
 Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using *Ensembles.run_dynamics* function.
 
 {: .note }
 All the trajectories will finish either after reaching the maximum simulation time *max_time_fs* or whenever callback function *terminate_cb* is satisfied.
 
 ```jl
-@time ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, 
+ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, 
                         output=OutputTrajectory(atoms, cell, cur_folder, surface, string(e_tran), models_mult, traj_start, v_models_error, save_errors),
                         callback=terminate_cb, ensemble_algorithm=EnsembleDistributed(), saveat=(0.0:austrip(1.0*u"fs"):austrip(max_time_fs*u"fs")))
 ```
