@@ -75,8 +75,12 @@ end
 ```
 
 ### High-error structure saver
-Struct and a function that includes calculating energies using all the models 
-#### HERE CONTINUE
+Struct *OutputTrajectory* with a function that is executed at the end of every trajectory. It allows calculating energies with all the models from *models_mult* list. After that, error (standard deviation) is calculated and compared to the manually chosen *v_models_error*, which is the minimum error required for the structure to be saved.
+
+If the calculated error is higher than *v_models_error*, the structure is saved to the *db_out* database stored in a specified path.
+
+{: .note }
+In order to save memory, only the last structure is returned by our output function.
 
 ```jl
 struct OutputTrajectory 
@@ -119,13 +123,12 @@ function (out::OutputTrajectory)(sol, i)
         end
     end
 
-    return last(sol.u) # return last trajectory
+    return last(sol.u) # return last structure
 end
 ```
 
-
 ### Postprocessing
-Function *ensemble_processing* allows 
+Function *ensemble_processing* is used after MD simulation is over, to postprocess our simulation data. In this case of simulating dissociative chemisorption of H<sub>2</sub> on Cu surface, we iterate over all the trajectories (last structure of every trajectory), to check whether the trajectory ended up with a scattering of H<sub>2</sub> molecule from the surface or with the reaction (sticking), to be able to calculate sticking probability in further steps.
 
 ```jl
 function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, n_atoms_layer)
@@ -176,7 +179,10 @@ end
 
 
 ### Model initializer
-Function for creating an NQCDynamics model object using ASE calculator (here SchNet calculator).
+Function *schnet_model_pes* is used for creating an NQCDynamics model object utilizing ASE calculator (here SchNet calculator). 
+
+{: .note }
+This function can be replaced with any MLIP that can be accessed through ASE calculator.
 
 ```jl
 function schnet_model_pes(model_path, cur_atoms)
@@ -192,14 +198,11 @@ end
 ```
 
 
-## Running Ensemble (x_cores) simulation by using the initial conditions
+## Simulation settings
 
-## Setting paths and simulation details
+Now, we set all the required paths and we create the output folders.
 
 ```jl
-es_tran = [0.200, 0.400, 0.500, 0.600, 0.750, 0.850] # v0
-#es_tran = [0.200, 0.300, 0.400, 0.500, 0.600, 0.750] # v1
-
 ml_model_f = "path/to/mlip/model"
 icond_f = "path/to/initial/conditions/folder"
 icond_str = "path/to/initial/structures/folder/"
@@ -207,14 +210,17 @@ output_f = "path/to/output/folder/"
 mkpath(output_f)
 ```
 
-## Setting saving high-error structures for adaptive sampling
+We then choose settings for high-error structures saver (adaptive sampling).
 
 ```jl
 save_errors = true # choose if you want to save structures with min error of v_models_error for adaptive sampling 
 v_models_error = 0.025 # minimum error (std) of potential energy predictions made by multiple models, of the structure that will be saved for adaptive sampling
+models_mult = []
+models_mult_paths = [] # this can be done in couple of ways, but e.g. add paths to different models here
+atoms_all = []
 ```
 
-## Simulation details
+Next, we set all the simulation details.
 
 ```jl
 height = 7.0 # H height / Ang 
@@ -227,15 +233,17 @@ step = 0.1u"fs" # simulation step
 scat_cutoff = ang_to_au(7.1) # termination condition (h2 height)
 dist_cutoff = ang_to_au(2.25) # termination condition (h2 bond length)
 slab_outside_max_len = ang_to_au(10)
-
 surface = "cu111" # surface
-e_tran = es_tran[1] # translational/collision energy
+e_tran = 0.5 # translational/collision energy in eV
 vjs = [0,1] # v and J states
 temp_surf = "925" # temperature of surface
 n_layers_metal = 6
+
+cur_folder = "$(output_f)$(surface)/v$(vjs[1])J$(vjs[2])/T$(temp_surf)/"
+mkpath(cur_folder)
 ```
 
-## Reading initial conditions file
+## Reading the initial conditions files
 
 ```jl
 file_name = "Et$(e_tran)_v$(vjs[1])_J$(vjs[2])/distr_Et$(e_tran)_v$(vjs[1])_J$(vjs[2])"
@@ -245,17 +253,13 @@ cell = system["cell"]
 distribution = system["dist"]
 atoms = system["atoms"]
 atoms = NQCDynamics.Atoms(atoms.types)
-atoms_all = []
-models_mult = []
-models_mult_paths = [] # this can be done in couple of ways, but e.g. add paths to different models here
-errors = []
-cur_folder = "$(output_f)$(surface)/v$(vjs[1])J$(vjs[2])/T$(temp_surf)/"
-mkpath(cur_folder)
-n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # if molecule is 2 atoms
+n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # number of atoms in a metal layer (if molecule contains 2 atoms)
 ```
 
-## Setting simulation
-### LOAD MODELS FOR ADAPTIVE LEARNING PROCEDURE
+## Preparing the simulation
+### Loading models
+We first load models for high error structure search (adaptive sampling). To do that, we load all of the models with path included in the *models_mult_paths* list, using previously mentioned *schnet_model_pes* function.
+
 ```jl
 if save_errors == true
     for (i, m) in enumerate(models_mult_paths) # 
@@ -264,7 +268,7 @@ if save_errors == true
 end
 ```
 
-### LOAD MODELS for MD
+Then, we load a model used for MD and we initialize the *Simulation*.
 
 ```jl
 model = schnet_model_pes(ml_model_f, ase_atoms)
@@ -272,6 +276,7 @@ sim = Simulation{Classical}(atoms, model, cell=cell)
 ```
 
 ### Set trajectory terminator
+In order to terminate the trajectories whenever the simulation has reached its goal, we set the terminating callback, which will be executed at every step of the simulation.
 
 ```jl
 terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_cutoff, dist_cutoff, slab_outside_max_len, 
@@ -280,37 +285,33 @@ terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_
 terminate_cb = DynamicsUtils.TerminatingCallback(terminator)
 ```
 
-## Running simulation
+## Running ensemble MD simulation
+Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using *Ensembles.run_dynamics* function.
+
+{: .note }
+All the trajectories will finish either after reaching the maximum simulation time *max_time_fs* or whenever callback function *terminate_cb* is satisfied.
 
 ```jl
-println("Initialize ...  ")
-println("... Running simulation ... ")
 @time ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, 
                         output=OutputTrajectory(atoms, cell, cur_folder, surface, string(e_tran), models_mult, traj_start, v_models_error, save_errors),
                         callback=terminate_cb, ensemble_algorithm=EnsembleDistributed(), saveat=(0.0:austrip(1.0*u"fs"):austrip(max_time_fs*u"fs")))
 ```
 
 ## Postprocess
-### Create new sim just for H<sub>2</sub> (for quantise_diatomic)
+After the simulation is over, we execute the *ensemble_processing* function that allows us to calculate our final reaction (sticking) probability *prob_reac_all*.
 
 ```jl
 output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, Int(n_atoms_layer))
-```
 
-### Calculating dissociation probability:
-
-```jl
-n_traj_sr = n_scat + n_reac
 n_traj_all = n_scat + n_reac + n_nondef
-prob_reac = n_reac/n_traj_sr
 prob_reac_all = n_reac/n_traj_all
 ```
 
-### Ending simulation and printing external files
+We end the simulation by printing the output file containing our final results.
 
 ```jl
-labels = ["n_scattering: ", "n_reaction: ", "n_nondefined: ", "reaction_probability: ", "reaction_probability_all: "]
-results =[n_scat, n_reac, n_nondef, prob_reac, prob_reac_all]
+labels = ["n_scattering: ", "n_reaction: ", "n_nondefined: ", "reaction_probability: "]
+results =[n_scat, n_reac, n_nondef, prob_reac_all]
 writedlm("$(cur_folder)$(surface)_Et$(e_tran)_results_$(traj_start)to$(traj_end).log", zip(labels,results))
 ```
 

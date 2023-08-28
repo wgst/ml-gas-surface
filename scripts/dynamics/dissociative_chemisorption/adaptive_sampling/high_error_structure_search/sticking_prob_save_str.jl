@@ -172,7 +172,7 @@ end # @everywhere
             end
         end
     
-        return last(sol.u) # return last trajectory
+        return last(sol.u) # return last structure
     end
 
 
