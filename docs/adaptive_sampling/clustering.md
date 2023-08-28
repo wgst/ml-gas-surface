@@ -8,10 +8,6 @@ nav_order: 9
 # Clustering
 {: .no_toc }
 
-{: .warning }
-The following section will include **Python**-based code.
-
-
 ## Table of contents
 {: .no_toc .text-delta }
 
@@ -20,10 +16,15 @@ The following section will include **Python**-based code.
 
 
 # Introduction
-The database of high-error structures usually contains too many data points. Fortunately, clustering methods, such as k-means, can help to find the most informative data points and add only them to our database. To do that, we prepared a Python notebook, which can be found [in this repository](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_clusters/choosing_datapoints_h2cu111_v0_clean.ipynb). Its contents with an explanation are also 
-included below.
+The database of high-error structures very often may contain too many data points. Fortunately, clustering methods, such as **k-means**, can help to find the most informative data points and add only them to our database. To do that, we prepared a Python notebook, which can be found [in this repository](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_clusters/choosing_datapoints_h2cu111_v0_clean.ipynb). We additionally share its contents, together with more detailed explanation below.
 
-### Import database with high-error structures
+{: .warning }
+The following sections will include **Python**-based code.
+
+# Initialization
+## Importing packages and loading high-error structures
+
+First, we import needed packages and we read the database that contains high-error structures obtained in MD simulations.
 
 ```py
 import matplotlib
@@ -31,14 +32,16 @@ import matplotlib.pyplot as plt
 from ase.io import write, read
 import numpy as np
 
-db_p = 'output_h2cu111_example.db' # Input db path
-db_out_p = 'h2cu_clust_centr.xyz' # Path for saving cluster centres
+db_p = 'db_name.db' # Input db path
+db_out_p = 'h2cu_clust_centr.xyz' # Path for saving cluster centres structures
 ncluster = 80 # Number of clusters (final structures that will be added to our database)
 # Read all high error structures
 struct_all = read(f'{db_p}@:')
 ```
 
-### Define descriptors (inverse distances)
+## Define descriptors (inverse distances)
+
+Next, we obtain all the distances and we evaluate our descriptors - invert distances.
 
 ```py
 dist_all = []
@@ -67,16 +70,16 @@ invd = invd.reshape(len(dist_all),natoms*natoms)
 invd_reduced = invd_reduced.reshape(len(dist_all),-1)
 descr = invd_reduced
 ```
+# Dimension reduction (PCA)
+In this optional step, we reduce number of dimensionos (here descriptors) using principal component analysis (PCA), for efficiency and better descriptiveness of our results. 
 
-### Use PCA for dimension reduction (optional)
+We start with creating 10 PCA components, based on our descriptors and we plot the variance ratio associated with all the components.
 
 ```py
 from sklearn.decomposition import PCA
 
 pca = PCA(n_components=10)
 pca.fit(descr)
-print(pca.explained_variance_ratio_)
-print(pca.singular_values_)
 X_new = pca.transform(descr)
 
 plt.xlabel("PCA components")
@@ -87,9 +90,15 @@ plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black')
 
 <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_pca_bar_E_all_v0.png?raw=true" width="400">
 
+Variance ratio of the two first components seems to contribute significantly more than other components, which is why in the following code we will continue with using just two first PCA components (PC1 and PC2) as our descripors.
 
 ```py
 descr = X_new[:,:2]
+```
+
+Below, we plot the distribution of our high-error structures within PC1 and PC2.
+
+```py
 fig, ax = plt.subplots(1, 1)
 
 ax.scatter(descr[:,0], descr[:,1], edgecolors='white', linewidths=0.4, label="datapoints", alpha=0.8)
@@ -103,6 +112,9 @@ plt.show()
 ```
 
 <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PCA_h2cu111_E_all_v0.png?raw=true" width="500">
+
+# Clustering
+After establishing the proper descriptors, we finally begin clustering using k-means.
 
 ```py
 from sklearn.cluster import MiniBatchKMeans
@@ -119,7 +131,8 @@ km = kmeans.fit(np.array(descr).reshape(-1,1))
 indices = km.fit_predict(descr)
 ```
 
-### Finding centers of clusters
+## Finding centers of clusters
+In order to find the most diverse structures, we search for the centers of the established clusters and we save the structures within the clusters that lie the closest to these centers.
 
 ```py
 from sklearn.metrics.pairwise import pairwise_distances_argmin
@@ -127,7 +140,6 @@ from sklearn.metrics.pairwise import pairwise_distances_argmin
 centroid = kmeans.cluster_centers_
 b = np.inf
 ind = pairwise_distances_argmin(centroid, descr)
-print(ind)
 
 geometries = []
 X_centers = []
@@ -145,7 +157,7 @@ H2_centers = np.array(H2_centers)
 X_centers = np.array(X_centers)
 ```
 
-### Plotting the final centers within PCs
+We can now visualize the final clusters and centers within PCs.
 
 ```py
 fig, ax = plt.subplots(1, 1)
@@ -163,10 +175,9 @@ plt.show()
 ```
 <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_PC1PC2_h2cu111_E_all_v0.png?raw=true" width="500">
 
-### Plotting centers of clusters within H-H and H1-Cu distances
+Similarly, we can also plot the clusters with the specified centers within the actual physical variables. Here, the H-H and H1-Cu distances.
 
 ```py
-
 fig, ax = plt.subplots(1, 1)
 
 ax.scatter(H2_dist[:,0], H2_dist[:,1],c=indices,edgecolors='white', linewidths=0.4, label="datapoints", alpha=0.8)

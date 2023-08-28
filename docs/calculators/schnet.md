@@ -11,6 +11,8 @@ nav_order: 5
 
 Below are the instructions on how to initialize the SchNet calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
 
+{: .warning }
+The following instructions will include **Julia**-based code.
 
 We start with importing NQCDynamics.jl packages and PyCall that allows importing python-based packages.
 
@@ -53,7 +55,7 @@ sim = Simulation{Classical}(atoms, pes_model, cell=cell)
 ```
 
 
-## References
+# References
 
 [K. Schütt and P.-J. Kindermans and F. Sauceda, E. Huziel and S. Chmiela and A. Tkatchenko and K.-R. Müller, SchNet: A continuous-filter convolutional neural network for modeling quantum interactions, NeurIPS 2017](https://proceedings.neurips.cc/paper/2017/hash/303ed4c69846ab36c2904d3ba8573050-Abstract.html)
 

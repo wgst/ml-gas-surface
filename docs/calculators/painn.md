@@ -11,6 +11,8 @@ nav_order: 6
 
 Below are the instructions on how to initialize the PaiNN calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
 
+{: .warning }
+The following instructions will include **Julia**-based code.
 
 We start with importing NQCDynamics.jl packages and PyCall that allows importing python-based packages.
 

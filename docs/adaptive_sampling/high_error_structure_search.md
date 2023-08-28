@@ -8,9 +8,6 @@ nav_order: 8
 # High-energy structure search
 {: .no_toc }
 
-{: .warning }
-The following section will include **Julia**-based code.
-
 ## Table of contents
 {: .no_toc .text-delta }
 
@@ -24,6 +21,9 @@ In order to run the dynamics, we usually create the initial conditions (initial 
 Our initial conditions scripts for dissociative chemisorption included in this repository could be also helpful ([link1](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/initial_conditions/molecule%2Bsurface/initial_conditions_3x3_6lrs.jl), [link2](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl)).
 
 Having both the ML-based PES models and a set of initial conditions, we can finally run MD with high-error structure search. Below we will show an example script, which can also be accessed directly [here](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl).
+
+{: .warning }
+The following sections will include **Julia**-based code.
 
 ## Importing packages
 First, we import Julia-based and Python-based (PyCall) packages.
