@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Clustering 
+title: Structure selection 
 parent: Adaptive sampling
 nav_order: 9
 ---
