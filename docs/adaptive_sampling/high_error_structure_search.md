@@ -9,7 +9,7 @@ nav_order: 8
 {: .no_toc }
 
 {: .warning }
-*The following section will include Julia-based code.*
+The following section will include **Julia**-based code.
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -46,11 +46,11 @@ spk_utils = pyimport("schnetpack.utils")
 spk_interfaces = pyimport("schnetpack.interfaces")
 ```
 
-## Initial functions/structs
-Next, we define a couple of functions and structs that will allow us to create certain MD callbacks or to analyse our results.
+## Initial structures and functions
+Next, we define a couple of functions and structures that will allow us to create certain MD callbacks or to analyse our results.
 
 ### Trajectory terminator
-Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above *scat_cutoff* value or if the distance between hydrogens in H<sub>2</sub> is exceeds *dist_cutoff* value.
+Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above **scat_cutoff** value or if the distance between hydrogens in H<sub>2</sub> is exceeds **dist_cutoff** value.
 
 ```jl
 mutable struct TrajectoryTerminator
@@ -77,9 +77,9 @@ end
 ```
 
 ### High-error structure saver
-Struct *OutputTrajectory* with a function that is executed at the end of every trajectory. It allows calculating energies with all the models from *models_mult* list. After that, error (standard deviation) is calculated and compared to the manually chosen *v_models_error*, which is the minimum error required for the structure to be saved.
+Struct **OutputTrajectory** with a function that is executed at the end of every trajectory. It allows calculating energies with all the models from **models_mult** list. After that, error (standard deviation) is calculated and compared to the manually chosen **v_models_error**, which is the minimum error required for the structure to be saved.
 
-If the calculated error is higher than *v_models_error*, the structure is saved to the *db_out* database stored in a specified path.
+If the calculated error is higher than **v_models_error**, the structure is saved to the **db_out** database stored in a specified path.
 
 {: .note }
 In order to save memory, only the last structure is returned by our output function.
@@ -130,7 +130,7 @@ end
 ```
 
 ### Postprocessing
-Function *ensemble_processing* is used after MD simulation is over, to postprocess our simulation data. In this case of simulating dissociative chemisorption of H<sub>2</sub> on Cu surface, we iterate over all the trajectories (last structure of every trajectory), to check whether the trajectory ended up with a scattering of H<sub>2</sub> molecule from the surface or with the reaction (sticking), to be able to calculate sticking probability in further steps.
+Function **ensemble_processing** is used after MD simulation is over, to postprocess our simulation data. In this case of simulating dissociative chemisorption of H<sub>2</sub> on Cu surface, we iterate over all the trajectories (last structure of every trajectory), to check whether the trajectory ended up with a scattering of H<sub>2</sub> molecule from the surface or with the reaction (sticking), to be able to calculate sticking probability in further steps.
 
 ```jl
 function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, n_atoms_layer)
@@ -181,7 +181,7 @@ end
 
 
 ### Model initializer
-Function *schnet_model_pes* is used for creating an NQCDynamics model object utilizing ASE calculator (here SchNet calculator). 
+Function **schnet_model_pes** is used for creating an NQCDynamics model object utilizing ASE calculator (here SchNet calculator). 
 
 {: .note }
 This function can be replaced with any MLIP that can be accessed through ASE calculator.
@@ -260,7 +260,7 @@ n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # number of atoms in a meta
 
 ## Preparing the simulation
 ### Loading models
-We first load models for high error structure search (adaptive sampling). To do that, we load all of the models with path included in the *models_mult_paths* list, using previously mentioned *schnet_model_pes* function.
+We first load models for high error structure search (adaptive sampling). To do that, we load all of the models with path included in the **models_mult_paths** list, using previously mentioned **schnet_model_pes** function.
 
 ```jl
 if save_errors == true
@@ -270,7 +270,7 @@ if save_errors == true
 end
 ```
 
-Then, we load a model used for MD and we initialize the *Simulation*.
+Then, we load a model used for MD and we initialize the **Simulation**.
 
 ```jl
 model = schnet_model_pes(ml_model_f, ase_atoms)
@@ -288,10 +288,10 @@ terminate_cb = DynamicsUtils.TerminatingCallback(terminator)
 ```
 
 ## Running the ensemble MD simulation
-Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using *Ensembles.run_dynamics* function.
+Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using **Ensembles.run_dynamics** function.
 
 {: .note }
-All the trajectories will finish either after reaching the maximum simulation time *max_time_fs* or whenever callback function *terminate_cb* is satisfied.
+All the trajectories will finish either after reaching the maximum simulation time **max_time_fs** or whenever callback function **terminate_cb** is satisfied.
 
 ```jl
 ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, 
@@ -300,7 +300,7 @@ ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=
 ```
 
 ## Postprocess
-After the simulation is over, we execute the *ensemble_processing* function that allows us to calculate our final reaction (sticking) probability *prob_reac_all*.
+After the simulation is over, we execute the **ensemble_processing** function that allows us to calculate our final reaction (sticking) probability **prob_reac_all**.
 
 ```jl
 output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, Int(n_atoms_layer))

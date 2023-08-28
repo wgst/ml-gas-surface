@@ -9,7 +9,7 @@ nav_order: 9
 {: .no_toc }
 
 {: .warning }
-*The following section will include Python-based code.*
+The following section will include **Python**-based code.
 
 
 ## Table of contents
