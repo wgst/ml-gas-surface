@@ -5,7 +5,7 @@ parent: Adaptive sampling
 nav_order: 9
 ---
 
-# Clustering
+# Structure selection
 {: .no_toc }
 
 ## Table of contents
