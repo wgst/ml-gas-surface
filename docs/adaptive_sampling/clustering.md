@@ -91,7 +91,7 @@ plt.ylabel("Variance ratio")
 plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black')
 ```
 
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_pca_bar_E_all_v0.png?raw=true" width="450">
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_pca_bar_E_all_v0.png?raw=true" width="500">
 
 The variance ratio of the two first components seems to contribute significantly more than other components, which is why in the following code we will continue with using just two first PCA components (PC1 and PC2) as our descriptors.
 
