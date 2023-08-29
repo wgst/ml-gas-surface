@@ -18,7 +18,7 @@ has_toc: false
 
 # Introduction
 The adaptive sampling procedure for gas-surface dynamics described below is based on [Stark et al.](https://arxiv.org/abs/2305.10873) approach. The scheme for the adaptive sampling procedure is shown below.
-<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/adaptive_sampling_scheme.png?raw=true" width="500">
+<img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/adaptive_sampling_scheme.png?raw=true" width="400">
 
 # Initial database
 The entire process of building a database for ML-based interatomic potentials (MLIPs) starts with generating initial database. This is usually done by running several *ab initio* molecular dynamics (AIMD) trajectories with different settings/systems. For example, [Stark et al.](https://arxiv.org/abs/2305.10873) start with running AIMD trajectories in different temperatures and for 4 different Cu facets.
