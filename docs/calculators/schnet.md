@@ -14,7 +14,7 @@ Below are the instructions on how to initialize the SchNet calculator, to run dy
 {: .warning }
 The following instructions will include **Julia**-based code.
 
-We start with importing NQCDynamics.jl packages and PyCall that allows importing python-based packages.
+We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages.
 
 ```jl
 using NQCDynamics
@@ -27,7 +27,7 @@ spk_utils = pyimport("schnetpack.utils")
 spk_interfaces = pyimport("schnetpack.interfaces")
 ```
 
-Now, we specify paths to the model and atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
+Now, we specify paths to the model and atoms objects. Then we read the ASE Atoms object and we convert it to NQCDynamics object.
 
 ```jl
 pes_model_path = "path/to/schnet/model/best_model"

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: High error structure search
+title: High-error structure search
 parent: Adaptive sampling
 nav_order: 8
 ---
@@ -20,7 +20,7 @@ After training the models, we can finally start searching for high-error structu
 In order to run the dynamics, we usually create the initial conditions (initial positions and velocities) separately, in order to be able to access it multiple times, if needed. This part is very well explained in the [NQCDynamics.jl documentation](https://nqcd.github.io/NQCDynamics.jl/dev/).
 Our initial conditions scripts for dissociative chemisorption included in this repository could be also helpful ([link1](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/initial_conditions/molecule%2Bsurface/initial_conditions_3x3_6lrs.jl), [link2](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl)).
 
-Having both the ML-based PES models and a set of initial conditions, we can finally run MD with high-error structure search. Below we will show an example script, which can also be accessed directly [here](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl).
+Having both the ML-based PES models and a set of initial conditions, we can finally run MD with a high-error structure search. Below we will show an example script, which can also be accessed directly [here](https://github.com/wgst/ml-gas-surface/blob/main/scripts/dynamics/dissociative_chemisorption/adaptive_sampling/high_error_structure_search/sticking_prob_save_str.jl).
 
 {: .warning }
 The following sections will include **Julia**-based code.
@@ -47,10 +47,10 @@ spk_interfaces = pyimport("schnetpack.interfaces")
 ```
 
 ## Initial structures and functions
-Next, we define a couple of functions and structures that will allow us to create certain MD callbacks or to analyse our results.
+Next, we define a couple of functions and structures that will allow us to create certain MD callbacks or to analyze our results.
 
 ### Trajectory terminator
-Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above **scat_cutoff** value or if the distance between hydrogens in H<sub>2</sub> is exceeds **dist_cutoff** value.
+Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H<sub>2</sub> is above **scat_cutoff** value or if the distance between hydrogens in H<sub>2</sub> exceeds **dist_cutoff** value.
 
 ```jl
 mutable struct TrajectoryTerminator
@@ -77,7 +77,7 @@ end
 ```
 
 ### High-error structure saver
-Struct **OutputTrajectory** with a function that is executed at the end of every trajectory. It allows calculating energies with all the models from **models_mult** list. After that, error (standard deviation) is calculated and compared to the manually chosen **v_models_error**, which is the minimum error required for the structure to be saved.
+Structure **OutputTrajectory** with a function that is executed at the end of every trajectory. It allows calculating energies with all the models from the **models_mult** list. After that, the error (standard deviation) is calculated and compared to the manually chosen **v_models_error**, which is the minimum error required for the structure to be saved.
 
 If the calculated error is higher than **v_models_error**, the structure is saved to the **db_out** database stored in a specified path.
 
@@ -130,7 +130,7 @@ end
 ```
 
 ### Postprocessing
-Function **ensemble_processing** is used after MD simulation is over, to postprocess our simulation data. In this case of simulating dissociative chemisorption of H<sub>2</sub> on Cu surface, we iterate over all the trajectories (last structure of every trajectory), to check whether the trajectory ended up with a scattering of H<sub>2</sub> molecule from the surface or with the reaction (sticking), to be able to calculate sticking probability in further steps.
+Function **ensemble_processing** is used after MD simulation is over, to postprocess our simulation data. In this case of simulating dissociative chemisorption of H<sub>2</sub> on Cu surface, we iterate over all the trajectories (the last structure of every trajectory), to check whether the trajectory ended up with a scattering of H<sub>2</sub> molecule from the surface or with the reaction (sticking), to be able to calculate sticking probability in further steps.
 
 ```jl
 function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, n_atoms_layer)
@@ -181,10 +181,10 @@ end
 
 
 ### Model initializer
-Function **schnet_model_pes** is used for creating an NQCDynamics model object utilizing ASE calculator (here SchNet calculator). 
+Function **schnet_model_pes** is used for creating an NQCDynamics model object utilizing the ASE calculator (here SchNet calculator). 
 
 {: .note }
-This function can be replaced with any MLIP that can be accessed through ASE calculator.
+This function can be replaced with any MLIP that can be accessed through the ASE calculator.
 
 ```jl
 function schnet_model_pes(model_path, cur_atoms)
@@ -218,7 +218,7 @@ We then choose settings for high-error structures saver (adaptive sampling).
 save_errors = true # choose if you want to save structures with min error of v_models_error for adaptive sampling 
 v_models_error = 0.025 # minimum error (std) of potential energy predictions made by multiple models, of the structure that will be saved for adaptive sampling
 models_mult = []
-models_mult_paths = [] # this can be done in couple of ways, but e.g. add paths to different models here
+models_mult_paths = [] # this can be done in a couple of ways, but e.g. add paths to different models here
 atoms_all = []
 ```
 
@@ -255,12 +255,12 @@ cell = system["cell"]
 distribution = system["dist"]
 atoms = system["atoms"]
 atoms = NQCDynamics.Atoms(atoms.types)
-n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # number of atoms in a metal layer (if molecule contains 2 atoms)
+n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # number of atoms in a metal layer (if the molecule contains 2 atoms)
 ```
 
 ## Preparing the simulation
 ### Loading models
-We first load models for high error structure search (adaptive sampling). To do that, we load all of the models with path included in the **models_mult_paths** list, using previously mentioned **schnet_model_pes** function.
+We first load models for high error structure search (adaptive sampling). To do that, we load all of the models with paths included in the **models_mult_paths** list, using the previously mentioned **schnet_model_pes** function.
 
 ```jl
 if save_errors == true
@@ -288,10 +288,10 @@ terminate_cb = DynamicsUtils.TerminatingCallback(terminator)
 ```
 
 ## Running the ensemble MD simulation
-Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using **Ensembles.run_dynamics** function.
+Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using the **Ensembles.run_dynamics** function.
 
 {: .note }
-All the trajectories will finish either after reaching the maximum simulation time **max_time_fs** or whenever callback function **terminate_cb** is satisfied.
+All the trajectories will finish either after reaching the maximum simulation time **max_time_fs** or whenever the callback function **terminate_cb** is satisfied.
 
 ```jl
 ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, 

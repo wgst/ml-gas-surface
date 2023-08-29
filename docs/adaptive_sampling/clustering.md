@@ -22,7 +22,7 @@ The database of high-error structures very often may contain too many data point
 The following sections will include **Python**-based code.
 
 {: .note }
-The scripts shown below were prepared for H<sub>2</sub> dissociative chemisorption on Cu surface, but could be adjusted for any other system.
+The scripts shown below were prepared for H<sub>2</sub> dissociative chemisorption on Cu surface but could be adjusted for any other system.
 
 # Initialization
 ## Importing packages and loading high-error structures
@@ -38,7 +38,7 @@ import numpy as np
 db_p = 'db_name.db' # Input db path
 db_out_p = 'h2cu_clust_centr.xyz' # Path for saving cluster centres structures
 ncluster = 80 # Number of clusters (final structures that will be added to our database)
-# Read all high error structures
+# Read all high-error structures
 struct_all = read(f'{db_p}@:')
 ```
 
@@ -74,7 +74,7 @@ invd_reduced = invd_reduced.reshape(len(dist_all),-1)
 descr = invd_reduced
 ```
 # Dimension reduction (PCA)
-In this optional step, we reduce number of dimensionos (here descriptors) using principal component analysis (PCA), for efficiency and better descriptiveness of our results. 
+In this optional step, we reduce the number of dimensions (here descriptors) using principal component analysis (PCA), for efficiency and better descriptiveness of our results. 
 
 We start with creating 10 PCA components, based on our descriptors and we plot the variance ratio associated with all the components.
 
@@ -93,7 +93,7 @@ plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black')
 
 <img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/plot_pca_bar_E_all_v0.png?raw=true" width="400">
 
-Variance ratio of the two first components seems to contribute significantly more than other components, which is why in the following code we will continue with using just two first PCA components (PC1 and PC2) as our descripors.
+The variance ratio of the two first components seems to contribute significantly more than other components, which is why in the following code we will continue with using just two first PCA components (PC1 and PC2) as our descriptors.
 
 ```py
 descr = X_new[:,:2]

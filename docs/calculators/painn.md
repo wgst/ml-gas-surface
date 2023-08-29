@@ -14,7 +14,7 @@ Below are the instructions on how to initialize the PaiNN calculator, to run dyn
 {: .warning }
 The following instructions will include **Julia**-based code.
 
-We start with importing NQCDynamics.jl packages and PyCall that allows importing python-based packages.
+We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages.
 
 ```jl
 using NQCDynamics
@@ -29,10 +29,10 @@ torch = pyimport("torch")
 ```
 
 
-Now, we specify the cutoff distance, paths to the model and atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
+Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
 
 ```jl
-cutoff = 4.0  # Angstrom (units used in model)
+cutoff = 4.0  # Angstrom (units used in the model)
 pes_model_path = "path/to/painn/model/best_inference_model"
 atoms_path = "path/to/atoms.xyz"
 ase_atoms = io.read(atoms_path)
