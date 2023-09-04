@@ -18,7 +18,7 @@ W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R.
 	year = {2023},
 	publisher = {arXiv},
 	note = {arXiv:2305.10873 [physics]},
-  doi = {10.48550/arXiv.2305.10873},
+	doi = {10.48550/arXiv.2305.10873},
 	url = {http://arxiv.org/abs/2305.10873}
 }
 ```
