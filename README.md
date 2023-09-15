@@ -23,7 +23,7 @@ W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R.
 }
 ```
 
-J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [[arXiv]](https://arxiv.org/abs/2202.12925) [[DOI]](https://doi.org/10.1063/5.0089436)
+J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [[arXiv]](https://arxiv.org/abs/2202.12925) [[journal]](https://doi.org/10.1063/5.0089436)
 
 ```text
 @article{gardner_nqcdynamicsjl_2022,
