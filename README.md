@@ -9,7 +9,7 @@ Instructions and scripts for growing machine learning interatomic potentials (ML
 ## References
 **If you found the scripts and/or tutorial helpful, please cite the following references:**
 
-W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for gas-surface dynamics based on iterative refinement and error control of dynamic reaction probabilities, arXiv:2305.10873 [[arxiv]](https://arxiv.org/abs/2305.10873)
+W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for gas-surface dynamics based on iterative refinement and error control of dynamic reaction probabilities, arXiv:2305.10873 [[arXiv]](https://arxiv.org/abs/2305.10873)
 
 ```text
 @misc{stark_machine_2023,
@@ -23,7 +23,7 @@ W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R.
 }
 ```
 
-J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [[DOI]](https://doi.org/10.1063/5.0089436)
+J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [[arXiv]](https://arxiv.org/abs/2202.12925) [[DOI]](https://doi.org/10.1063/5.0089436)
 
 ```text
 @article{gardner_nqcdynamicsjl_2022,
