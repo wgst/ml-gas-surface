@@ -16,16 +16,15 @@ Here, you can find instructions on how to:
 # References
 **If you found this tutorial helpful, please cite the following reference:**
 
-W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for gas-surface dynamics based on iterative refinement and error control of dynamic reaction probabilities, arXiv:2305.10873 [[arxiv]](https://arxiv.org/abs/2305.10873)
+W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, arXiv:2305.10873 [[arxiv]](https://arxiv.org/abs/2305.10873) [[journal]](https://pubs.acs.org/doi/10.1021/acs.jpcc.3c06648)
 
 ```text
 @misc{stark_machine_2023,
-	title = {Machine learning interatomic potentials for gas-surface dynamics based on iterative refinement and error control of dynamic reaction probabilities},
+	title = {Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities},
 	author = {Stark, Wojciech G. and Westermayr, Julia and Douglas-Gallardo, Oscar A. and Gardner, James and Habershon, Scott and Maurer, Reinhard J.},
 	year = {2023},
-	publisher = {arXiv},
-	note = {arXiv:2305.10873 [physics]},
-    doi = {10.48550/arXiv.2305.10873},
-	url = {http://arxiv.org/abs/2305.10873}
+	publisher = {J. Phys. Chem. C},
+	doi = {10.1021/acs.jpcc.3c06648}, 
+	url = {https://doi.org/10.1021/acs.jpcc.3c06648}
 }
 ```
