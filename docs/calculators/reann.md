@@ -61,4 +61,6 @@ sim = Simulation{Classical}(atoms, pes_model, cell=cell)
 
 ## References
 
-[K. Schütt, O. Unke, M. Gastegger, Equivariant message passing for the prediction of tensorial properties and molecular spectra, PMLR 2021](https://proceedings.mlr.press/v139/schutt21a.html)
+[Y. Zhang, C. Hu, B. Jiang, Embedded Atom Neural Network Potentials: Efficient and Accurate Machine Learning with a Physically Inspired Representation, J. Phys. Chem. Lett. 10, 4962−4967, 2019](http://dx.doi.org/10.1021/acs.jpclett.9b02037)
+
+[Y. Zhang, J. Xia, B. Jiang, Physically motivated recursively embedded atom neural networks: incorporating local completeness and nonlocality, Phys. Rev. Lett. 127, 156002, 2021](https://doi.org/10.1103/PhysRevLett.127.156002)

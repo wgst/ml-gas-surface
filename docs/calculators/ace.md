@@ -66,4 +66,5 @@ sim = Simulation{Classical}(atoms, pes_model, cell=cell)
 
 ## References
 
-[K. Schütt, O. Unke, M. Gastegger, Equivariant message passing for the prediction of tensorial properties and molecular spectra, PMLR 2021](https://proceedings.mlr.press/v139/schutt21a.html)
+[R. Drautz, Atomic cluster expansion for accurate and transferable interatomic potentials, Phys. Rev. B Condens. Matter. 99, 014104, 2019](https://doi.org/10.1103/PhysRevB.99.014104)
+[G. Dusson, M. Bachmayr, G. Csanyi, S. Etter, C. van der Oord, and C. Ortner, ACEpotentials.jl: A Julia implementation of the atomic cluster expansion, J. Chem. Phys. 159, 164101, 2023](https://doi.org/10.1063/5.0158783)
