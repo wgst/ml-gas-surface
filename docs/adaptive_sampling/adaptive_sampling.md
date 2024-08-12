@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Adaptive sampling
-nav_order: 7
+nav_order: 10
 has_children: true
 permalink: /docs/adaptive_sampling
 has_toc: false

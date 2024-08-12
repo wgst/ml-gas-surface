@@ -2,7 +2,7 @@
 layout: default
 title: High-error structure search
 parent: Adaptive sampling
-nav_order: 8
+nav_order: 11
 ---
 
 # High-energy structure search

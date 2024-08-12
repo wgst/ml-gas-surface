@@ -7,7 +7,7 @@ nav_order: 5
 
 # SchNet calculator
 
-[SchNet](https://github.com/atomistic-machine-learning/schnetpack) is one of the most popular message-passing neural-network-based MLIPs.
+[SchNet](https://github.com/atomistic-machine-learning/schnetpack) is one of the most popular message-passing neural-network-based MLIP.
 
 Below are the instructions on how to initialize the SchNet calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
 
@@ -44,7 +44,7 @@ model_args = spk_utils.read_from_json("$(pes_model_path)/args.json")
 environment_provider = spk_utils.script_utils.settings.get_environment_provider(model_args,device="cpu")
 calculator = spk_interfaces.SpkCalculator(spk_model, energy="energy", forces="forces", environment_provider=environment_provider)
 ase_atoms.set_calculator(calculator)
-model = AdiabaticASEModel(ase_atoms)
+pes_model = AdiabaticASEModel(ase_atoms)
 ```
 
 

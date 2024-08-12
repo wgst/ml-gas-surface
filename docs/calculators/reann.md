@@ -1,15 +1,15 @@
 ---
 layout: default
-title: PaiNN
+title: REANN
 parent: MLIP calculators
-nav_order: 6
+nav_order: 7
 ---
 
-# PaiNN calculator
+# REANN calculator
 
-[PaiNN](https://github.com/atomistic-machine-learning/schnetpack) is an equivariant message-passing neural-network-based MLIP.
+[REANN](https://github.com/zhangylch/REANN) (recursively embedded atom neural network) is a message-passing neural-network-based MLIP.
 
-Below are the instructions on how to initialize the PaiNN calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
+Below are the instructions on how to initialize the REANN calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
 
 {: .warning }
 The following instructions will include **Julia**-based code.
@@ -23,33 +23,31 @@ using NQCModels
 
 # Importing Python modules with PyCall
 io = pyimport("ase.io")
-spk_ase_interface = pyimport("schnetpack.interfaces.ase_interface")
-spk_transform = pyimport("schnetpack.transform")
+reann = pyimport("ase.calculators.reann")
 ```
 
 
 Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
 
 ```jl
-cutoff = 4.0  # Angstrom (units used in the model)
-pes_model_path = "path/to/painn/model/best_inference_model"
+pes_model_path = "path/to/reann/model/REANN_PES_DOUBLE.pt"
 atoms_path = "path/to/atoms.xyz"
 ase_atoms = io.read(atoms_path)
 atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms)
 ```
 
 
-We then set up our PaiNN calculator and create NQCModels [AdiabaticASEModel](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCModels/adiabaticmodels/#NQCModels.AdiabaticModels.AdiabaticASEModel) object that includes the model.
+We then set up our REANN calculator and create NQCModels [AdiabaticASEModel](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCModels/adiabaticmodels/#NQCModels.AdiabaticModels.AdiabaticASEModel) object that includes the model.
 
 ```jl
-calculator = spk_ase_interface.SpkCalculator(
-    model_file=pes_model_path,
-    stress_key="stress",
-    neighbor_list=spk_transform.ASENeighborList(cutoff=cutoff),
-    energy_unit="eV",
-    forces_units="eV/Angstrom",
-    stress_units="eV/Ang/Ang/Ang"
-)
+atomtype = ["Cu","H"]
+period = [1,1,1]
+
+calculator = reann.REANN(
+    device="cpu", 
+    atomtype=atomtype, 
+    period=period, 
+    nn=pes_model_path)
 ase_atoms.set_calculator(calculator)
 pes_model = AdiabaticASEModel(ase_atoms)
 ```

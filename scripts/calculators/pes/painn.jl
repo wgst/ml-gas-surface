@@ -4,17 +4,21 @@ using NQCModels
 
 # Importing Python modules with PyCall
 io = pyimport("ase.io")
-spk_interfaces = pyimport("schnetpack.interfaces")
+spk_ase_interface = pyimport("schnetpack.interfaces.ase_interface")
 spk_transform = pyimport("schnetpack.transform")
-torch = pyimport("torch")
 
 """
-Function for creating ASE object from SchNet model
+Function for creating ASE object from PaiNN model (SchNetPack 2.0)
 """
 function painn_model_pes(model_path, cur_atoms, cutoff)
-    best_model = torch.load(model_path,map_location=torch.device("cpu") ).to("cpu")
-    converter = spk_interfaces.AtomsConverter(neighbor_list=spk_transform.ASENeighborList(cutoff=cutoff), dtype=torch.float32)
-    calculator = spk_interfaces.SpkCalculator(model=best_model, converter=converter, energy_units="eV", forces_units="eV/Angstrom")
+    calculator = spk_ase_interface.SpkCalculator(
+        model_file=model_path,
+        stress_key="stress",
+        neighbor_list=spk_transform.ASENeighborList(cutoff=cutoff),
+        energy_unit="eV",
+        forces_units="eV/Angstrom",
+        stress_units="eV/Ang/Ang/Ang"
+    )
     cur_atoms.set_calculator(calculator)
     model = AdiabaticASEModel(cur_atoms)
 

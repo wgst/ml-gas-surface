@@ -2,7 +2,7 @@
 layout: default
 title: Structure selection 
 parent: Adaptive sampling
-nav_order: 9
+nav_order: 12
 ---
 
 # Structure selection
