@@ -1,0 +1,82 @@
+#=======================================================
+# FHI-aims file: /home/chem/msrmnk/1_calculations/1_H_on_metals/5_ml_models/1_schnet/1_h2cu/7_adaptive_learning/1_julia_scripts/1_initial_conditions/output/1_scattering/cu100_start.in
+# Created using the Atomic Simulation Environment (ASE)
+# Tue Jan 25 22:45:53 2022
+#=======================================================
+lattice_vector 7.7487589500000000 0.0000000000000000 0.0000000000000000 
+lattice_vector 0.0000000000000000 7.7487589500000000 0.0000000000000000 
+lattice_vector 0.0000000000000000 0.0000000000000000 49.1319999999999979 
+atom       1.29145983      1.29145983      0.00000000 Cu
+  constrain_relaxation .true.
+atom       3.87437948      1.29145983      0.00000000 Cu
+  constrain_relaxation .true.
+atom       6.45729913      1.29145983      0.00000000 Cu
+  constrain_relaxation .true.
+atom       1.29145983      3.87437948      0.00000000 Cu
+  constrain_relaxation .true.
+atom       3.87437948      3.87437948      0.00000000 Cu
+  constrain_relaxation .true.
+atom       6.45729913      3.87437948      0.00000000 Cu
+  constrain_relaxation .true.
+atom       1.29145983      6.45729913      0.00000000 Cu
+  constrain_relaxation .true.
+atom       3.87437948      6.45729913      0.00000000 Cu
+  constrain_relaxation .true.
+atom       6.45729913      6.45729913      0.00000000 Cu
+  constrain_relaxation .true.
+atom       0.00000000      0.00000000      1.82640000 Cu
+  constrain_relaxation .true.
+atom       2.58291965      0.00000000      1.82640000 Cu
+  constrain_relaxation .true.
+atom       5.16583930      0.00000000      1.82640000 Cu
+  constrain_relaxation .true.
+atom       0.00000000      2.58291965      1.82640000 Cu
+  constrain_relaxation .true.
+atom       2.58291965      2.58291965      1.82640000 Cu
+  constrain_relaxation .true.
+atom       5.16583930      2.58291965      1.82640000 Cu
+  constrain_relaxation .true.
+atom       0.00000000      5.16583930      1.82640000 Cu
+  constrain_relaxation .true.
+atom       2.58291965      5.16583930      1.82640000 Cu
+  constrain_relaxation .true.
+atom       5.16583930      5.16583930      1.82640000 Cu
+  constrain_relaxation .true.
+atom       1.29155328      1.29203853      3.65389285 Cu
+atom       3.87755553      1.28872385      3.65228351 Cu
+atom       6.45432484      1.28849083      3.65220618 Cu
+atom       1.29166206      3.87426170      3.65391797 Cu
+atom       3.87763238      3.87788805      3.65224362 Cu
+atom       6.45446861      3.87771287      3.65219314 Cu
+atom       1.29176518      6.45764196      3.65155504 Cu
+atom       3.88036090      6.45776436      3.65532755 Cu
+atom       6.45190548      6.45763720      3.65528518 Cu
+atom      -0.01133187     -0.00516892      5.47563668 Cu
+atom       2.59504722     -0.00470953      5.47571312 Cu
+atom       5.16602399     -0.00554725      5.50767362 Cu
+atom      -0.01438890      2.58299706      5.47544947 Cu
+atom       2.59745179      2.58347168      5.47555669 Cu
+atom       5.16601499      2.58356204      5.47144455 Cu
+atom      -0.01119987      5.17172253      5.47528129 Cu
+atom       2.59533424      5.17208509      5.47541381 Cu
+atom       5.16654325      5.17261582      5.50748281 Cu
+atom       1.29135910      1.29421383      7.24007707 Cu
+atom       3.86658709      1.30313829      7.32031054 Cu
+atom       1.29171415      3.87280158      7.23904143 Cu
+atom       3.86729732      3.86564954      7.31978867 Cu
+atom       6.46462178      1.30165766      7.31992220 Cu
+atom       6.46562830      3.86460139      7.32025270 Cu
+atom       1.29262365      6.45779719      7.28836369 Cu
+atom       3.85193283      6.45823230      7.34951676 Cu
+atom       6.48193070      6.45759291      7.34915766 Cu
+atom       5.16647488      0.00625275      9.08153624 Cu
+atom       5.16502274      2.58418182      9.07573315 Cu
+atom       0.02059508      5.15575552      9.10883490 Cu
+atom       2.56615511      5.15758223      9.10953418 Cu
+atom       5.16800057      5.16166283      9.08176211 Cu
+atom       0.01936413      0.00912555      9.10898784 Cu
+atom       2.56525274      0.01143477      9.10873604 Cu
+atom       0.01647950      2.58225921      9.14733728 Cu
+atom       2.56287421      2.58520959      9.14871717 Cu
+atom 3.8743794750000000 3.8743794750000000 16.4162335800000001 H
+atom 3.3531243975398373 3.3531243975398373 16.4162335800000001 H

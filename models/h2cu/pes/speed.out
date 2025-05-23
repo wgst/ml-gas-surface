@@ -1,0 +1,907 @@
+Evaluation no 1
+Number of atoms: 56
+Last atom positions: [ 8.82441416  5.23343375 13.79474565]
+Number of atoms: 56
+Last atom positions: [ 7.35146173  4.88767774 14.81631689]
+Energy evaluation time is: 0.3218870162963867 s
+Force (after e) evaluation time is: 0.00033164024353027344 s
+Force evaluation time is: 0.11683511734008789 s
+
+Evaluation no 2
+Number of atoms: 56
+Last atom positions: [10.49512209  6.53327263 15.13687517]
+Number of atoms: 56
+Last atom positions: [ 6.83395515  5.33340602 17.34687449]
+Energy evaluation time is: 0.05273866653442383 s
+Force (after e) evaluation time is: 0.00031948089599609375 s
+Force evaluation time is: 0.05340099334716797 s
+
+Evaluation no 3
+Number of atoms: 56
+Last atom positions: [ 8.49506264  0.98357827 12.68814683]
+Number of atoms: 56
+Last atom positions: [ 2.2346777   0.15716468 12.48757044]
+Energy evaluation time is: 0.053852081298828125 s
+Force (after e) evaluation time is: 0.0002772808074951172 s
+Force evaluation time is: 0.05194973945617676 s
+
+Evaluation no 4
+Number of atoms: 56
+Last atom positions: [ 5.12788513  1.53254329 17.43539722]
+Number of atoms: 56
+Last atom positions: [ 7.82773933  3.98509038 16.34462999]
+Energy evaluation time is: 0.05189990997314453 s
+Force (after e) evaluation time is: 0.00026035308837890625 s
+Force evaluation time is: 0.05318307876586914 s
+
+Evaluation no 5
+Number of atoms: 56
+Last atom positions: [ 6.01093134  0.4645268  12.92424814]
+Number of atoms: 56
+Last atom positions: [ 9.48141725  6.66064837 13.26473479]
+Energy evaluation time is: 0.053319454193115234 s
+Force (after e) evaluation time is: 0.0002772808074951172 s
+Force evaluation time is: 0.0515289306640625 s
+
+Evaluation no 6
+Number of atoms: 56
+Last atom positions: [ 8.35362956  4.81344895 17.23810419]
+Number of atoms: 56
+Last atom positions: [ 6.6535463   0.84334888 17.82909411]
+Energy evaluation time is: 0.052413225173950195 s
+Force (after e) evaluation time is: 0.00027823448181152344 s
+Force evaluation time is: 0.05262446403503418 s
+
+Evaluation no 7
+Number of atoms: 56
+Last atom positions: [ 5.91702674  0.46153649 17.95187819]
+Number of atoms: 56
+Last atom positions: [ 6.99005087  4.39956221 14.75730487]
+Energy evaluation time is: 0.053389549255371094 s
+Force (after e) evaluation time is: 0.00028586387634277344 s
+Force evaluation time is: 0.05388188362121582 s
+
+Evaluation no 8
+Number of atoms: 56
+Last atom positions: [ 9.54902539  6.49557346 14.13090527]
+Number of atoms: 56
+Last atom positions: [ 7.68926804  1.63179547 15.3864685 ]
+Energy evaluation time is: 0.05375337600708008 s
+Force (after e) evaluation time is: 0.00028133392333984375 s
+Force evaluation time is: 0.052907466888427734 s
+
+Evaluation no 9
+Number of atoms: 56
+Last atom positions: [ 7.69867715  1.56156772 17.03921851]
+Number of atoms: 56
+Last atom positions: [ 8.00340358  5.12772969 15.77215242]
+Energy evaluation time is: 0.053136348724365234 s
+Force (after e) evaluation time is: 0.0002894401550292969 s
+Force evaluation time is: 0.05348849296569824 s
+
+Evaluation no 10
+Number of atoms: 56
+Last atom positions: [ 1.42358241  2.28838876 12.61835608]
+Number of atoms: 56
+Last atom positions: [ 2.57634657  2.45238365 16.2400584 ]
+Energy evaluation time is: 0.054376840591430664 s
+Force (after e) evaluation time is: 0.0002808570861816406 s
+Force evaluation time is: 0.05253958702087402 s
+
+Evaluation no 11
+Number of atoms: 56
+Last atom positions: [10.32754958  6.14935707 17.24384224]
+Number of atoms: 56
+Last atom positions: [ 9.59117898  4.67961142 12.7513594 ]
+Energy evaluation time is: 0.0514073371887207 s
+Force (after e) evaluation time is: 0.0002684593200683594 s
+Force evaluation time is: 0.05323910713195801 s
+
+Evaluation no 12
+Number of atoms: 56
+Last atom positions: [ 8.31692431  5.31065925 17.81175972]
+Number of atoms: 56
+Last atom positions: [ 2.10606739  2.69935365 17.81459684]
+Energy evaluation time is: 0.05278420448303223 s
+Force (after e) evaluation time is: 0.0003228187561035156 s
+Force evaluation time is: 0.05419921875 s
+
+Evaluation no 13
+Number of atoms: 56
+Last atom positions: [ 6.79024362  1.61335205 13.06081553]
+Number of atoms: 56
+Last atom positions: [ 5.32932543  4.28491736 14.06807463]
+Energy evaluation time is: 0.054010629653930664 s
+Force (after e) evaluation time is: 0.0003299713134765625 s
+Force evaluation time is: 0.05336427688598633 s
+
+Evaluation no 14
+Number of atoms: 56
+Last atom positions: [ 9.47518874  5.26521826 14.5220545 ]
+Number of atoms: 56
+Last atom positions: [ 7.60951571  1.12771005 16.73028032]
+Energy evaluation time is: 0.05290341377258301 s
+Force (after e) evaluation time is: 0.00029087066650390625 s
+Force evaluation time is: 0.0518343448638916 s
+
+Evaluation no 15
+Number of atoms: 56
+Last atom positions: [ 7.71858958  1.57791262 17.10025997]
+Number of atoms: 56
+Last atom positions: [ 6.95169235  2.39555504 14.97678897]
+Energy evaluation time is: 0.05273127555847168 s
+Force (after e) evaluation time is: 0.00031948089599609375 s
+Force evaluation time is: 0.05166149139404297 s
+
+Evaluation no 16
+Number of atoms: 56
+Last atom positions: [ 4.73150763  0.15095901 13.07914347]
+Number of atoms: 56
+Last atom positions: [ 3.93339961  0.9607067  12.77130016]
+Energy evaluation time is: 0.05319094657897949 s
+Force (after e) evaluation time is: 0.00032067298889160156 s
+Force evaluation time is: 0.05411791801452637 s
+
+Evaluation no 17
+Number of atoms: 56
+Last atom positions: [ 8.1225856   2.87040155 14.71660377]
+Number of atoms: 56
+Last atom positions: [ 9.14023778  6.11591033 13.84424978]
+Energy evaluation time is: 0.05282878875732422 s
+Force (after e) evaluation time is: 0.0002791881561279297 s
+Force evaluation time is: 0.05238699913024902 s
+
+Evaluation no 18
+Number of atoms: 56
+Last atom positions: [ 6.74447829  0.63065657 15.43858466]
+Number of atoms: 56
+Last atom positions: [ 1.70881548  3.33589107 15.0088138 ]
+Energy evaluation time is: 0.05323004722595215 s
+Force (after e) evaluation time is: 0.00031876564025878906 s
+Force evaluation time is: 0.053026437759399414 s
+
+Evaluation no 19
+Number of atoms: 56
+Last atom positions: [ 4.70884913  1.51970826 13.41745208]
+Number of atoms: 56
+Last atom positions: [ 9.09847947  3.11153558 16.07763257]
+Energy evaluation time is: 0.05338144302368164 s
+Force (after e) evaluation time is: 0.0003173351287841797 s
+Force evaluation time is: 0.05321860313415527 s
+
+Evaluation no 20
+Number of atoms: 56
+Last atom positions: [ 1.06644826  0.65078956 15.68105133]
+Number of atoms: 56
+Last atom positions: [ 4.6727849   4.93528748 15.75603041]
+Energy evaluation time is: 0.0522613525390625 s
+Force (after e) evaluation time is: 0.0002765655517578125 s
+Force evaluation time is: 0.05148720741271973 s
+
+Evaluation no 21
+Number of atoms: 56
+Last atom positions: [ 3.79635512  1.77107714 15.9621972 ]
+Number of atoms: 56
+Last atom positions: [ 3.25168766  1.16474317 14.28042278]
+Energy evaluation time is: 0.0511469841003418 s
+Force (after e) evaluation time is: 0.00027298927307128906 s
+Force evaluation time is: 0.05160379409790039 s
+
+Evaluation no 22
+Number of atoms: 56
+Last atom positions: [ 6.87275779  1.05748418 16.83695242]
+Number of atoms: 56
+Last atom positions: [ 2.5322798   3.94445482 13.06063616]
+Energy evaluation time is: 0.05276989936828613 s
+Force (after e) evaluation time is: 0.00031876564025878906 s
+Force evaluation time is: 0.05329394340515137 s
+
+Evaluation no 23
+Number of atoms: 56
+Last atom positions: [ 8.14198132  5.41463565 14.20646057]
+Number of atoms: 56
+Last atom positions: [ 7.96315089  6.24389417 17.18505146]
+Energy evaluation time is: 0.05240631103515625 s
+Force (after e) evaluation time is: 0.0003159046173095703 s
+Force evaluation time is: 0.051996469497680664 s
+
+Evaluation no 24
+Number of atoms: 56
+Last atom positions: [ 9.38201923  5.79310872 13.01229557]
+Number of atoms: 56
+Last atom positions: [ 4.39556956 -0.02682405 12.23300768]
+Energy evaluation time is: 0.05380368232727051 s
+Force (after e) evaluation time is: 0.00027489662170410156 s
+Force evaluation time is: 0.05303454399108887 s
+
+Evaluation no 25
+Number of atoms: 56
+Last atom positions: [ 6.00067133  1.59291383 13.4878316 ]
+Number of atoms: 56
+Last atom positions: [ 8.27761257  2.21907995 15.80140462]
+Energy evaluation time is: 0.052468061447143555 s
+Force (after e) evaluation time is: 0.0003197193145751953 s
+Force evaluation time is: 0.05331683158874512 s
+
+Evaluation no 26
+Number of atoms: 56
+Last atom positions: [ 5.61930069  2.94916831 14.10643333]
+Number of atoms: 56
+Last atom positions: [ 8.82964171  5.32906337 16.08948105]
+Energy evaluation time is: 0.053021907806396484 s
+Force (after e) evaluation time is: 0.00032067298889160156 s
+Force evaluation time is: 0.053824663162231445 s
+
+Evaluation no 27
+Number of atoms: 56
+Last atom positions: [ 7.53750658  1.58007115 12.33679698]
+Number of atoms: 56
+Last atom positions: [ 2.58417241  3.85299016 12.8368526 ]
+Energy evaluation time is: 0.05391192436218262 s
+Force (after e) evaluation time is: 0.0003142356872558594 s
+Force evaluation time is: 0.05481123924255371 s
+
+Evaluation no 28
+Number of atoms: 56
+Last atom positions: [ 1.76625579  3.18941019 16.69966527]
+Number of atoms: 56
+Last atom positions: [ 6.65352475  0.84418688 16.55834344]
+Energy evaluation time is: 0.053533077239990234 s
+Force (after e) evaluation time is: 0.00031113624572753906 s
+Force evaluation time is: 0.05348968505859375 s
+
+Evaluation no 29
+Number of atoms: 56
+Last atom positions: [ 6.54449438  1.75743543 15.5768042 ]
+Number of atoms: 56
+Last atom positions: [ 8.8527899   0.43847864 15.02020984]
+Energy evaluation time is: 0.05306577682495117 s
+Force (after e) evaluation time is: 0.00032019615173339844 s
+Force evaluation time is: 0.0538783073425293 s
+
+Evaluation no 30
+Number of atoms: 56
+Last atom positions: [ 6.48749499  1.22402703 17.58120687]
+Number of atoms: 56
+Last atom positions: [ 4.3089615  -0.25459051 15.24325019]
+Energy evaluation time is: 0.05417346954345703 s
+Force (after e) evaluation time is: 0.0002701282501220703 s
+Force evaluation time is: 0.05257153511047363 s
+
+Evaluation no 31
+Number of atoms: 56
+Last atom positions: [ 8.90377067  4.73702788 15.28040905]
+Number of atoms: 56
+Last atom positions: [ 8.37390375  3.09439545 15.10124277]
+Energy evaluation time is: 0.051964521408081055 s
+Force (after e) evaluation time is: 0.00026726722717285156 s
+Force evaluation time is: 0.05364727973937988 s
+
+Evaluation no 32
+Number of atoms: 56
+Last atom positions: [10.22896425  6.17086296 16.30914866]
+Number of atoms: 56
+Last atom positions: [10.08373171  6.53198852 15.21567424]
+Energy evaluation time is: 0.052710533142089844 s
+Force (after e) evaluation time is: 0.0002853870391845703 s
+Force evaluation time is: 0.05152082443237305 s
+
+Evaluation no 33
+Number of atoms: 56
+Last atom positions: [ 7.31426893  0.16293276 15.79605143]
+Number of atoms: 56
+Last atom positions: [ 9.11432322  4.84625164 17.06616295]
+Energy evaluation time is: 0.05309629440307617 s
+Force (after e) evaluation time is: 0.00028228759765625 s
+Force evaluation time is: 0.05278468132019043 s
+
+Evaluation no 34
+Number of atoms: 56
+Last atom positions: [ 8.70165956  4.53936412 14.94162528]
+Number of atoms: 56
+Last atom positions: [ 7.33759934  2.75563682 17.98974079]
+Energy evaluation time is: 0.051897287368774414 s
+Force (after e) evaluation time is: 0.00031375885009765625 s
+Force evaluation time is: 0.053748369216918945 s
+
+Evaluation no 35
+Number of atoms: 56
+Last atom positions: [ 9.57216721  5.7202731  17.4644005 ]
+Number of atoms: 56
+Last atom positions: [ 1.50345371  2.34292239 16.40647715]
+Energy evaluation time is: 0.05331707000732422 s
+Force (after e) evaluation time is: 0.00027179718017578125 s
+Force evaluation time is: 0.054039955139160156 s
+
+Evaluation no 36
+Number of atoms: 56
+Last atom positions: [ 5.30028001  3.63317866 16.80687054]
+Number of atoms: 56
+Last atom positions: [ 6.19809624  3.74331005 12.61861306]
+Energy evaluation time is: 0.053275108337402344 s
+Force (after e) evaluation time is: 0.0003216266632080078 s
+Force evaluation time is: 0.054078102111816406 s
+
+Evaluation no 37
+Number of atoms: 56
+Last atom positions: [ 6.2161215   3.59818721 12.07200493]
+Number of atoms: 56
+Last atom positions: [ 7.61222749  4.49126236 13.13471732]
+Energy evaluation time is: 0.054425954818725586 s
+Force (after e) evaluation time is: 0.0002777576446533203 s
+Force evaluation time is: 0.05332803726196289 s
+
+Evaluation no 38
+Number of atoms: 56
+Last atom positions: [ 6.17933575  3.70717268 16.15342506]
+Number of atoms: 56
+Last atom positions: [ 7.31426893  0.16293276 15.79605143]
+Energy evaluation time is: 0.053212642669677734 s
+Force (after e) evaluation time is: 0.0002796649932861328 s
+Force evaluation time is: 0.05371713638305664 s
+
+Evaluation no 39
+Number of atoms: 56
+Last atom positions: [ 4.19410437  2.83802175 17.53067267]
+Number of atoms: 56
+Last atom positions: [ 7.21053584  0.98116741 16.04361968]
+Energy evaluation time is: 0.053617238998413086 s
+Force (after e) evaluation time is: 0.00027251243591308594 s
+Force evaluation time is: 0.053292036056518555 s
+
+Evaluation no 40
+Number of atoms: 56
+Last atom positions: [ 7.75423547  1.39095765 12.88201033]
+Number of atoms: 56
+Last atom positions: [ 6.52710188  1.79214846 16.27911116]
+Energy evaluation time is: 0.052652835845947266 s
+Force (after e) evaluation time is: 0.0002818107604980469 s
+Force evaluation time is: 0.0528872013092041 s
+
+Evaluation no 41
+Number of atoms: 56
+Last atom positions: [ 8.41616036  5.20826521 15.39855904]
+Number of atoms: 56
+Last atom positions: [10.27295936  5.07021255 16.90610973]
+Energy evaluation time is: 0.05320262908935547 s
+Force (after e) evaluation time is: 0.0002720355987548828 s
+Force evaluation time is: 0.05166482925415039 s
+
+Evaluation no 42
+Number of atoms: 56
+Last atom positions: [ 8.85750293  2.55543704 14.06365899]
+Number of atoms: 56
+Last atom positions: [ 5.90561417  2.36212316 16.30918943]
+Energy evaluation time is: 0.05330252647399902 s
+Force (after e) evaluation time is: 0.0003273487091064453 s
+Force evaluation time is: 0.05378103256225586 s
+
+Evaluation no 43
+Number of atoms: 56
+Last atom positions: [ 7.21661397  2.59244969 16.25128145]
+Number of atoms: 56
+Last atom positions: [ 5.11726966  1.65685844 17.62297054]
+Energy evaluation time is: 0.053464412689208984 s
+Force (after e) evaluation time is: 0.0002579689025878906 s
+Force evaluation time is: 0.053548336029052734 s
+
+Evaluation no 44
+Number of atoms: 56
+Last atom positions: [ 1.17480729  2.27939866 12.52104776]
+Number of atoms: 56
+Last atom positions: [ 8.96104073  5.38743413 15.14713613]
+Energy evaluation time is: 0.054258108139038086 s
+Force (after e) evaluation time is: 0.00032067298889160156 s
+Force evaluation time is: 0.05388593673706055 s
+
+Evaluation no 45
+Number of atoms: 56
+Last atom positions: [ 4.75375975  0.90203482 12.88982894]
+Number of atoms: 56
+Last atom positions: [ 8.9822599   6.51026353 12.07323019]
+Energy evaluation time is: 0.05360603332519531 s
+Force (after e) evaluation time is: 0.00032591819763183594 s
+Force evaluation time is: 0.05473780632019043 s
+
+Evaluation no 46
+Number of atoms: 56
+Last atom positions: [ 7.4250519   3.9365939  17.74303351]
+Number of atoms: 56
+Last atom positions: [ 5.714206    5.4007684  12.27142398]
+Energy evaluation time is: 0.053275108337402344 s
+Force (after e) evaluation time is: 0.0003204345703125 s
+Force evaluation time is: 0.05416154861450195 s
+
+Evaluation no 47
+Number of atoms: 56
+Last atom positions: [ 4.77852051  4.49847624 12.60039742]
+Number of atoms: 56
+Last atom positions: [ 2.64117544  0.42997309 14.72355069]
+Energy evaluation time is: 0.05487203598022461 s
+Force (after e) evaluation time is: 0.0002815723419189453 s
+Force evaluation time is: 0.05394172668457031 s
+
+Evaluation no 48
+Number of atoms: 56
+Last atom positions: [ 2.91537394  1.74955066 17.91851286]
+Number of atoms: 56
+Last atom positions: [ 6.78267205  1.10250576 12.01151594]
+Energy evaluation time is: 0.053374290466308594 s
+Force (after e) evaluation time is: 0.0002772808074951172 s
+Force evaluation time is: 0.05416440963745117 s
+
+Evaluation no 49
+Number of atoms: 56
+Last atom positions: [ 7.89028518  6.26190443 16.92936795]
+Number of atoms: 56
+Last atom positions: [ 8.33898079  4.14001127 13.67438215]
+Energy evaluation time is: 0.054071903228759766 s
+Force (after e) evaluation time is: 0.0002627372741699219 s
+Force evaluation time is: 0.05367732048034668 s
+
+Evaluation no 50
+Number of atoms: 56
+Last atom positions: [ 4.39830719  6.14968366 12.22772511]
+Number of atoms: 56
+Last atom positions: [ 9.21744321  6.39595378 12.09329115]
+Energy evaluation time is: 0.0538785457611084 s
+Force (after e) evaluation time is: 0.0003211498260498047 s
+Force evaluation time is: 0.05454277992248535 s
+
+Evaluation no 51
+Number of atoms: 56
+Last atom positions: [ 1.87408888  1.28719502 16.70519924]
+Number of atoms: 56
+Last atom positions: [ 1.46026431  1.00805036 13.54667949]
+Energy evaluation time is: 0.05301308631896973 s
+Force (after e) evaluation time is: 0.0002760887145996094 s
+Force evaluation time is: 0.051900386810302734 s
+
+Evaluation no 52
+Number of atoms: 56
+Last atom positions: [ 4.42722775  5.83812556 15.49381739]
+Number of atoms: 56
+Last atom positions: [-0.14744889  2.8907297  18.24155808]
+Energy evaluation time is: 0.05388522148132324 s
+Force (after e) evaluation time is: 0.0003170967102050781 s
+Force evaluation time is: 0.05268979072570801 s
+
+Evaluation no 53
+Number of atoms: 56
+Last atom positions: [10.10556853  6.84955864 16.38237636]
+Number of atoms: 56
+Last atom positions: [ 7.98042088  2.02085688 12.69958954]
+Energy evaluation time is: 0.05176997184753418 s
+Force (after e) evaluation time is: 0.0003190040588378906 s
+Force evaluation time is: 0.05263876914978027 s
+
+Evaluation no 54
+Number of atoms: 56
+Last atom positions: [ 8.40881668  5.30167097 15.28166965]
+Number of atoms: 56
+Last atom positions: [ 6.76579396  5.15909812 14.76704213]
+Energy evaluation time is: 0.05241847038269043 s
+Force (after e) evaluation time is: 0.000278472900390625 s
+Force evaluation time is: 0.05370593070983887 s
+
+Evaluation no 55
+Number of atoms: 56
+Last atom positions: [ 9.47268787  5.76294383 15.44506067]
+Number of atoms: 56
+Last atom positions: [ 5.7852962   0.85439242 16.36983515]
+Energy evaluation time is: 0.05357170104980469 s
+Force (after e) evaluation time is: 0.00027108192443847656 s
+Force evaluation time is: 0.05374002456665039 s
+
+Evaluation no 56
+Number of atoms: 56
+Last atom positions: [ 7.17096361  1.69377301 12.6244142 ]
+Number of atoms: 56
+Last atom positions: [ 2.11808192 -0.09155631 14.09536226]
+Energy evaluation time is: 0.05380725860595703 s
+Force (after e) evaluation time is: 0.0003159046173095703 s
+Force evaluation time is: 0.05369138717651367 s
+
+Evaluation no 57
+Number of atoms: 56
+Last atom positions: [ 8.68282855  0.59999398 14.39878762]
+Number of atoms: 56
+Last atom positions: [10.23490965  5.11040798 12.98867649]
+Energy evaluation time is: 0.05431866645812988 s
+Force (after e) evaluation time is: 0.00032782554626464844 s
+Force evaluation time is: 0.053902626037597656 s
+
+Evaluation no 58
+Number of atoms: 56
+Last atom positions: [ 7.61762613  1.09133207 12.5886606 ]
+Number of atoms: 56
+Last atom positions: [ 8.21946864  7.32428821 13.09101455]
+Energy evaluation time is: 0.05314826965332031 s
+Force (after e) evaluation time is: 0.0003218650817871094 s
+Force evaluation time is: 0.054445505142211914 s
+
+Evaluation no 59
+Number of atoms: 56
+Last atom positions: [ 7.11866572  2.53274499 16.13482724]
+Number of atoms: 56
+Last atom positions: [10.04813075  6.51244354 16.3820732 ]
+Energy evaluation time is: 0.05348920822143555 s
+Force (after e) evaluation time is: 0.0002880096435546875 s
+Force evaluation time is: 0.0527043342590332 s
+
+Evaluation no 60
+Number of atoms: 56
+Last atom positions: [10.83696891  1.50879567 15.68436583]
+Number of atoms: 56
+Last atom positions: [ 1.8179386   2.8637456  16.51954957]
+Energy evaluation time is: 0.05364632606506348 s
+Force (after e) evaluation time is: 0.00032210350036621094 s
+Force evaluation time is: 0.053142547607421875 s
+
+Evaluation no 61
+Number of atoms: 56
+Last atom positions: [ 8.91289978  6.42787695 15.20185909]
+Number of atoms: 56
+Last atom positions: [ 7.61565356  1.5597174  17.7368376 ]
+Energy evaluation time is: 0.052618980407714844 s
+Force (after e) evaluation time is: 0.00026535987854003906 s
+Force evaluation time is: 0.05374455451965332 s
+
+Evaluation no 62
+Number of atoms: 56
+Last atom positions: [ 7.10298391  2.70874033 14.83127726]
+Number of atoms: 56
+Last atom positions: [ 6.41322226  3.53848222 15.73154853]
+Energy evaluation time is: 0.05339646339416504 s
+Force (after e) evaluation time is: 0.00028824806213378906 s
+Force evaluation time is: 0.052392005920410156 s
+
+Evaluation no 63
+Number of atoms: 56
+Last atom positions: [ 7.63199186  1.72888511 16.85393972]
+Number of atoms: 56
+Last atom positions: [ 8.84586812  5.66001684 14.74295396]
+Energy evaluation time is: 0.051727294921875 s
+Force (after e) evaluation time is: 0.0002815723419189453 s
+Force evaluation time is: 0.05113363265991211 s
+
+Evaluation no 64
+Number of atoms: 56
+Last atom positions: [ 9.28329624  6.68249932 11.87317768]
+Number of atoms: 56
+Last atom positions: [ 6.02228849  4.54265344 15.4531618 ]
+Energy evaluation time is: 0.05251455307006836 s
+Force (after e) evaluation time is: 0.0002722740173339844 s
+Force evaluation time is: 0.05117011070251465 s
+
+Evaluation no 65
+Number of atoms: 56
+Last atom positions: [10.07849486  6.73153181 12.67632596]
+Number of atoms: 56
+Last atom positions: [10.67777311  1.52044847 15.61046608]
+Energy evaluation time is: 0.052233219146728516 s
+Force (after e) evaluation time is: 0.0002899169921875 s
+Force evaluation time is: 0.05329275131225586 s
+
+Evaluation no 66
+Number of atoms: 56
+Last atom positions: [ 8.46717844  5.98648022 16.6297223 ]
+Number of atoms: 56
+Last atom positions: [ 8.92991153  5.34815559 14.77149799]
+Energy evaluation time is: 0.05247616767883301 s
+Force (after e) evaluation time is: 0.00031447410583496094 s
+Force evaluation time is: 0.05125117301940918 s
+
+Evaluation no 67
+Number of atoms: 56
+Last atom positions: [ 7.46512408  1.24555869 13.75920284]
+Number of atoms: 56
+Last atom positions: [ 4.05156754  1.71230881 15.59497628]
+Energy evaluation time is: 0.051316022872924805 s
+Force (after e) evaluation time is: 0.0003139972686767578 s
+Force evaluation time is: 0.05160641670227051 s
+
+Evaluation no 68
+Number of atoms: 56
+Last atom positions: [ 2.65266328  0.46712675 14.61645739]
+Number of atoms: 56
+Last atom positions: [ 7.31962119  1.41091863 12.12938896]
+Energy evaluation time is: 0.05368924140930176 s
+Force (after e) evaluation time is: 0.00026726722717285156 s
+Force evaluation time is: 0.05489969253540039 s
+
+Evaluation no 69
+Number of atoms: 56
+Last atom positions: [ 7.06493403  1.14356216 15.96350202]
+Number of atoms: 56
+Last atom positions: [ 8.9464243   4.88790507 14.84831956]
+Energy evaluation time is: 0.05403256416320801 s
+Force (after e) evaluation time is: 0.00027680397033691406 s
+Force evaluation time is: 0.05294060707092285 s
+
+Evaluation no 70
+Number of atoms: 56
+Last atom positions: [ 7.07189492  2.7379135  14.91219874]
+Number of atoms: 56
+Last atom positions: [11.21574769  7.36378146 17.73645061]
+Energy evaluation time is: 0.052770376205444336 s
+Force (after e) evaluation time is: 0.0003108978271484375 s
+Force evaluation time is: 0.05313849449157715 s
+
+Evaluation no 71
+Number of atoms: 56
+Last atom positions: [ 9.14500083  6.08002982 15.66876589]
+Number of atoms: 56
+Last atom positions: [ 1.4963778   2.34908716 12.47032036]
+Energy evaluation time is: 0.05298256874084473 s
+Force (after e) evaluation time is: 0.00032401084899902344 s
+Force evaluation time is: 0.052770376205444336 s
+
+Evaluation no 72
+Number of atoms: 56
+Last atom positions: [ 3.33677555  2.97209139 13.14800311]
+Number of atoms: 56
+Last atom positions: [ 6.20469987  2.3609062  12.58740217]
+Energy evaluation time is: 0.05381894111633301 s
+Force (after e) evaluation time is: 0.0002703666687011719 s
+Force evaluation time is: 0.053923606872558594 s
+
+Evaluation no 73
+Number of atoms: 56
+Last atom positions: [11.21610126  6.92241437 14.92389373]
+Number of atoms: 56
+Last atom positions: [ 7.43847486  3.9005285  18.07763852]
+Energy evaluation time is: 0.05273246765136719 s
+Force (after e) evaluation time is: 0.0003170967102050781 s
+Force evaluation time is: 0.05099058151245117 s
+
+Evaluation no 74
+Number of atoms: 56
+Last atom positions: [ 5.34875871  3.7609394  12.32760245]
+Number of atoms: 56
+Last atom positions: [ 9.92477447  6.75128693 12.55871625]
+Energy evaluation time is: 0.05215811729431152 s
+Force (after e) evaluation time is: 0.00030684471130371094 s
+Force evaluation time is: 0.054901123046875 s
+
+Evaluation no 75
+Number of atoms: 56
+Last atom positions: [10.27255189  6.31908838 12.12986187]
+Number of atoms: 56
+Last atom positions: [ 4.67495722  0.11963367 12.98717158]
+Energy evaluation time is: 0.05450940132141113 s
+Force (after e) evaluation time is: 0.0002777576446533203 s
+Force evaluation time is: 0.05402350425720215 s
+
+Evaluation no 76
+Number of atoms: 56
+Last atom positions: [ 3.69041651  1.56674687 13.4549597 ]
+Number of atoms: 56
+Last atom positions: [ 6.78582542  0.15061073 16.88441778]
+Energy evaluation time is: 0.054010868072509766 s
+Force (after e) evaluation time is: 0.00027441978454589844 s
+Force evaluation time is: 0.05289268493652344 s
+
+Evaluation no 77
+Number of atoms: 56
+Last atom positions: [ 7.34356367  1.3074106  16.45080271]
+Number of atoms: 56
+Last atom positions: [ 5.62933324  5.69678817 14.98125456]
+Energy evaluation time is: 0.051705121994018555 s
+Force (after e) evaluation time is: 0.0002865791320800781 s
+Force evaluation time is: 0.053443193435668945 s
+
+Evaluation no 78
+Number of atoms: 56
+Last atom positions: [ 4.06025485  4.99834787 16.99798922]
+Number of atoms: 56
+Last atom positions: [ 4.35539411 -0.05375333 12.37344498]
+Energy evaluation time is: 0.05312490463256836 s
+Force (after e) evaluation time is: 0.00027561187744140625 s
+Force evaluation time is: 0.053931474685668945 s
+
+Evaluation no 79
+Number of atoms: 56
+Last atom positions: [ 7.28518145  2.33529102 12.33374443]
+Number of atoms: 56
+Last atom positions: [ 5.18599101  1.78689228 15.80766497]
+Energy evaluation time is: 0.05495595932006836 s
+Force (after e) evaluation time is: 0.0002613067626953125 s
+Force evaluation time is: 0.05364823341369629 s
+
+Evaluation no 80
+Number of atoms: 56
+Last atom positions: [ 5.62144955  2.95642977 14.80144327]
+Number of atoms: 56
+Last atom positions: [10.03769677  6.54679667 12.05792985]
+Energy evaluation time is: 0.053255319595336914 s
+Force (after e) evaluation time is: 0.00028324127197265625 s
+Force evaluation time is: 0.054013967514038086 s
+
+Evaluation no 81
+Number of atoms: 56
+Last atom positions: [ 7.57471781  6.32531047 17.17636981]
+Number of atoms: 56
+Last atom positions: [ 8.29736675  4.08243616 13.33309908]
+Energy evaluation time is: 0.05366635322570801 s
+Force (after e) evaluation time is: 0.0002739429473876953 s
+Force evaluation time is: 0.05400252342224121 s
+
+Evaluation no 82
+Number of atoms: 56
+Last atom positions: [ 7.47719654  6.18281442 16.3749095 ]
+Number of atoms: 56
+Last atom positions: [ 6.66617343  1.8829163  18.01820068]
+Energy evaluation time is: 0.05345463752746582 s
+Force (after e) evaluation time is: 0.0002789497375488281 s
+Force evaluation time is: 0.05255293846130371 s
+
+Evaluation no 83
+Number of atoms: 56
+Last atom positions: [ 2.11583828 -0.09372315 12.86117529]
+Number of atoms: 56
+Last atom positions: [ 4.65167906  6.31992665 13.336647  ]
+Energy evaluation time is: 0.05320858955383301 s
+Force (after e) evaluation time is: 0.0002677440643310547 s
+Force evaluation time is: 0.053907155990600586 s
+
+Evaluation no 84
+Number of atoms: 56
+Last atom positions: [10.77945544  6.11728384 15.98019127]
+Number of atoms: 56
+Last atom positions: [ 4.34913047  4.38330795 16.67504922]
+Energy evaluation time is: 0.05288410186767578 s
+Force (after e) evaluation time is: 0.00027060508728027344 s
+Force evaluation time is: 0.05417060852050781 s
+
+Evaluation no 85
+Number of atoms: 56
+Last atom positions: [ 2.75936149  2.84380391 13.17426826]
+Number of atoms: 56
+Last atom positions: [ 3.39094317  2.59784801 12.51277203]
+Energy evaluation time is: 0.054042816162109375 s
+Force (after e) evaluation time is: 0.0002796649932861328 s
+Force evaluation time is: 0.05431795120239258 s
+
+Evaluation no 86
+Number of atoms: 56
+Last atom positions: [ 3.90530127  2.56930062 12.45311729]
+Number of atoms: 56
+Last atom positions: [ 8.28028204  4.08413042 12.77880907]
+Energy evaluation time is: 0.05553245544433594 s
+Force (after e) evaluation time is: 0.00027632713317871094 s
+Force evaluation time is: 0.05501866340637207 s
+
+Evaluation no 87
+Number of atoms: 56
+Last atom positions: [ 9.26923565  5.96808261 16.27838096]
+Number of atoms: 56
+Last atom positions: [ 8.97263017  5.3530257  14.14643165]
+Energy evaluation time is: 0.052507638931274414 s
+Force (after e) evaluation time is: 0.00030231475830078125 s
+Force evaluation time is: 0.052922964096069336 s
+
+Evaluation no 88
+Number of atoms: 56
+Last atom positions: [ 7.76825675  4.53858156 15.58559809]
+Number of atoms: 56
+Last atom positions: [ 2.48142784  4.18248017 13.10355047]
+Energy evaluation time is: 0.05352663993835449 s
+Force (after e) evaluation time is: 0.0002663135528564453 s
+Force evaluation time is: 0.05427694320678711 s
+
+Evaluation no 89
+Number of atoms: 56
+Last atom positions: [ 3.36207528  2.89949713 12.69294963]
+Number of atoms: 56
+Last atom positions: [ 8.6329901   2.32073332 12.18297429]
+Energy evaluation time is: 0.054468393325805664 s
+Force (after e) evaluation time is: 0.00027942657470703125 s
+Force evaluation time is: 0.05409407615661621 s
+
+Evaluation no 90
+Number of atoms: 56
+Last atom positions: [ 5.42708927  0.97239283 17.09601612]
+Number of atoms: 56
+Last atom positions: [ 7.43658307  3.85496447 17.36537344]
+Energy evaluation time is: 0.05327248573303223 s
+Force (after e) evaluation time is: 0.00027060508728027344 s
+Force evaluation time is: 0.054349660873413086 s
+
+Evaluation no 91
+Number of atoms: 56
+Last atom positions: [ 2.5039984   2.46187612 11.80429176]
+Number of atoms: 56
+Last atom positions: [ 7.06855005  1.14555675 12.66199907]
+Energy evaluation time is: 0.054392337799072266 s
+Force (after e) evaluation time is: 0.00026416778564453125 s
+Force evaluation time is: 0.05401039123535156 s
+
+Evaluation no 92
+Number of atoms: 56
+Last atom positions: [ 4.58373815  4.14014765 13.96285564]
+Number of atoms: 56
+Last atom positions: [ 3.35869555  3.0275858  15.52793135]
+Energy evaluation time is: 0.053365468978881836 s
+Force (after e) evaluation time is: 0.0003218650817871094 s
+Force evaluation time is: 0.051093339920043945 s
+
+Evaluation no 93
+Number of atoms: 56
+Last atom positions: [ 6.51003767  0.38525679 18.05095732]
+Number of atoms: 56
+Last atom positions: [ 9.99353112  4.87308677 17.11593556]
+Energy evaluation time is: 0.0511777400970459 s
+Force (after e) evaluation time is: 0.00027108192443847656 s
+Force evaluation time is: 0.05130887031555176 s
+
+Evaluation no 94
+Number of atoms: 56
+Last atom positions: [ 7.90497412  1.99339412 15.42014651]
+Number of atoms: 56
+Last atom positions: [ 4.73081936  4.46284013 12.28992782]
+Energy evaluation time is: 0.05155658721923828 s
+Force (after e) evaluation time is: 0.0002727508544921875 s
+Force evaluation time is: 0.05210709571838379 s
+
+Evaluation no 95
+Number of atoms: 56
+Last atom positions: [ 1.87044685  2.08167293 17.89458114]
+Number of atoms: 56
+Last atom positions: [ 4.40709862 -0.02036674 15.59037428]
+Energy evaluation time is: 0.05345344543457031 s
+Force (after e) evaluation time is: 0.0002808570861816406 s
+Force evaluation time is: 0.053236961364746094 s
+
+Evaluation no 96
+Number of atoms: 56
+Last atom positions: [ 8.73972782  5.38946408 16.27023034]
+Number of atoms: 56
+Last atom positions: [ 8.18589372  2.02485239 12.30752571]
+Energy evaluation time is: 0.05367326736450195 s
+Force (after e) evaluation time is: 0.00027298927307128906 s
+Force evaluation time is: 0.054370880126953125 s
+
+Evaluation no 97
+Number of atoms: 56
+Last atom positions: [ 6.55188134  2.10356379 12.01413517]
+Number of atoms: 56
+Last atom positions: [ 5.44960441  4.8916033  12.85448656]
+Energy evaluation time is: 0.05471181869506836 s
+Force (after e) evaluation time is: 0.0002593994140625 s
+Force evaluation time is: 0.053900957107543945 s
+
+Evaluation no 98
+Number of atoms: 56
+Last atom positions: [ 0.17835985  2.01477289 16.12628832]
+Number of atoms: 56
+Last atom positions: [ 6.62896434  1.1654538  13.89035361]
+Energy evaluation time is: 0.05275535583496094 s
+Force (after e) evaluation time is: 0.0002741813659667969 s
+Force evaluation time is: 0.05401778221130371 s
+
+Evaluation no 99
+Number of atoms: 56
+Last atom positions: [ 9.07961974  4.91550868 16.00865474]
+Number of atoms: 56
+Last atom positions: [ 7.74260482  1.73946574 17.36249476]
+Energy evaluation time is: 0.052846670150756836 s
+Force (after e) evaluation time is: 0.0002989768981933594 s
+Force evaluation time is: 0.05273151397705078 s
+
+Evaluation no 100
+Number of atoms: 56
+Last atom positions: [ 9.13861951  4.68105932 17.54442148]
+Number of atoms: 56
+Last atom positions: [ 7.52589406  1.52755557 12.15588354]
+Energy evaluation time is: 0.05295300483703613 s
+Force (after e) evaluation time is: 0.00030231475830078125 s
+Force evaluation time is: 0.05399656295776367 s
+
+Overall time ENERGY = 5.265931606292725
+Overall time FORCES = 5.270067930221558
+Overall time TOTAL = 10.680098295211792
+---
+Avg time ENERGY = 0.052659316062927244
+Avg time FORCES = 0.05270067930221558
+Avg time TOTAL = 0.10680098295211791
