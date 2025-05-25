@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Nonadiabatic dynamics: molecular dynamics with electronic friction
+title: "Nonadiabatic dynamics: molecular dynamics with electronic friction"
 nav_order: 17
 has_children: true
 permalink: /docs/nonadiabatic-dynamics
