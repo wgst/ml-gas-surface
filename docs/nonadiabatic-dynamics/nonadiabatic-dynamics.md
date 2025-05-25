@@ -2,7 +2,7 @@
 layout: default
 title: "Nonadiabatic dynamics"
 nav_order: 17
-has_children: true
+has_children: false
 permalink: /docs/nonadiabatic-dynamics
 ---
 

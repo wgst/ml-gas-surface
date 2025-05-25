@@ -21,7 +21,7 @@ Here, you can find instructions on how to:
 W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [[arXiv]](https/...)
 
 ```text
-@misc{stark_,
+@misc{stark_nonadiabatic_2025,
 	title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
 	author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Maurer, R. J.},
 	year = {2025},

@@ -10,7 +10,7 @@ nav_order: 16
 Orbital dependent friction (ODF) allows evaluating electronic friction tensors (EFTs) from electronic structure code, enabling evaluation of full EFTs. For more details, go to [NQCDynamics-ODF](https://nqcd.github.io/NQCDynamics.jl/stable/dynamicssimulations/dynamicsmethods/mdef/#Time-dependent-Perturbation-theory-(TDPT)).
 
 
-Below are the instructions on how to initialize the [ACEds](https://github.com/ACEsuit/ACEds.jl) [ACEfriction](https://github.com/ACEsuit/ACEfriction.jl) ODF calculator, to run molecular dynamics with electronic friction (MDEF) within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [FrictionProviders.jl](https://github.com/NQCD/FrictionProviders.jl).
+Below are the instructions on how to initialize the [ACEds](https://github.com/ACEsuit/ACEds.jl) (currently: [ACEfriction](https://github.com/ACEsuit/ACEfriction.jl)) ODF calculator, to run molecular dynamics with electronic friction (MDEF) within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [FrictionProviders.jl](https://github.com/NQCD/FrictionProviders.jl).
 
 {: .warning }
 The following instructions will include **Julia**-based code.
