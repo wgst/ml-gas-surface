@@ -51,7 +51,7 @@ J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. 
 
 ```text
 @article{gardner_nqcdynamicsjl_2022,
-	title = {{NQCDynamics}.jl: {A} {Julia} package for nonadiabatic quantum classical molecular dynamics in the condensed phase},
+	title = { {NQCDynamics}.jl: {A} {Julia} package for nonadiabatic quantum classical molecular dynamics in the condensed phase},
 	author = {Gardner, James and Douglas-Gallardo, Oscar A. and Stark, Wojciech G. and Westermayr, Julia and Janke, Svenja M. and Habershon, Scott and Maurer, Reinhard J.},
 	journal = {J. Chem. Phys.},
 	volume = {156},
