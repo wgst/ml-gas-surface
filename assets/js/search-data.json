@@ -133,11 +133,11 @@
     "relUrl": "/adaptive_sampling/clustering.html#finding-centers-of-clusters"
   },"19": {
     "doc": "EFT calculators",
-    "title": "Calculators",
-    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
-    "url": "/ml-gas-surface/docs/eft-calculators#calculators",
+    "title": "Electronic friction calculators",
+    "content": "To run molecular dynamics with electronic friction, we need a ground state potential as described in MLIP-calculators page. However, to include nonadiabatic effects in our dynamics, we also need electronic friction tensor (EFT). Within NQCDynamics.jl environment this can be done using EFT connector FrictionProviders.jl. FrictionProviders.jl allows connecting EFT ML models or cube files to molecular dynamics code for orbital dependent friction (ODF) and local density friction approximation (LDFA). In this section, we will show examples of including different FrictionProviders.jl calculators into NQCDynamics.jl dynamical infrastructure. The instructions on loading EFT models are shown here: . | ODF | LDFA | . ",
+    "url": "/ml-gas-surface/docs/eft-calculators#electronic-friction-calculators",
     
-    "relUrl": "/docs/eft-calculators#calculators"
+    "relUrl": "/docs/eft-calculators#electronic-friction-calculators"
   },"20": {
     "doc": "EFT calculators",
     "title": "EFT calculators",
@@ -148,14 +148,14 @@
   },"21": {
     "doc": "EFT-LDFA",
     "title": "EFT-LDFA calculator",
-    "content": "MACE is an equivariant message-passing neural-network-based MLIP. Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") mace_calc = pyimport(\"mace.calculators\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/ace/model/MACE_model_swa.model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our MACE calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = mace_calc.MACECalculator( model_path=pes_model_path, device=\"cpu\", default_dtype=\"float32\") # device = \"cpu\" or \"cuda\" ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "content": "Local density friction approximation (LDFA) allows evaluation of electronic friction tensors (EFTs) by utilizing surface density at the position of adsorbate atom. For details, please go to: NQCDynamics-LDFA. To obtain EFT with LDFA, we need to evaluate surface electronic density. This can be done using many methods. Here, we will focus on ACEpotentials.jl models. Below are the instructions on how to initialize the ACE-LDFA calculator, to run molecular dynamics with electronic friction (MDEF) within NQCDynamics.jl using FrictionProviders.jl. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using FrictionProviders using PyCall: pyimport using NQCBase: NQCBase using Unitful: @u_str using ACE1 using ASE using JuLIP using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") . Now, we specify the density units, EFT indices, and paths to the model. We read the ASE atoms object and we convert it to JuLIP Atoms object. density_unit = u\"Å^-3\" eft_ids = [length(atoms_ase)-1,length(atoms_ase)] # remember that Cu(211) in my db is 3x4 (other facets are 3x3), so 'atoms_ase' may not always have 56 atoms model_p = \"path/to/ace/model/h2cu_ace.json\" atoms_p = \"path/to/atoms.xyz\" atoms_ase = io.read(atoms_p) atoms, R, cell = NQCBase.convert_from_ase_atoms(atoms_ase) atoms_ase.pop() # for density models we need a structure with a single H atom for model initialization - make sure 'atoms' still includes 2 atoms atoms_ase_jl = ASE.ASEAtoms(atoms_ase) # convert to ASE.jl object atoms_julip = JuLIP.Atoms(atoms_ase_jl) # convert to julip object . We then set up our JuLIP-ACE calculator within NQCDynamics.jl and we create AceLDFA and LDFAFriction objects with FrictionProviders.jl. IP = ACE1.read_dict(load_dict(model_p)[\"IP\"]) JuLIP.set_calculator!(atoms_julip, IP) ace_model = AdiabaticModels.JuLIPModel(atoms_julip) density_model = AceLDFA(ace_model; density_unit=density_unit) model = LDFAFriction(density_model, atoms; friction_atoms=eft_ids) . Together with PES model, the above LDFA object (LDFAFriction) can be then used for MDEF simulations (as documented in NQCDynamics-MDEF). ",
     "url": "/ml-gas-surface/eft-calculators/eft-ldfa.html#eft-ldfa-calculator",
     
     "relUrl": "/eft-calculators/eft-ldfa.html#eft-ldfa-calculator"
   },"22": {
     "doc": "EFT-LDFA",
     "title": "References",
-    "content": "I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022 . ",
+    "content": "J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) . ",
     "url": "/ml-gas-surface/eft-calculators/eft-ldfa.html#references",
     
     "relUrl": "/eft-calculators/eft-ldfa.html#references"
@@ -204,14 +204,14 @@
   },"29": {
     "doc": "EFT-ODF",
     "title": "EFT-ODF calculator",
-    "content": "MACE is an equivariant message-passing neural-network-based MLIP. Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") mace_calc = pyimport(\"mace.calculators\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/ace/model/MACE_model_swa.model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our MACE calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = mace_calc.MACECalculator( model_path=pes_model_path, device=\"cpu\", default_dtype=\"float32\") # device = \"cpu\" or \"cuda\" ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "content": "Orbital dependent friction (ODF) allows evaluating electronic friction tensors (EFTs) from electronic structure code, enabling evaluation of full EFTs. For more details, go to NQCDynamics-ODF. Below are the instructions on how to initialize the ACEds ACEfriction ODF calculator, to run molecular dynamics with electronic friction (MDEF) within NQCDynamics.jl using FrictionProviders.jl. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels using Unitful using UnitfulAtomic using FrictionProviders using NQCBase: NQCBase using ACE using ACEds: ac_matrixmodel using ACEds.FrictionModels using ACEds.FrictionModels: Gamma using JuLIP using JuLIP: set_positions! using ASE using JLD2 # Importing Python modules with PyCall io = pyimport(\"ase.io\") . Now, we specify the EFT units and indices, and paths to the model. We read the ASE atoms object and we convert it to JuLIP Atoms object. eft_unit = u\"ps^-1\" friction_ids = [length(ase_atoms)-1,length(ase_atoms)] eft_model_path = \"path/to/aceds/model/eft_ac.model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) ase_jl = ASE.ASEAtoms(ase_atoms) julip_atoms = JuLIP.Atoms(ase_jl) . Next, we load the ACEds model and we create ODFriction object with FrictionProviders.jl. eft_model_aceds = read_dict(load_dict(eft_model_path)) aceds_model = ACEdsODF(eft_model_aceds, Gamma, julip_atoms; friction_unit=eft_unit) odf_model = ODFriction(aceds_model; friction_atoms=friction_ids) . Together with PES model, the above ODF object (ODFriction) can be then used for MDEF simulations (as documented in NQCDynamics-MDEF). ",
     "url": "/ml-gas-surface/eft-calculators/eft-odf.html#eft-odf-calculator",
     
     "relUrl": "/eft-calculators/eft-odf.html#eft-odf-calculator"
   },"30": {
     "doc": "EFT-ODF",
     "title": "References",
-    "content": "I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022 . ",
+    "content": "J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) . ",
     "url": "/ml-gas-surface/eft-calculators/eft-odf.html#references",
     
     "relUrl": "/eft-calculators/eft-odf.html#references"
@@ -302,14 +302,14 @@
   },"43": {
     "doc": "Introduction",
     "title": "Introduction",
-    "content": "Welcome to the ML gas-surface tutorial! Here, you can find instructions on how to: . | use machine learning interatomic potentials (MLIPs) to run molecular dynamics (MD) simulations, | perform adaptive sampling to build your database for gas-surface ML models. | . | employ high-dimensional ML models for orbital dependent friction and local density friction approximation within molecular dynamics with electronic friction to study nonadiabatic effects in state-to-state scattering dynamics. | . | . ",
+    "content": "Welcome to the ML gas-surface tutorial! Here, you can find instructions on how to: . | use machine learning interatomic potentials (MLIPs) to run molecular dynamics (MD) simulations, | perform adaptive sampling to build your database for gas-surface ML models. | employ high-dimensional ML models for orbital dependent friction and local density friction approximation within molecular dynamics with electronic friction to study nonadiabatic effects in state-to-state scattering dynamics. | . ",
     "url": "/ml-gas-surface/#introduction",
     
     "relUrl": "/#introduction"
   },"44": {
     "doc": "Introduction",
     "title": "References",
-    "content": "If you found this tutorial helpful, please cite the following reference: . W. G. Stark, C. L. Box, M. Sachs, N. Hertl, C. Ortner, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [arXiv] . @misc{stark_, title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper}, author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Ortner, C. and Maurer, R. J.}, year = {2025}, publisher = {arxiv}, doi = {}, url = {https://arxiv...} } . W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, J. Phys. Chem. C, 127, 50, 24168–24182, (2023) [arXiv] [journal] . @misc{stark_machine_2023, title = {Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities}, author = {Stark, Wojciech G. and Westermayr, Julia and Douglas-Gallardo, Oscar A. and Gardner, James and Habershon, Scott and Maurer, Reinhard J.}, volume = {127}, number = {50}, pages = {24168–24182}, year = {2023}, publisher = {J. Phys. Chem. C}, doi = {10.1021/acs.jpcc.3c06648}, url = {https://doi.org/10.1021/acs.jpcc.3c06648} } . J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [arXiv] [journal] . @article{gardner_nqcdynamicsjl_2022, title = { {NQCDynamics}.jl: {A} {Julia} package for nonadiabatic quantum classical molecular dynamics in the condensed phase}, author = {Gardner, James and Douglas-Gallardo, Oscar A. and Stark, Wojciech G. and Westermayr, Julia and Janke, Svenja M. and Habershon, Scott and Maurer, Reinhard J.}, journal = {J. Chem. Phys.}, volume = {156}, number = {17}, pages = {174801}, year = {2022}, issn = {0021-9606, 1089-7690}, doi = {10.1063/5.0089436}, url = {https://aip.scitation.org/doi/10.1063/5.0089436} } . ",
+    "content": "If you found this tutorial helpful, please cite the following reference: . W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [arXiv] . @misc{stark_, title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper}, author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Maurer, R. J.}, year = {2025}, publisher = {arxiv}, doi = {}, url = {https://arxiv...} } . W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, J. Phys. Chem. C, 127, 50, 24168–24182, (2023) [arXiv] [journal] . @misc{stark_machine_2023, title = {Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities}, author = {Stark, Wojciech G. and Westermayr, Julia and Douglas-Gallardo, Oscar A. and Gardner, James and Habershon, Scott and Maurer, Reinhard J.}, volume = {127}, number = {50}, pages = {24168–24182}, year = {2023}, publisher = {J. Phys. Chem. C}, doi = {10.1021/acs.jpcc.3c06648}, url = {https://doi.org/10.1021/acs.jpcc.3c06648} } . J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [arXiv] [journal] . @article{gardner_nqcdynamicsjl_2022, title = { {NQCDynamics}.jl: {A} {Julia} package for nonadiabatic quantum classical molecular dynamics in the condensed phase}, author = {Gardner, James and Douglas-Gallardo, Oscar A. and Stark, Wojciech G. and Westermayr, Julia and Janke, Svenja M. and Habershon, Scott and Maurer, Reinhard J.}, journal = {J. Chem. Phys.}, volume = {156}, number = {17}, pages = {174801}, year = {2022}, issn = {0021-9606, 1089-7690}, doi = {10.1063/5.0089436}, url = {https://aip.scitation.org/doi/10.1063/5.0089436} } . ",
     "url": "/ml-gas-surface/#references",
     
     "relUrl": "/#references"
@@ -343,57 +343,57 @@
     "relUrl": "/mlip-calculators/mace.html"
   },"49": {
     "doc": "MLIP calculators",
-    "title": "Calculators",
-    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
-    "url": "/ml-gas-surface/docs/mlip-calculators#calculators",
-    
-    "relUrl": "/docs/mlip-calculators#calculators"
-  },"50": {
-    "doc": "MLIP calculators",
     "title": "MLIP calculators",
-    "content": " ",
+    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
     "url": "/ml-gas-surface/docs/mlip-calculators",
     
     "relUrl": "/docs/mlip-calculators"
-  },"51": {
+  },"50": {
     "doc": "ML interatomic potentials",
     "title": "Training MLIPs",
     "content": " ",
     "url": "/ml-gas-surface/mlips.html#training-mlips",
     
     "relUrl": "/mlips.html#training-mlips"
-  },"52": {
+  },"51": {
     "doc": "ML interatomic potentials",
     "title": "Table of contents",
     "content": ". | Introduction | Machine learning interatomic potentials | . ",
     "url": "/ml-gas-surface/mlips.html#table-of-contents",
     
     "relUrl": "/mlips.html#table-of-contents"
-  },"53": {
+  },"52": {
     "doc": "ML interatomic potentials",
     "title": "Introduction",
     "content": "Traditionally, we utilize ab initio methods, within density functional theory (DFT), to run molecular dynamics simulations. However, for many systems or problems these methods are too computationally expensive, e.g. due to the long length of the simulation or to the high number of trajectories. This is often the case within the gas-surface systems, for which many experimental results provide reaction probabilities. To model such probabilities, high number of trajectories is required. One of the most popular method that allows significantly faster force evaluations is machine learning (ML). ",
     "url": "/ml-gas-surface/mlips.html#introduction",
     
     "relUrl": "/mlips.html#introduction"
-  },"54": {
+  },"53": {
     "doc": "ML interatomic potentials",
     "title": "Machine learning interatomic potentials",
     "content": "Employing machine learning interatomic potentials (MLIPs) in our dynamics can reduce the simulation times by several orders of magnitude. There are many MLIP methods, that mainly differ by descriptor type or architecture. Some of the most popular MLIPs include: . | SchNet | PaiNN | linear atomic cluster expansion (ACE) | MACE | Recursively embedded atom neural network (REANN) | NequIP | and many, many more! | . ",
     "url": "/ml-gas-surface/mlips.html#machine-learning-interatomic-potentials",
     
     "relUrl": "/mlips.html#machine-learning-interatomic-potentials"
-  },"55": {
+  },"54": {
     "doc": "ML interatomic potentials",
     "title": "ML interatomic potentials",
     "content": " ",
     "url": "/ml-gas-surface/mlips.html",
     
     "relUrl": "/mlips.html"
-  },"56": {
-    "doc": "Nonadiabatic dynamics: molecular dynamics with electronic friction",
+  },"55": {
+    "doc": "Nonadiabatic dynamics",
     "title": "Nonadiabatic dynamics: molecular dynamics with electronic friction",
-    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
+    "content": "Continuum of states of metal surfaces may lead to significant nonadiabatic effects, which are not accounted for in classical MD simulations. One method to include such methods, while employing Born-Oppenheimer, ground state PES is molecular dynamics with electronic friction (MDEF). In MDEF, frictional and random forces are included within the equation of motion, to account for nonadiabatic effects. To run MDEF simulation, we first load PES model. Here, we load a MACE model, just as in MLIP-calculators. pes_model = mace_model(ml_model_path, ase_atoms) calculator_pes = mace_calc.MACECalculator(model_path=ml_model_path, device=\"cpu\", default_dtype=\"float32\") . Then, ODF model can be loaded. Here, we load an LDFA model, as described in EFT-LDFA. friction_ids = [length(ase_atoms)-1,length(ase_atoms)] eft_model_ml = ace_model(eft_model_path, atoms_julip) density_model = AceLDFA(eft_model_ml; density_unit=u\"Å^-3\") eft_model = LDFAFriction(density_model, atoms; friction_atoms=friction_ids) . Finally, we combine the MLIP, and EFT models using NQCModels.FrictionModels.CompositeFrictionModel. model = CompositeFrictionModel(pes_model,eft_model) sim = Simulation{MDEF}(atoms, model, cell=cell, temperature=parse(Float64,temp_surf)*u\"K\") . To run the MDEF simulation we can then execute the following line, using the constructed simulation (sim) object, using initial conditions included in distribution variable. ensemble = Ensembles.run_dynamics(sim, (0.0, 3000*u\"fs\"), distribution; dt=0.1*u\"fs\", ensemble_algorithm=EnsembleDistributed(), saveat=(0.0:austrip(0.1*u\"fs\"):austrip(3000*u\"fs\"))) . More instructions on how to run the MDEF simulations and how to use the simulation output within the NQCDynamics.jl can be found here). ",
+    "url": "/ml-gas-surface/docs/nonadiabatic-dynamics#nonadiabatic-dynamics-molecular-dynamics-with-electronic-friction",
+    
+    "relUrl": "/docs/nonadiabatic-dynamics#nonadiabatic-dynamics-molecular-dynamics-with-electronic-friction"
+  },"56": {
+    "doc": "Nonadiabatic dynamics",
+    "title": "Nonadiabatic dynamics",
+    "content": " ",
     "url": "/ml-gas-surface/docs/nonadiabatic-dynamics",
     
     "relUrl": "/docs/nonadiabatic-dynamics"
