@@ -1,0 +1,464 @@
+{"0": {
+    "doc": "ACE",
+    "title": "ACE calculator",
+    "content": "ACEpotentials is an atomic cluster expansion (ACE)-based linear MLIP. Below are the instructions on how to initialize the ACEpotentials calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") pyjulip = pyimport(\"pyjulip\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/ace/model/h2cu_ace.json\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our ACEpotentials calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = pyjulip.ACE1(pes_model_path) ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . The model can be loaded also directly within julia: . using ASE using JuLIP using ACE1 IP = ACE1.read_dict(load_dict(model_path)[\"IP\"]) JuLIP.set_calculator!(ase_atoms, IP) pes_model = AdiabaticModels.JuLIPModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/mlip-calculators/ace.html#ace-calculator",
+    
+    "relUrl": "/mlip-calculators/ace.html#ace-calculator"
+  },"1": {
+    "doc": "ACE",
+    "title": "References",
+    "content": "R. Drautz, Atomic cluster expansion for accurate and transferable interatomic potentials, Phys. Rev. B Condens. Matter. 99, 014104, 2019 G. Dusson, M. Bachmayr, G. Csanyi, S. Etter, C. van der Oord, and C. Ortner, ACEpotentials.jl: A Julia implementation of the atomic cluster expansion, J. Chem. Phys. 159, 164101, 2023 . ",
+    "url": "/mlip-calculators/ace.html#references",
+    
+    "relUrl": "/mlip-calculators/ace.html#references"
+  },"2": {
+    "doc": "ACE",
+    "title": "ACE",
+    "content": " ",
+    "url": "/mlip-calculators/ace.html",
+    
+    "relUrl": "/mlip-calculators/ace.html"
+  },"3": {
+    "doc": "Adaptive sampling",
+    "title": "Adaptive sampling",
+    "content": " ",
+    "url": "/docs/adaptive_sampling",
+    
+    "relUrl": "/docs/adaptive_sampling"
+  },"4": {
+    "doc": "Adaptive sampling",
+    "title": "Table of contents",
+    "content": ". | Introduction | Initial database | Training ML-based interatomic potentials | High-error search within molecular dynamics | Structure selection (clustering) | . ",
+    "url": "/docs/adaptive_sampling#table-of-contents",
+    
+    "relUrl": "/docs/adaptive_sampling#table-of-contents"
+  },"5": {
+    "doc": "Adaptive sampling",
+    "title": "Introduction",
+    "content": "The adaptive sampling procedure for gas-surface dynamics described below is based on Stark et al. approach. The scheme for the adaptive sampling procedure is shown below. ",
+    "url": "/docs/adaptive_sampling#introduction",
+    
+    "relUrl": "/docs/adaptive_sampling#introduction"
+  },"6": {
+    "doc": "Adaptive sampling",
+    "title": "Initial database",
+    "content": "The entire process of building a database for ML-based interatomic potentials (MLIPs) starts with generating initial database. This is usually done by running several ab initio molecular dynamics (AIMD) trajectories with different settings/systems. For example, Stark et al. start with running AIMD trajectories in different temperatures and for 4 different Cu facets. After the AIMD simulations are done, we can add every n-th structure of each trajectory in our initial database (where n is mainly dependent on simulation step size and atomic environment). ",
+    "url": "/docs/adaptive_sampling#initial-database",
+    
+    "relUrl": "/docs/adaptive_sampling#initial-database"
+  },"7": {
+    "doc": "Adaptive sampling",
+    "title": "Training ML-based interatomic potentials",
+    "content": "The second step of adaptive sampling is MLIP training. We need at least 3 models for energy error evaluation. The models can differ e.g. by training on the same database, but different random training-validation-test sets. Training of MLIP is different with every method. We list some of the most popular methods with link to the repositories in the ML interatomic potentials page. Training is usually not straightforward and should include proper optimization of hyperparameters (k-fold cross-validation). ",
+    "url": "/docs/adaptive_sampling#training-ml-based-interatomic-potentials",
+    
+    "relUrl": "/docs/adaptive_sampling#training-ml-based-interatomic-potentials"
+  },"8": {
+    "doc": "Adaptive sampling",
+    "title": "High-error search within molecular dynamics",
+    "content": "The trained MLIPs can now be used to search for the high-error structures in our chemical space. This is done by running MD simulations using one of the models and evaluating energy at every or every n-th step with all of the trained models, to calculate error (standard deviation) of the predictions. High-error structures are then saved in a database. We include a more detailed description of this step, together with an explanation of scripts in the High-error structure search page. ",
+    "url": "/docs/adaptive_sampling#high-error-search-within-molecular-dynamics",
+    
+    "relUrl": "/docs/adaptive_sampling#high-error-search-within-molecular-dynamics"
+  },"9": {
+    "doc": "Adaptive sampling",
+    "title": "Structure selection (clustering)",
+    "content": "The obtained high-error structures database is usually too sizeable for just including it in our main database in its entirety. One of the most popular approach to select the most diverse, and thus the most informative, data points is k-means clustering. Within this method, we can choose how many clusters of our data do we need and then we establish centers of these clusters to obtain our final filtered high-error structure database. We include a more detailed description of this step, together with explanation of scritps in the Structure selection page. Following the structure selection, energy, forces, and any other important properties can be calculated using electronic structure codes (usually within DFT). Then, the structures can be added to our initial database and the entire process can be repeated until we are satisfied with the obtained models. ",
+    "url": "/docs/adaptive_sampling#structure-selection-clustering",
+    
+    "relUrl": "/docs/adaptive_sampling#structure-selection-clustering"
+  },"10": {
+    "doc": "Structure selection",
+    "title": "Structure selection",
+    "content": " ",
+    "url": "/adaptive_sampling/clustering.html",
+    
+    "relUrl": "/adaptive_sampling/clustering.html"
+  },"11": {
+    "doc": "Structure selection",
+    "title": "Table of contents",
+    "content": ". | Introduction | Initialization . | Importing packages and loading high-error structures | Define descriptors (inverse distances) | . | Dimension reduction (PCA) | Clustering . | Finding centers of clusters | . | . ",
+    "url": "/adaptive_sampling/clustering.html#table-of-contents",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#table-of-contents"
+  },"12": {
+    "doc": "Structure selection",
+    "title": "Introduction",
+    "content": "The database of high-error structures very often may contain too many data points. Fortunately, clustering methods, such as k-means, can help to find the most informative data points and add only them to our database. To do that, we prepared a Python notebook, which can be found in this repository. We additionally share its contents, together with more detailed explanation below. The following sections will include Python-based code. The scripts shown below were prepared for H2 dissociative chemisorption on Cu surface but could be adjusted for any other system. ",
+    "url": "/adaptive_sampling/clustering.html#introduction",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#introduction"
+  },"13": {
+    "doc": "Structure selection",
+    "title": "Initialization",
+    "content": " ",
+    "url": "/adaptive_sampling/clustering.html#initialization",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#initialization"
+  },"14": {
+    "doc": "Structure selection",
+    "title": "Importing packages and loading high-error structures",
+    "content": "First, we import needed packages and we read the database that contains high-error structures obtained in MD simulations. import matplotlib import matplotlib.pyplot as plt from ase.io import write, read import numpy as np db_p = 'db_name.db' # Input db path db_out_p = 'h2cu_clust_centr.xyz' # Path for saving cluster centres structures ncluster = 80 # Number of clusters (final structures that will be added to our database) # Read all high-error structures struct_all = read(f'{db_p}@:') . ",
+    "url": "/adaptive_sampling/clustering.html#importing-packages-and-loading-high-error-structures",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#importing-packages-and-loading-high-error-structures"
+  },"15": {
+    "doc": "Structure selection",
+    "title": "Define descriptors (inverse distances)",
+    "content": "Next, we obtain all the distances and we evaluate our descriptors - invert distances. dist_all = [] H2_dist = np.zeros((len(struct_all),3)) # For H2 get the minimum distance to all atoms for j in range(len(struct_all)): dist_cur = struct_all[j].get_all_distances(mic=True) # Save dist_all list for inverse distance matrix later dist_all.append(dist_cur) # Minimal descriptor H2_dist[j][0] = dist_cur[-1,-2] # Distance between H-H H2_dist[j][1] = np.min(dist_cur[-1,:-2]) # Min distance between H1-Cu H2_dist[j][2] = np.min(dist_cur[-2,:-2]) # Min distance between H2-Cu natoms = len(struct_all[0].get_all_distances()) invd = np.zeros((len(dist_all),natoms,natoms)) # Make 1s out of the diagonal for i in range(len(dist_all)): np.fill_diagonal(dist_all[i],1.0) invd[i] = np.ones((natoms,natoms))/dist_all[i] # We will use invd[:,-2:], which refers to the inverse distances between both H atoms and all atoms invd_reduced = invd[:,-2:] invd = invd.reshape(len(dist_all),natoms*natoms) invd_reduced = invd_reduced.reshape(len(dist_all),-1) descr = invd_reduced . ",
+    "url": "/adaptive_sampling/clustering.html#define-descriptors-inverse-distances",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#define-descriptors-inverse-distances"
+  },"16": {
+    "doc": "Structure selection",
+    "title": "Dimension reduction (PCA)",
+    "content": "In this optional step, we reduce the number of dimensions (here descriptors) using principal component analysis (PCA), for efficiency and better descriptiveness of our results. We start with creating 10 PCA components, based on our descriptors and we plot the variance ratio associated with all the components. from sklearn.decomposition import PCA pca = PCA(n_components=10) pca.fit(descr) X_new = pca.transform(descr) plt.xlabel(\"PCA components\") plt.ylabel(\"Variance ratio\") plt.bar(np.arange(10),pca.explained_variance_ratio_, edgecolor='black') . The variance ratio of the two first components seems to contribute significantly more than other components, which is why in the following code we will continue with using just two first PCA components (PC1 and PC2) as our descriptors. descr = X_new[:,:2] . Below, we plot the distribution of our high-error structures within PC1 and PC2. fig, ax = plt.subplots(1, 1) ax.scatter(descr[:,0], descr[:,1], edgecolors='white', linewidths=0.4, label=\"datapoints\", alpha=0.8) plt.xlabel(\"PC1\") plt.ylabel(\"PC2\") fig.set_figheight(6.0) fig.set_figwidth(6.0) plt.show() . ",
+    "url": "/adaptive_sampling/clustering.html#dimension-reduction-pca",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#dimension-reduction-pca"
+  },"17": {
+    "doc": "Structure selection",
+    "title": "Clustering",
+    "content": "After establishing the proper descriptors, we finally begin clustering using k-means. from sklearn.cluster import MiniBatchKMeans niter = 1000000 minibatch = 1800 # Batch size (how many data points are treated in the algorithm at once, reduce if you run out of memory) kmeans = MiniBatchKMeans(n_clusters=ncluster, init=\"k-means++\", max_iter=niter, batch_size=minibatch) # Fit the clustering model km = kmeans.fit(np.array(descr).reshape(-1,1)) # Use the clustering model to predict the cluster number of each data point indices = km.fit_predict(descr) . ",
+    "url": "/adaptive_sampling/clustering.html#clustering",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#clustering"
+  },"18": {
+    "doc": "Structure selection",
+    "title": "Finding centers of clusters",
+    "content": "In order to find the most diverse structures, we search for the centers of the established clusters and we save the structures within the clusters that lie the closest to these centers. from sklearn.metrics.pairwise import pairwise_distances_argmin centroid = kmeans.cluster_centers_ b = np.inf ind = pairwise_distances_argmin(centroid, descr) geometries = [] X_centers = [] H2_centers = [] for i in range(len(ind)): geometries.append(struct_all[ind[i]]) X_centers.append(X_new[ind[i]]) H2_centers.append(H2_dist[ind[i]]) # Save the chosen center structures write(db_out_p, geometries) H2_centers = np.array(H2_centers) X_centers = np.array(X_centers) . We can now visualize the final clusters and centers within PCs. fig, ax = plt.subplots(1, 1) ax.scatter(X_new[:,0], X_new[:,1],c=indices, edgecolors='white', linewidths=0.4, label=\"datapoints\", alpha=0.8) ax.scatter(X_centers[:,0],X_centers[:,1],color=\"white\",label=\"centers\",edgecolors='black',linewidths=0.7,marker=\"X\", alpha=0.8) plt.legend(fancybox=True,framealpha=1,edgecolor='black',handletextpad=0.05,borderpad=0.3,handlelength=1.2,columnspacing=0.4,labelspacing=0.2,ncol=1,loc=1, fontsize=\"medium\") #, bbox_to_anchor=(1.75, 1.02)) plt.xlabel(\"PC1\") plt.ylabel(\"PC2\") fig.set_figheight(6.0) fig.set_figwidth(6.0) plt.show() . Similarly, we can also plot the clusters with the specified centers within the actual physical variables. Here, the H-H and H1-Cu distances. fig, ax = plt.subplots(1, 1) ax.scatter(H2_dist[:,0], H2_dist[:,1],c=indices,edgecolors='white', linewidths=0.4, label=\"datapoints\", alpha=0.8) ax.scatter(H2_centers[:,0],H2_centers[:,1],color=\"white\",label=\"centers\",edgecolors='black',linewidths=0.7,marker=\"X\", alpha=0.8) plt.legend(fancybox=True,framealpha=1,edgecolor='black',handletextpad=0.05,borderpad=0.3,handlelength=1.2,columnspacing=0.4,labelspacing=0.2,ncol=1,loc=1, fontsize=\"medium\") #, bbox_to_anchor=(1.75, 1.02)) plt.xlabel(\"H1-H2 distance / Å\") plt.ylabel(\"H1-Cu distance / Å\") fig.set_figheight(6.0) fig.set_figwidth(6.0) plt.show() . ",
+    "url": "/adaptive_sampling/clustering.html#finding-centers-of-clusters",
+    
+    "relUrl": "/adaptive_sampling/clustering.html#finding-centers-of-clusters"
+  },"19": {
+    "doc": "EFT calculators",
+    "title": "Calculators",
+    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
+    "url": "/docs/eft-calculators#calculators",
+    
+    "relUrl": "/docs/eft-calculators#calculators"
+  },"20": {
+    "doc": "EFT calculators",
+    "title": "EFT calculators",
+    "content": " ",
+    "url": "/docs/eft-calculators",
+    
+    "relUrl": "/docs/eft-calculators"
+  },"21": {
+    "doc": "EFT-LDFA",
+    "title": "EFT-LDFA calculator",
+    "content": "MACE is an equivariant message-passing neural-network-based MLIP. Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") mace_calc = pyimport(\"mace.calculators\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/ace/model/MACE_model_swa.model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our MACE calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = mace_calc.MACECalculator( model_path=pes_model_path, device=\"cpu\", default_dtype=\"float32\") # device = \"cpu\" or \"cuda\" ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/eft-calculators/eft-ldfa.html#eft-ldfa-calculator",
+    
+    "relUrl": "/eft-calculators/eft-ldfa.html#eft-ldfa-calculator"
+  },"22": {
+    "doc": "EFT-LDFA",
+    "title": "References",
+    "content": "I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022 . ",
+    "url": "/eft-calculators/eft-ldfa.html#references",
+    
+    "relUrl": "/eft-calculators/eft-ldfa.html#references"
+  },"23": {
+    "doc": "EFT-LDFA",
+    "title": "EFT-LDFA",
+    "content": " ",
+    "url": "/eft-calculators/eft-ldfa.html",
+    
+    "relUrl": "/eft-calculators/eft-ldfa.html"
+  },"24": {
+    "doc": "Electronic friction ML models",
+    "title": "Training MLIPs",
+    "content": " ",
+    "url": "/eft-models.html#training-mlips",
+    
+    "relUrl": "/eft-models.html#training-mlips"
+  },"25": {
+    "doc": "Electronic friction ML models",
+    "title": "Table of contents",
+    "content": ". | Introduction | Machine learning interatomic potentials | . ",
+    "url": "/eft-models.html#table-of-contents",
+    
+    "relUrl": "/eft-models.html#table-of-contents"
+  },"26": {
+    "doc": "Electronic friction ML models",
+    "title": "Introduction",
+    "content": "Traditionally, we utilize ab initio methods, within density functional theory (DFT), to run molecular dynamics simulations. However, for many systems or problems these methods are too computationally expensive, e.g. due to the long length of the simulation or to the high number of trajectories. This is often the case within the gas-surface systems, for which many experimental results provide reaction probabilities. To model such probabilities, high number of trajectories is required. One of the most popular method that allows significantly faster force evaluations is machine learning (ML). ",
+    "url": "/eft-models.html#introduction",
+    
+    "relUrl": "/eft-models.html#introduction"
+  },"27": {
+    "doc": "Electronic friction ML models",
+    "title": "Machine learning interatomic potentials",
+    "content": "Employing machine learning interatomic potentials (MLIPs) in our dynamics can reduce the simulation times by several orders of magnitude. There are many MLIP methods, that mainly differ by descriptor type or architecture. Some of the most popular MLIPs include: . | SchNet | PaiNN | linear atomic cluster expansion (ACE) | MACE | Recursively embedded atom neural network (REANN) | NequIP | and many, many more! | . ",
+    "url": "/eft-models.html#machine-learning-interatomic-potentials",
+    
+    "relUrl": "/eft-models.html#machine-learning-interatomic-potentials"
+  },"28": {
+    "doc": "Electronic friction ML models",
+    "title": "Electronic friction ML models",
+    "content": " ",
+    "url": "/eft-models.html",
+    
+    "relUrl": "/eft-models.html"
+  },"29": {
+    "doc": "EFT-ODF",
+    "title": "EFT-ODF calculator",
+    "content": "MACE is an equivariant message-passing neural-network-based MLIP. Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") mace_calc = pyimport(\"mace.calculators\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/ace/model/MACE_model_swa.model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our MACE calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = mace_calc.MACECalculator( model_path=pes_model_path, device=\"cpu\", default_dtype=\"float32\") # device = \"cpu\" or \"cuda\" ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/eft-calculators/eft-odf.html#eft-odf-calculator",
+    
+    "relUrl": "/eft-calculators/eft-odf.html#eft-odf-calculator"
+  },"30": {
+    "doc": "EFT-ODF",
+    "title": "References",
+    "content": "I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022 . ",
+    "url": "/eft-calculators/eft-odf.html#references",
+    
+    "relUrl": "/eft-calculators/eft-odf.html#references"
+  },"31": {
+    "doc": "EFT-ODF",
+    "title": "EFT-ODF",
+    "content": " ",
+    "url": "/eft-calculators/eft-odf.html",
+    
+    "relUrl": "/eft-calculators/eft-odf.html"
+  },"32": {
+    "doc": "High-error structure search",
+    "title": "High-energy structure search",
+    "content": " ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#high-energy-structure-search",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#high-energy-structure-search"
+  },"33": {
+    "doc": "High-error structure search",
+    "title": "Table of contents",
+    "content": ". | Introduction . | Importing packages | Initial structures and functions . | Trajectory terminator | High-error structure saver | Postprocessing | Model initializer | . | Simulation settings | Reading the initial conditions files | Preparing the simulation . | Loading models | Set trajectory terminator | . | Running the ensemble MD simulation | Postprocess | . | . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#table-of-contents",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#table-of-contents"
+  },"34": {
+    "doc": "High-error structure search",
+    "title": "Introduction",
+    "content": "After training the models, we can finally start searching for high-error structures in our system. This is done by running molecular dynamics (MD) trajectories using forces from one of the trained models searching for potential energy surface holes across the trajectories. An excellent environment to run such simulations is NQCDynamics.jl within Julia. In order to run the dynamics, we usually create the initial conditions (initial positions and velocities) separately, in order to be able to access it multiple times, if needed. This part is very well explained in the NQCDynamics.jl documentation. Our initial conditions scripts for dissociative chemisorption included in this repository could be also helpful (link1, link2). Having both the ML-based PES models and a set of initial conditions, we can finally run MD with a high-error structure search. Below we will show an example script, which can also be accessed directly here. The following sections will include Julia-based code. ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#introduction",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#introduction"
+  },"35": {
+    "doc": "High-error structure search",
+    "title": "Importing packages",
+    "content": "First, we import Julia-based and Python-based (PyCall) packages. using NQCDynamics using NQCDynamics.InitialConditions.QuantisedDiatomic using PyCall using DelimitedFiles using Unitful using UnitfulAtomic using SciMLBase using LinearAlgebra using Statistics using JLD2 # Importing Python modules with PyCall io = pyimport(\"ase.io\") db = pyimport(\"ase.db\") spk_utils = pyimport(\"schnetpack.utils\") spk_interfaces = pyimport(\"schnetpack.interfaces\") . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#importing-packages",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#importing-packages"
+  },"36": {
+    "doc": "High-error structure search",
+    "title": "Initial structures and functions",
+    "content": "Next, we define a couple of functions and structures that will allow us to create certain MD callbacks or to analyze our results. Trajectory terminator . Below, we define an MD trajectory terminator, which stops the trajectory when certain conditions are met. Here, the trajectory is stopped if H2 is above scat_cutoff value or if the distance between hydrogens in H2 exceeds dist_cutoff value. mutable struct TrajectoryTerminator h2_indices scat_cutoff dist_cutoff slab_range_dif slab_ranges n_atoms_layer end function (term::TrajectoryTerminator)(u, t, integrator)::Bool R = NQCDynamics.get_positions(u) com_h2_z = minimum(R[3,term.h2_indices[1]:term.h2_indices[2]]) top_surface_avg_z = sum(R[3,end-Int(term.n_atoms_layer)-1:end-2])/term.n_atoms_layer if (com_h2_z - top_surface_avg_z) &gt; term.scat_cutoff # [scat_cutoff] Ang above the surface return true elseif norm(R[:,term.h2_indices[1]] .- R[:,term.h2_indices[2]]) &gt; term.dist_cutoff # at least [dist_cutoff] Ang between H2 = reaction return true else return false end end . High-error structure saver . Structure OutputTrajectory with a function that is executed at the end of every trajectory. It allows calculating energies with all the models from the models_mult list. After that, the error (standard deviation) is calculated and compared to the manually chosen v_models_error, which is the minimum error required for the structure to be saved. If the calculated error is higher than v_models_error, the structure is saved to the db_out database stored in a specified path. In order to save memory, only the last structure is returned by our output function. struct OutputTrajectory atoms cell path surface e_tran models_mult selection_start v_models_error save_errors end function (out::OutputTrajectory)(sol, i) if out.save_errors == true atoms_all = [] errors = [] Vs = [] cur_error = 0 db_out = db.connect(\"$(out.path)output_h2$(out.surface)_E$(out.e_tran).db\") for (n, e) in enumerate(sol.u) for (i1, m) in enumerate(out.models_mult) append!(Vs, potential(out.models_mult[i1], NQCDynamics.get_positions(e))) end cur_error = std(Vs) if cur_error &gt;= out.v_models_error append!(errors, cur_error) cur_ase_atoms = NQCDynamics.convert_to_ase_atoms(out.atoms, NQCDynamics.get_positions(e), out.cell) append!(atoms_all, [cur_ase_atoms]) data=Dict() data[\"surface\"] = out.surface data[\"traj_id\"] = out.selection_start + i - 1 data[\"atoms_id\"] = n data[\"error\"] = cur_error data[\"e_transl\"] = out.e_tran db_out.write(cur_ase_atoms, data=data) end end end return last(sol.u) # return last structure end . Postprocessing . Function ensemble_processing is used after MD simulation is over, to postprocess our simulation data. In this case of simulating dissociative chemisorption of H2 on Cu surface, we iterate over all the trajectories (the last structure of every trajectory), to check whether the trajectory ended up with a scattering of H2 molecule from the surface or with the reaction (sticking), to be able to calculate sticking probability in further steps. function ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, n_atoms_layer) atoms_all = [] output_data = [] n_scat = 0 n_reac = 0 n_nondef = 0 h2_distance = 0 h2_surface_distance = 0 scattering = 0 reaction = 0 non_defined = 0 db_out = db.connect(\"$(cur_folder)output_last_str_h2$(surface)_E$(e_tran).db\") for (n, e) in enumerate(ensemble) # for each traj e = e[:OutputTrajectory] scattering = 0 reaction = 0 non_defined = 0 h2_distance = norm(NQCDynamics.get_positions(e)[:,end].-NQCDynamics.get_positions(e)[:,end-1]) top_surface_avg_z = sum(NQCDynamics.get_positions(e)[3,end-Int(n_atoms_layer)-1:end-2])/n_atoms_layer h2_surface_distance = minimum(NQCDynamics.get_positions(e)[3,end-1:end]) - top_surface_avg_z # min H2 z - max Cu z value cur_ase_atoms = NQCDynamics.convert_to_ase_atoms(atoms, NQCDynamics.get_positions(e), cell) if h2_surface_distance &gt;= scat_cutoff # Scattering event n_scat += 1 scattering = 1 elseif h2_distance &gt;= dist_cutoff # DC event n_reac += 1 reaction = 1 else # Non-defined category n_nondef += 1 non_defined = 1 end data=Dict() data[\"surface\"] = surface data[\"scattering\"] = scattering data[\"reaction\"] = reaction data[\"non_defined\"] = non_defined db_out.write(cur_ase_atoms, data=data) end return output_data, atoms_all, n_scat, n_reac, n_nondef end . Model initializer . Function schnet_model_pes is used for creating an NQCDynamics model object utilizing the ASE calculator (here SchNet calculator). This function can be replaced with any MLIP that can be accessed through the ASE calculator. function schnet_model_pes(model_path, cur_atoms) spk_model = spk_utils.load_model(model_path;map_location=\"cpu\") model_args = spk_utils.read_from_json(\"$(model_path)/args.json\") environment_provider = spk_utils.script_utils.settings.get_environment_provider(model_args,device=\"cpu\") calculator = spk_interfaces.SpkCalculator(spk_model, energy=\"energy\", forces=\"forces\", environment_provider=environment_provider) cur_atoms.set_calculator(calculator) model = AdiabaticASEModel(cur_atoms) return model end . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#initial-structures-and-functions",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#initial-structures-and-functions"
+  },"37": {
+    "doc": "High-error structure search",
+    "title": "Simulation settings",
+    "content": "Now, we set all the required paths and we create the output folders. ml_model_f = \"path/to/mlip/model\" icond_f = \"path/to/initial/conditions/folder\" icond_str = \"path/to/initial/structures/folder/\" output_f = \"path/to/output/folder/\" mkpath(output_f) . We then choose settings for high-error structures saver (adaptive sampling). save_errors = true # choose if you want to save structures with min error of v_models_error for adaptive sampling v_models_error = 0.025 # minimum error (std) of potential energy predictions made by multiple models, of the structure that will be saved for adaptive sampling models_mult = [] models_mult_paths = [] # this can be done in a couple of ways, but e.g. add paths to different models here atoms_all = [] . Next, we set all the simulation details. height = 7.0 # H height / Ang traj_start = parse(Int64, ENV[\"TRAJ_START\"]) # starting trajectory (based on initial conditions) traj_end = parse(Int64, ENV[\"TRAJ_END\"]) # last trajectory (based on initial conditions) traj_num = traj_end - traj_start + 1 # number of trajectories to run max_time_fs = 3000 # simulation time / fs max_time = max_time_fs*u\"fs\" step = 0.1u\"fs\" # simulation step scat_cutoff = ang_to_au(7.1) # termination condition (H2 height) dist_cutoff = ang_to_au(2.25) # termination condition (H2 bond length) slab_outside_max_len = ang_to_au(10) surface = \"cu111\" # surface e_tran = 0.5 # translational/collision energy in eV vjs = [0,1] # v and J states temp_surf = \"925\" # temperature of surface n_layers_metal = 6 cur_folder = \"$(output_f)$(surface)/v$(vjs[1])J$(vjs[2])/T$(temp_surf)/\" mkpath(cur_folder) . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#simulation-settings",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#simulation-settings"
+  },"38": {
+    "doc": "High-error structure search",
+    "title": "Reading the initial conditions files",
+    "content": "file_name = \"Et$(e_tran)_v$(vjs[1])_J$(vjs[2])/distr_Et$(e_tran)_v$(vjs[1])_J$(vjs[2])\" system = load(\"$(icond_f)$(surface)/T$(temp_surf)K/$(file_name).jld2\") ase_atoms = io.read(\"$(icond_str)$(surface)_h$(height)_full_$(temp_surf)K.in\") cell = system[\"cell\"] distribution = system[\"dist\"] atoms = system[\"atoms\"] atoms = NQCDynamics.Atoms(atoms.types) n_atoms_layer = (length(ase_atoms)-2)/n_layers_metal # number of atoms in a metal layer (if the molecule contains 2 atoms) . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#reading-the-initial-conditions-files",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#reading-the-initial-conditions-files"
+  },"39": {
+    "doc": "High-error structure search",
+    "title": "Preparing the simulation",
+    "content": "Loading models . We first load models for high error structure search (adaptive sampling). To do that, we load all of the models with paths included in the models_mult_paths list, using the previously mentioned schnet_model_pes function. if save_errors == true for (i, m) in enumerate(models_mult_paths) # append!(models_mult, [schnet_model_pes(models_mult_paths[i], ase_slab.copy())]) end end . Then, we load a model used for MD and we initialize the Simulation. model = schnet_model_pes(ml_model_f, ase_atoms) sim = Simulation{Classical}(atoms, model, cell=cell) . Set trajectory terminator . In order to terminate the trajectories whenever the simulation has reached its goal, we set the terminating callback, which will be executed at every step of the simulation. terminator = TrajectoryTerminator([length(ase_atoms)-1,length(ase_atoms)], scat_cutoff, dist_cutoff, slab_outside_max_len, [[ang_to_au(0.0), cell.vectors[1,1] + cell.vectors[1,2]], [ang_to_au(0.0), cell.vectors[2,2]], [ang_to_au(0.0), ang_to_au(15.0)]],Int(n_atoms_layer)) terminate_cb = DynamicsUtils.TerminatingCallback(terminator) . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#preparing-the-simulation",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#preparing-the-simulation"
+  },"40": {
+    "doc": "High-error structure search",
+    "title": "Running the ensemble MD simulation",
+    "content": "Finally, we use all the model parameters established in the previous steps and we run the ensemble dynamics using the Ensembles.run_dynamics function. All the trajectories will finish either after reaching the maximum simulation time max_time_fs or whenever the callback function terminate_cb is satisfied. ensemble = Ensembles.run_dynamics(sim, (0.0, max_time), distribution; selection=traj_start:traj_end, dt=step, trajectories=traj_num, output=OutputTrajectory(atoms, cell, cur_folder, surface, string(e_tran), models_mult, traj_start, v_models_error, save_errors), callback=terminate_cb, ensemble_algorithm=EnsembleDistributed(), saveat=(0.0:austrip(1.0*u\"fs\"):austrip(max_time_fs*u\"fs\"))) . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#running-the-ensemble-md-simulation",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#running-the-ensemble-md-simulation"
+  },"41": {
+    "doc": "High-error structure search",
+    "title": "Postprocess",
+    "content": "After the simulation is over, we execute the ensemble_processing function that allows us to calculate our final reaction (sticking) probability prob_reac_all. output_data, atoms_all, n_scat, n_reac, n_nondef = ensemble_processing(ensemble, dist_cutoff, scat_cutoff, atoms, cell, surface, e_tran, cur_folder, Int(n_atoms_layer)) n_traj_all = n_scat + n_reac + n_nondef prob_reac_all = n_reac/n_traj_all . We end the simulation by printing the output file containing our final results. labels = [\"n_scattering: \", \"n_reaction: \", \"n_nondefined: \", \"reaction_probability: \"] results =[n_scat, n_reac, n_nondef, prob_reac_all] writedlm(\"$(cur_folder)$(surface)_Et$(e_tran)_results_$(traj_start)to$(traj_end).log\", zip(labels,results)) . ",
+    "url": "/adaptive_sampling/high_error_structure_search.html#postprocess",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html#postprocess"
+  },"42": {
+    "doc": "High-error structure search",
+    "title": "High-error structure search",
+    "content": " ",
+    "url": "/adaptive_sampling/high_error_structure_search.html",
+    
+    "relUrl": "/adaptive_sampling/high_error_structure_search.html"
+  },"43": {
+    "doc": "Introduction",
+    "title": "Introduction",
+    "content": "Welcome to the ML gas-surface tutorial! Here, you can find instructions on how to: . | use machine learning interatomic potentials (MLIPs) to run molecular dynamics (MD) simulations, | perform adaptive sampling to build your database for gas-surface ML models. | . | employ high-dimensional ML models for orbital dependent friction and local density friction approximation within molecular dynamics with electronic friction to study nonadiabatic effects in state-to-state scattering dynamics. | . | . ",
+    "url": "/#introduction",
+    
+    "relUrl": "/#introduction"
+  },"44": {
+    "doc": "Introduction",
+    "title": "References",
+    "content": "If you found this tutorial helpful, please cite the following reference: . W. G. Stark, C. L. Box, M. Sachs, N. Hertl, C. Ortner, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [arXiv] . @misc{stark_, title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper}, author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Ortner, C. and Maurer, R. J.}, year = {2025}, publisher = {arxiv}, doi = {}, url = {https://arxiv...} } . W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, J. Phys. Chem. C, 127, 50, 24168–24182, (2023) [arXiv] [journal] . @misc{stark_machine_2023, title = {Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities}, author = {Stark, Wojciech G. and Westermayr, Julia and Douglas-Gallardo, Oscar A. and Gardner, James and Habershon, Scott and Maurer, Reinhard J.}, volume = {127}, number = {50}, pages = {24168–24182}, year = {2023}, publisher = {J. Phys. Chem. C}, doi = {10.1021/acs.jpcc.3c06648}, url = {https://doi.org/10.1021/acs.jpcc.3c06648} } . J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022) [arXiv] [journal] . @article{gardner_nqcdynamicsjl_2022, title = { {NQCDynamics}.jl: {A} {Julia} package for nonadiabatic quantum classical molecular dynamics in the condensed phase}, author = {Gardner, James and Douglas-Gallardo, Oscar A. and Stark, Wojciech G. and Westermayr, Julia and Janke, Svenja M. and Habershon, Scott and Maurer, Reinhard J.}, journal = {J. Chem. Phys.}, volume = {156}, number = {17}, pages = {174801}, year = {2022}, issn = {0021-9606, 1089-7690}, doi = {10.1063/5.0089436}, url = {https://aip.scitation.org/doi/10.1063/5.0089436} } . ",
+    "url": "/#references",
+    
+    "relUrl": "/#references"
+  },"45": {
+    "doc": "Introduction",
+    "title": "Introduction",
+    "content": " ",
+    "url": "/",
+    
+    "relUrl": "/"
+  },"46": {
+    "doc": "MACE",
+    "title": "MACE calculator",
+    "content": "MACE is an equivariant message-passing neural-network-based MLIP. Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") mace_calc = pyimport(\"mace.calculators\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/ace/model/MACE_model_swa.model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our MACE calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = mace_calc.MACECalculator( model_path=pes_model_path, device=\"cpu\", default_dtype=\"float32\") # device = \"cpu\" or \"cuda\" ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/mlip-calculators/mace.html#mace-calculator",
+    
+    "relUrl": "/mlip-calculators/mace.html#mace-calculator"
+  },"47": {
+    "doc": "MACE",
+    "title": "References",
+    "content": "I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022 . ",
+    "url": "/mlip-calculators/mace.html#references",
+    
+    "relUrl": "/mlip-calculators/mace.html#references"
+  },"48": {
+    "doc": "MACE",
+    "title": "MACE",
+    "content": " ",
+    "url": "/mlip-calculators/mace.html",
+    
+    "relUrl": "/mlip-calculators/mace.html"
+  },"49": {
+    "doc": "MLIP calculators",
+    "title": "Calculators",
+    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
+    "url": "/docs/mlip-calculators#calculators",
+    
+    "relUrl": "/docs/mlip-calculators#calculators"
+  },"50": {
+    "doc": "MLIP calculators",
+    "title": "MLIP calculators",
+    "content": " ",
+    "url": "/docs/mlip-calculators",
+    
+    "relUrl": "/docs/mlip-calculators"
+  },"51": {
+    "doc": "ML interatomic potentials",
+    "title": "Training MLIPs",
+    "content": " ",
+    "url": "/mlips.html#training-mlips",
+    
+    "relUrl": "/mlips.html#training-mlips"
+  },"52": {
+    "doc": "ML interatomic potentials",
+    "title": "Table of contents",
+    "content": ". | Introduction | Machine learning interatomic potentials | . ",
+    "url": "/mlips.html#table-of-contents",
+    
+    "relUrl": "/mlips.html#table-of-contents"
+  },"53": {
+    "doc": "ML interatomic potentials",
+    "title": "Introduction",
+    "content": "Traditionally, we utilize ab initio methods, within density functional theory (DFT), to run molecular dynamics simulations. However, for many systems or problems these methods are too computationally expensive, e.g. due to the long length of the simulation or to the high number of trajectories. This is often the case within the gas-surface systems, for which many experimental results provide reaction probabilities. To model such probabilities, high number of trajectories is required. One of the most popular method that allows significantly faster force evaluations is machine learning (ML). ",
+    "url": "/mlips.html#introduction",
+    
+    "relUrl": "/mlips.html#introduction"
+  },"54": {
+    "doc": "ML interatomic potentials",
+    "title": "Machine learning interatomic potentials",
+    "content": "Employing machine learning interatomic potentials (MLIPs) in our dynamics can reduce the simulation times by several orders of magnitude. There are many MLIP methods, that mainly differ by descriptor type or architecture. Some of the most popular MLIPs include: . | SchNet | PaiNN | linear atomic cluster expansion (ACE) | MACE | Recursively embedded atom neural network (REANN) | NequIP | and many, many more! | . ",
+    "url": "/mlips.html#machine-learning-interatomic-potentials",
+    
+    "relUrl": "/mlips.html#machine-learning-interatomic-potentials"
+  },"55": {
+    "doc": "ML interatomic potentials",
+    "title": "ML interatomic potentials",
+    "content": " ",
+    "url": "/mlips.html",
+    
+    "relUrl": "/mlips.html"
+  },"56": {
+    "doc": "Nonadiabatic dynamics: molecular dynamics with electronic friction",
+    "title": "Nonadiabatic dynamics: molecular dynamics with electronic friction",
+    "content": "In order to run an MD simulation, we have to connect our ML model with the MD infrastructure. This is done through the calculators and depending on an MLIP, there are different types of calculators. The most popular calculators are used within ASE. Many codes also enable connecting the MLIPs to LAMMPS. In our case, we use ASE calculators that we employ within NQCDynamics.jl, dynamics code. In this section, we will show examples of including different calculators into NQCDynamics.jl dynamical infrastructure. Instructions on how to run the MD simulations within the NQCDynamics.jl can be found here: . | Classical molecular dynamics | Reactive scattering from a metal surface | . ",
+    "url": "/docs/nonadiabatic-dynamics",
+    
+    "relUrl": "/docs/nonadiabatic-dynamics"
+  },"57": {
+    "doc": "PaiNN",
+    "title": "PaiNN calculator",
+    "content": "PaiNN is an equivariant message-passing neural-network-based MLIP. Below are the instructions on how to initialize the PaiNN calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") spk_ase_interface = pyimport(\"schnetpack.interfaces.ase_interface\") spk_transform = pyimport(\"schnetpack.transform\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. cutoff = 4.0 # Angstrom (units used in the model) pes_model_path = \"path/to/painn/model/best_inference_model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our PaiNN calculator and create NQCModels AdiabaticASEModel object that includes the model. calculator = spk_ase_interface.SpkCalculator( model_file=pes_model_path, stress_key=\"stress\", neighbor_list=spk_transform.ASENeighborList(cutoff=cutoff), energy_unit=\"eV\", forces_units=\"eV/Angstrom\", stress_units=\"eV/Ang/Ang/Ang\" ) ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/mlip-calculators/painn.html#painn-calculator",
+    
+    "relUrl": "/mlip-calculators/painn.html#painn-calculator"
+  },"58": {
+    "doc": "PaiNN",
+    "title": "References",
+    "content": "K. Schütt, O. Unke, M. Gastegger, Equivariant message passing for the prediction of tensorial properties and molecular spectra, PMLR 2021 . ",
+    "url": "/mlip-calculators/painn.html#references",
+    
+    "relUrl": "/mlip-calculators/painn.html#references"
+  },"59": {
+    "doc": "PaiNN",
+    "title": "PaiNN",
+    "content": " ",
+    "url": "/mlip-calculators/painn.html",
+    
+    "relUrl": "/mlip-calculators/painn.html"
+  },"60": {
+    "doc": "REANN",
+    "title": "REANN calculator",
+    "content": "REANN (recursively embedded atom neural network) is a message-passing neural-network-based MLIP. Below are the instructions on how to initialize the REANN calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") reann = pyimport(\"ase.calculators.reann\") . Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/reann/model/REANN_PES_DOUBLE.pt\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our REANN calculator and create NQCModels AdiabaticASEModel object that includes the model. atomtype = [\"Cu\",\"H\"] period = [1,1,1] calculator = reann.REANN( device=\"cpu\", atomtype=atomtype, period=period, nn=pes_model_path) ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/mlip-calculators/reann.html#reann-calculator",
+    
+    "relUrl": "/mlip-calculators/reann.html#reann-calculator"
+  },"61": {
+    "doc": "REANN",
+    "title": "References",
+    "content": "Y. Zhang, C. Hu, B. Jiang, Embedded Atom Neural Network Potentials: Efficient and Accurate Machine Learning with a Physically Inspired Representation, J. Phys. Chem. Lett. 10, 4962−4967, 2019 . Y. Zhang, J. Xia, B. Jiang, Physically motivated recursively embedded atom neural networks: incorporating local completeness and nonlocality, Phys. Rev. Lett. 127, 156002, 2021 . ",
+    "url": "/mlip-calculators/reann.html#references",
+    
+    "relUrl": "/mlip-calculators/reann.html#references"
+  },"62": {
+    "doc": "REANN",
+    "title": "REANN",
+    "content": " ",
+    "url": "/mlip-calculators/reann.html",
+    
+    "relUrl": "/mlip-calculators/reann.html"
+  },"63": {
+    "doc": "SchNet",
+    "title": "SchNet calculator",
+    "content": "SchNet is one of the most popular message-passing neural-network-based MLIP. Below are the instructions on how to initialize the SchNet calculator, to run dynamics simulations within NQCDynamics.jl using ASE interface. The following instructions will include Julia-based code. We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages. using NQCDynamics using PyCall using NQCModels # Importing Python modules with PyCall io = pyimport(\"ase.io\") spk_utils = pyimport(\"schnetpack.utils\") spk_interfaces = pyimport(\"schnetpack.interfaces\") . Now, we specify paths to the model and atoms objects. Then we read the ASE Atoms object and we convert it to NQCDynamics object. pes_model_path = \"path/to/schnet/model/best_model\" atoms_path = \"path/to/atoms.xyz\" ase_atoms = io.read(atoms_path) atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms) . We then set up our SchNet calculator and create NQCModels AdiabaticASEModel object that includes the model. spk_model = spk_utils.load_model(pes_model_path;map_location=\"cpu\") model_args = spk_utils.read_from_json(\"$(pes_model_path)/args.json\") environment_provider = spk_utils.script_utils.settings.get_environment_provider(model_args,device=\"cpu\") calculator = spk_interfaces.SpkCalculator(spk_model, energy=\"energy\", forces=\"forces\", environment_provider=environment_provider) ase_atoms.set_calculator(calculator) pes_model = AdiabaticASEModel(ase_atoms) . Finally, we can use the model to e.g. initialize Simulation object that is employed to run MD simulations. sim = Simulation{Classical}(atoms, pes_model, cell=cell) . ",
+    "url": "/mlip-calculators/schnet.html#schnet-calculator",
+    
+    "relUrl": "/mlip-calculators/schnet.html#schnet-calculator"
+  },"64": {
+    "doc": "SchNet",
+    "title": "References",
+    "content": "K. Schütt and P.-J. Kindermans and F. Sauceda, E. Huziel and S. Chmiela and A. Tkatchenko and K.-R. Müller, SchNet: A continuous-filter convolutional neural network for modeling quantum interactions, NeurIPS 2017 . K.T. Schütt, H.E. Sauceda, P.-J. Kindermans, A. Tkatchenko, K.-R. Müller, SchNet – A deep learning architecture for molecules and materials, J. Chem. Phys., 148, 241722, 2018 . ",
+    "url": "/mlip-calculators/schnet.html#references",
+    
+    "relUrl": "/mlip-calculators/schnet.html#references"
+  },"65": {
+    "doc": "SchNet",
+    "title": "SchNet",
+    "content": " ",
+    "url": "/mlip-calculators/schnet.html",
+    
+    "relUrl": "/mlip-calculators/schnet.html"
+  }
+}
