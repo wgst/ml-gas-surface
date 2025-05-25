@@ -12,18 +12,18 @@ Welcome to the ML gas-surface tutorial!
 Here, you can find instructions on how to:
 * use **machine learning interatomic potentials** (MLIPs) to run **molecular dynamics** (MD) simulations,
 * perform **adaptive sampling** to build your database for **gas-surface** ML models.
-* * employ high-dimensional ML models for **orbital dependent friction** and **local density friction approximation** within  **molecular dynamics with electronic friction** to study nonadiabatic effects in **state-to-state** scattering dynamics.
+* employ high-dimensional ML models for **orbital dependent friction** and **local density friction approximation** within  **molecular dynamics with electronic friction** to study nonadiabatic effects in **state-to-state** scattering dynamics.
 
 # References
 **If you found this tutorial helpful, please cite the following reference:**
 
 
-W. G. Stark, C. L. Box, M. Sachs, N. Hertl, C. Ortner, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [[arXiv]](https/...)
+W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [[arXiv]](https/...)
 
 ```text
 @misc{stark_,
 	title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
-	author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Ortner, C. and Maurer, R. J.},
+	author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Maurer, R. J.},
 	year = {2025},
 	publisher = {arxiv},
 	doi = {}, 

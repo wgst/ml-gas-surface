@@ -7,9 +7,10 @@ nav_order: 16
 
 # EFT-ODF calculator
 
-[MACE](https://github.com/ACEsuit/mace) is an equivariant message-passing neural-network-based MLIP.
+Orbital dependent friction (ODF) allows evaluating electronic friction tensors (EFTs) from electronic structure code, enabling evaluation of full EFTs. For more details, go to [NQCDynamics-ODF](https://nqcd.github.io/NQCDynamics.jl/stable/dynamicssimulations/dynamicsmethods/mdef/#Time-dependent-Perturbation-theory-(TDPT)).
 
-Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
+
+Below are the instructions on how to initialize the [ACEds](https://github.com/ACEsuit/ACEds.jl) [ACEfriction](https://github.com/ACEsuit/ACEfriction.jl) ODF calculator, to run molecular dynamics with electronic friction (MDEF) within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [FrictionProviders.jl](https://github.com/NQCD/FrictionProviders.jl).
 
 {: .warning }
 The following instructions will include **Julia**-based code.
@@ -20,41 +21,45 @@ We start with importing NQCDynamics.jl packages and PyCall which allows importin
 using NQCDynamics
 using PyCall
 using NQCModels
-
+using Unitful
+using UnitfulAtomic
+using FrictionProviders
+using NQCBase: NQCBase
+using ACE
+using ACEds: ac_matrixmodel
+using ACEds.FrictionModels
+using ACEds.FrictionModels: Gamma
+using JuLIP
+using JuLIP: set_positions!
+using ASE
+using JLD2
 # Importing Python modules with PyCall
 io = pyimport("ase.io")
-mace_calc = pyimport("mace.calculators")
 ```
 
 
-Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
+Now, we specify the EFT units and indices, and paths to the model. We read the ASE atoms object and we convert it to [JuLIP](https://github.com/JuliaMolSim/JuLIP.jl) Atoms object.
 
 ```jl
-pes_model_path = "path/to/ace/model/MACE_model_swa.model"
+eft_unit = u"ps^-1"
+friction_ids = [length(ase_atoms)-1,length(ase_atoms)]
+eft_model_path = "path/to/aceds/model/eft_ac.model"
 atoms_path = "path/to/atoms.xyz"
 ase_atoms = io.read(atoms_path)
-atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms)
+ase_jl = ASE.ASEAtoms(ase_atoms)
+julip_atoms = JuLIP.Atoms(ase_jl)
 ```
 
-
-We then set up our MACE calculator and create NQCModels [AdiabaticASEModel](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCModels/adiabaticmodels/#NQCModels.AdiabaticModels.AdiabaticASEModel) object that includes the model.
+Next, we load the [ACEds](https://github.com/ACEsuit/ACEds.jl) model and we create ODFriction object with [FrictionProviders.jl](https://github.com/NQCD/FrictionProviders.jl).
 
 ```jl
-calculator = mace_calc.MACECalculator(
-    model_path=pes_model_path, 
-    device="cpu", 
-    default_dtype="float32") # device = "cpu" or "cuda"
-ase_atoms.set_calculator(calculator)
-pes_model = AdiabaticASEModel(ase_atoms)
+eft_model_aceds = read_dict(load_dict(eft_model_path))
+aceds_model = ACEdsODF(eft_model_aceds, Gamma, julip_atoms; friction_unit=eft_unit)     
+odf_model = ODFriction(aceds_model; friction_atoms=friction_ids)
 ```
 
-Finally, we can use the model to e.g. initialize [Simulation](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCDynamics/nonadiabaticmoleculardynamics/#NQCDynamics.Simulation-Union%7BTuple%7BT%7D,%20Tuple%7BM%7D,%20Tuple%7BAtoms%7BT%7D,%20NQCModels.Model,%20M%7D%7D%20where%20%7BM,%20T%7D) object that is employed to run MD simulations.
-
-```jl
-sim = Simulation{Classical}(atoms, pes_model, cell=cell)
-```
-
+Together with PES model, the above ODF object (ODFriction) can be then used for MDEF simulations (as documented in [NQCDynamics-MDEF](https://nqcd.github.io/NQCDynamics.jl/stable/dynamicssimulations/dynamicsmethods/mdef/)).
 
 ## References
 
-[I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022](https://proceedings.neurips.cc/paper_files/paper/2022/file/4a36c3c51af11ed9f34615b81edb5bbc-Paper-Conference.pdf)
+[J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022)](https://doi.org/10.1063/5.0089436)

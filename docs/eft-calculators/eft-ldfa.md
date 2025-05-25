@@ -7,54 +7,63 @@ nav_order: 15
 
 # EFT-LDFA calculator
 
-[MACE](https://github.com/ACEsuit/mace) is an equivariant message-passing neural-network-based MLIP.
+Local density friction approximation (LDFA) allows evaluation of electronic friction tensors (EFTs) by utilizing surface density at the position of adsorbate atom. For details, please go to: [NQCDynamics-LDFA](https://nqcd.github.io/NQCDynamics.jl/stable/dynamicssimulations/dynamicsmethods/mdef/#Local-density-friction-approximation-(LDFA)).
 
-Below are the instructions on how to initialize the MACE calculator, to run dynamics simulations within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [ASE interface](https://nqcd.github.io/NQCDynamics.jl/stable/NQCModels/ase/).
+To obtain EFT with LDFA, we need to evaluate surface electronic density. This can be done using many methods. Here, we will focus on [ACEpotentials.jl](https://github.com/ACEsuit/ACEpotentials.jl) models.
+
+Below are the instructions on how to initialize the ACE-LDFA calculator, to run molecular dynamics with electronic friction (MDEF) within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) using [FrictionProviders.jl](https://github.com/NQCD/FrictionProviders.jl).
 
 {: .warning }
 The following instructions will include **Julia**-based code.
 
-We start with importing NQCDynamics.jl packages and PyCall which allows importing Python-based packages.
+We start with importing [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) packages and PyCall which allows importing Python-based packages.
 
 ```jl
-using NQCDynamics
-using PyCall
+using FrictionProviders
+using PyCall: pyimport
+using NQCBase: NQCBase
+using Unitful: @u_str
+using ACE1
+using ASE
+using JuLIP
 using NQCModels
 
 # Importing Python modules with PyCall
 io = pyimport("ase.io")
-mace_calc = pyimport("mace.calculators")
 ```
 
 
-Now, we specify the cutoff distance, paths to the model, and Atoms objects. Then we read the ASE atoms object and we convert it to NQCDynamics object.
+Now, we specify the density units, EFT indices, and paths to the model. We read the ASE atoms object and we convert it to [JuLIP](https://github.com/JuliaMolSim/JuLIP.jl) Atoms object.
 
 ```jl
-pes_model_path = "path/to/ace/model/MACE_model_swa.model"
-atoms_path = "path/to/atoms.xyz"
-ase_atoms = io.read(atoms_path)
-atoms, positions, cell = NQCDynamics.convert_from_ase_atoms(ase_atoms)
+density_unit = u"Å^-3"
+eft_ids = [length(atoms_ase)-1,length(atoms_ase)] # remember that Cu(211) in my db is 3x4 (other facets are 3x3), so 'atoms_ase' may not always have 56 atoms
+
+model_p = "path/to/ace/model/h2cu_ace.json"
+atoms_p = "path/to/atoms.xyz"
+atoms_ase = io.read(atoms_p)
+atoms, R, cell =  NQCBase.convert_from_ase_atoms(atoms_ase)
+atoms_ase.pop() # for density models we need a structure with a single H atom for model initialization - make sure 'atoms' still includes 2 atoms
+atoms_ase_jl = ASE.ASEAtoms(atoms_ase) # convert to ASE.jl object
+atoms_julip = JuLIP.Atoms(atoms_ase_jl) # convert to julip object
 ```
 
 
-We then set up our MACE calculator and create NQCModels [AdiabaticASEModel](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCModels/adiabaticmodels/#NQCModels.AdiabaticModels.AdiabaticASEModel) object that includes the model.
+We then set up our [JuLIP](https://github.com/JuliaMolSim/JuLIP.jl)-ACE calculator within [NQCDynamics.jl](https://github.com/NQCD/NQCDynamics.jl) and we create AceLDFA and LDFAFriction objects with [FrictionProviders.jl](https://github.com/NQCD/FrictionProviders.jl).
 
 ```jl
-calculator = mace_calc.MACECalculator(
-    model_path=pes_model_path, 
-    device="cpu", 
-    default_dtype="float32") # device = "cpu" or "cuda"
-ase_atoms.set_calculator(calculator)
-pes_model = AdiabaticASEModel(ase_atoms)
+IP = ACE1.read_dict(load_dict(model_p)["IP"])
+JuLIP.set_calculator!(atoms_julip, IP)
+ace_model = AdiabaticModels.JuLIPModel(atoms_julip)
+
+density_model = AceLDFA(ace_model; density_unit=density_unit)
+
+model = LDFAFriction(density_model, atoms; friction_atoms=eft_ids)
 ```
 
-Finally, we can use the model to e.g. initialize [Simulation](https://nqcd.github.io/NQCDynamics.jl/stable/api/NQCDynamics/nonadiabaticmoleculardynamics/#NQCDynamics.Simulation-Union%7BTuple%7BT%7D,%20Tuple%7BM%7D,%20Tuple%7BAtoms%7BT%7D,%20NQCModels.Model,%20M%7D%7D%20where%20%7BM,%20T%7D) object that is employed to run MD simulations.
-
-```jl
-sim = Simulation{Classical}(atoms, pes_model, cell=cell)
-```
+Together with PES model, the above LDFA object (LDFAFriction) can be then used for MDEF simulations (as documented in [NQCDynamics-MDEF](https://nqcd.github.io/NQCDynamics.jl/stable/dynamicssimulations/dynamicsmethods/mdef/)).
 
 
 ## References
 
-[I. Batatia, D. P. Kovács, G. N. C. Simm, C. Ortner, G. Csányi, MACE: Higher order equivariant message passing neural networks for fast and accurate force fields, NeurIPS 2022](https://proceedings.neurips.cc/paper_files/paper/2022/file/4a36c3c51af11ed9f34615b81edb5bbc-Paper-Conference.pdf)
+[J. Gardner, O. A. Douglas-Gallardo, W. G. Stark, J. Westermayr, S. M. Janke, S. Habershon, R. J. Maurer, NQCDynamics.jl: A Julia package for nonadiabatic quantum classical molecular dynamics in the condensed phase, J. Chem. Phys. 156, 174801 (2022)](https://doi.org/10.1063/5.0089436)
