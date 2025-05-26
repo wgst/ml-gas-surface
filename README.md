@@ -1,3 +1,5 @@
+<center><img src="https://github.com/wgst/ml-gas-surface/blob/main/docs/figures/ml_to_gas_surf.png?raw=true" width="300"></center>
+
 # ML for gas-surface dynamics
 
 Instructions and scripts for growing machine learning interatomic potentials (MLIPs) databases through adaptive sampling for gas-surface dynamics.
