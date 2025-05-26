@@ -18,16 +18,17 @@ Here, you can find instructions on how to:
 **If you found this tutorial helpful, please cite the following reference:**
 
 
-W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [[arXiv]](https/...)
+W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arXiv:2505.18147 [physics.chem-ph], (2025) [[arXiv]](http://arxiv.org/abs/2505.18147)
 
 ```text
 @misc{stark_nonadiabatic_2025,
 	title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
-	author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Maurer, R. J.},
+	doi = {10.48550/arXiv.2505.18147},
+	publisher = {arXiv},
+	author = {Stark, Wojciech G. and Box, Connor L. and Sachs, Matthias and Hertl, Nils and Maurer, Reinhard J.},
 	year = {2025},
-	publisher = {arxiv},
-	doi = {}, 
-	url = {https://arxiv...}
+	note = {arXiv:2505.18147 [physics.chem-ph]},
+	url = {http://arxiv.org/abs/2505.18147},
 }
 ```
 
