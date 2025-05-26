@@ -9,23 +9,24 @@ Instructions and scripts for growing machine learning interatomic potentials (ML
 ## References
 **If you found the scripts and/or tutorial helpful, please cite the following references:**
 
-W. G. Stark, C. L. Box, M. Sachs, N. Hertl, C. Ortner, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arxiv, (2025) [[arXiv]](https/...)
+W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arXiv:2505.18147 [physics.chem-ph], (2025) [[arXiv]](http://arxiv.org/abs/2505.18147)
 
 ```text
-@misc{stark_,
+@misc{stark_nonadiabatic_2025,
 	title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
-	author = {Stark, W. G. and Box, C. L. and Sachs, M. and Hertl, N. and Ortner, C. and Maurer, R. J.},
+	doi = {10.48550/arXiv.2505.18147},
+	publisher = {arXiv},
+	author = {Stark, Wojciech G. and Box, Connor L. and Sachs, Matthias and Hertl, Nils and Maurer, Reinhard J.},
 	year = {2025},
-	publisher = {arxiv},
-	doi = {}, 
-	url = {https://arxiv...}
+	note = {arXiv:2505.18147 [physics.chem-ph]},
+	url = {http://arxiv.org/abs/2505.18147},
 }
 ```
 
 W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, J. Phys. Chem. C, 127, 50, 24168–24182, (2023) [[arXiv]](https://arxiv.org/abs/2305.10873) [[journal]](https://pubs.acs.org/doi/10.1021/acs.jpcc.3c06648)
 
 ```text
-@misc{stark_machine_2023,
+@article{stark_machine_2023,
 	title = {Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities},
 	author = {Stark, Wojciech G. and Westermayr, Julia and Douglas-Gallardo, Oscar A. and Gardner, James and Habershon, Scott and Maurer, Reinhard J.},
 	volume = {127},
