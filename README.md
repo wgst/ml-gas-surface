@@ -44,6 +44,8 @@ If this code or data helped your work, please cite:
 1. **H<sub>2</sub>/Cu Nonadiabatic dynamics, construction of electronic friction models:**  
    * W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arXiv:2505.18147 [physics.chem-ph], (2025) [[arXiv]](http://arxiv.org/abs/2505.18147)
 
+   * W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, Phys. Rev. B, 112, 3 (2025) [[arXiv]](http://arxiv.org/abs/2505.18147) [[journal]](https://link.aps.org/doi/10.1103/h7vd-94pk)
+
 2. **H<sub>2</sub>/Cu dissociative chemisorption, construction of MLIPs**  
    * W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, J. Phys. Chem. C, 127, 50, 24168–24182, (2023) [[arXiv]](https://arxiv.org/abs/2305.10873) [[journal]](https://pubs.acs.org/doi/10.1021/acs.jpcc.3c06648)
 
@@ -54,14 +56,17 @@ If this code or data helped your work, please cite:
 <details>
 <summary>BibTeX</summary>
 
+
 ```bibtex
-@misc{stark_nonadiabatic_2025,
-  title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
+@article{stark_nonadiabatic_2025,
+	title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
   author = {Stark, Wojciech G. and Box, Connor L. and Sachs, Matthias and Hertl, Nils and Maurer, Reinhard J.},
-  year = {2025},
-  eprint = {2505.18147},
-  archivePrefix = {arXiv},
-  primaryClass = {physics.chem-ph}
+	publisher = {Phys. Rev. B},
+	volume = {112},
+	number = {3},
+  doi = {10.1103/h7vd-94pk},
+	year = {2025},
+	url = {https://link.aps.org/doi/10.1103/h7vd-94pk},
 }
 
 @article{stark_machine_2023,

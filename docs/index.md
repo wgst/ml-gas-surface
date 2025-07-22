@@ -18,24 +18,25 @@ Here, you can find instructions on how to:
 **If you found this tutorial helpful, please cite the following reference:**
 
 
-W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, arXiv:2505.18147 [physics.chem-ph], (2025) [[arXiv]](http://arxiv.org/abs/2505.18147)
+W. G. Stark, C. L. Box, M. Sachs, N. Hertl, R. J. Maurer, Nonadiabatic reactive scattering of hydrogen on different surface facets of copper, Phys. Rev. B, 112, 3 (2025) [[arXiv]](http://arxiv.org/abs/2505.18147) [[journal]](https://link.aps.org/doi/10.1103/h7vd-94pk)
 
 ```text
-@misc{stark_nonadiabatic_2025,
+@article{stark_nonadiabatic_2025,
 	title = {Nonadiabatic reactive scattering of hydrogen on different surface facets of copper},
-	doi = {10.48550/arXiv.2505.18147},
-	publisher = {arXiv},
-	author = {Stark, Wojciech G. and Box, Connor L. and Sachs, Matthias and Hertl, Nils and Maurer, Reinhard J.},
+  author = {Stark, Wojciech G. and Box, Connor L. and Sachs, Matthias and Hertl, Nils and Maurer, Reinhard J.},
+	publisher = {Phys. Rev. B},
+	volume = {112},
+	number = {3},
+  doi = {10.1103/h7vd-94pk},
 	year = {2025},
-	note = {arXiv:2505.18147 [physics.chem-ph]},
-	url = {http://arxiv.org/abs/2505.18147},
+	url = {https://link.aps.org/doi/10.1103/h7vd-94pk},
 }
 ```
 
 W. G. Stark, J. Westermayr, O. A. Douglas-Gallardo, J. Gardner, S. Habershon, R. J. Maurer, Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities, J. Phys. Chem. C, 127, 50, 24168–24182, (2023) [[arXiv]](https://arxiv.org/abs/2305.10873) [[journal]](https://pubs.acs.org/doi/10.1021/acs.jpcc.3c06648)
 
 ```text
-@misc{stark_machine_2023,
+@article{stark_machine_2023,
 	title = {Machine learning interatomic potentials for reactive hydrogen dynamics at metal surfaces based on iterative refinement of reaction probabilities},
 	author = {Stark, Wojciech G. and Westermayr, Julia and Douglas-Gallardo, Oscar A. and Gardner, James and Habershon, Scott and Maurer, Reinhard J.},
 	volume = {127},
